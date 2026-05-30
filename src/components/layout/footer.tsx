@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { Container } from "./container";
+import { Container } from "./Container";
 import { siteConfig } from "@/data/site";
 
 export const Footer = () => {

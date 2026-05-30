@@ -4,8 +4,11 @@ import { useState, type FormEvent } from "react";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Mail, MessageSquare, Send, Tag, User } from "lucide-react";
-import { Input, Textarea, Select, Label } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
+import { Select } from "@/components/ui/Select";
+import { Label } from "@/components/ui/Label";
+import { Button } from "@/components/ui/Button";
 import type { ContactSubject } from "@/types";
 
 const SUBJECTS: ContactSubject[] = ["project", "consulting", "collaboration", "other"];

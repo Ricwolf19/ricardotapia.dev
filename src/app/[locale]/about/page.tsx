@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Section } from "@/components/layout/section";
-import { ExperienceTimeline } from "@/components/sections/experience-timeline";
-import { TechStack } from "@/components/sections/tech-stack";
+import { Section } from "@/components/layout/Section";
+import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline";
+import { TechStack } from "@/components/sections/TechStack";
 
 export const generateMetadata = async ({
   params,

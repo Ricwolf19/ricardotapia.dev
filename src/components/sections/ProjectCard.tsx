@@ -4,8 +4,8 @@ import { Link } from "@/i18n/routing";
 import type { Project } from "@/types";
 import { getLiveUrl } from "@/data/projects";
 import { getTagline } from "@/data/localize";
-import { Badge, type BadgeProps } from "@/components/ui/badge";
-import { ProjectThumbnail } from "./project-thumbnail";
+import { Badge, type BadgeProps } from "@/components/ui/Badge";
+import { ProjectThumbnail } from "./ProjectThumbnail";
 
 const statusVariant: Record<Project["status"], BadgeProps["variant"]> = {
   production: "production",

@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
-import { Container } from "./container";
+import { Container } from "./Container";
 
 interface SectionProps extends HTMLAttributes<HTMLElement> {
   /** Si false, no envuelve en Container (para secciones full-bleed). */

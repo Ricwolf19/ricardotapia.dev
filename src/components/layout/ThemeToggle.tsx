@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 
 /** Toggle light/dark con persistencia (next-themes). Default light (spec §10.10). */
 export const ThemeToggle = () => {

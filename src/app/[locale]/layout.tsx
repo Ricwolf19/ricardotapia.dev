@@ -5,11 +5,11 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { siteConfig } from "@/data/site";
-import { ThemeProvider } from "@/components/layout/theme-provider";
-import { MotionProvider } from "@/components/motion/motion-provider";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { WhatsAppWidget } from "@/components/sections/whatsapp-widget";
+import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { MotionProvider } from "@/components/motion/MotionProvider";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { WhatsAppWidget } from "@/components/layout/WhatsAppWidget";
 import "@/styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });

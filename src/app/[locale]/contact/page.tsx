@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Mail } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
-import { Section } from "@/components/layout/section";
-import { ContactForm } from "@/components/sections/contact-form";
+import { Section } from "@/components/layout/Section";
+import { ContactForm } from "@/components/sections/ContactForm";
 import { siteConfig } from "@/data/site";
 
 export const generateMetadata = async ({

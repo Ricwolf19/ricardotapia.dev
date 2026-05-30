@@ -9,8 +9,8 @@ import { getProjectBySlug, workProjects } from "@/data/projects";
 import { getTagline, getDescription } from "@/data/localize";
 import { getProjectContent } from "@/lib/mdx";
 import { mdxComponents } from "@/components/mdx/mdx-components";
-import { Section } from "@/components/layout/section";
-import { Badge } from "@/components/ui/badge";
+import { Section } from "@/components/layout/Section";
+import { Badge } from "@/components/ui/Badge";
 
 export const generateStaticParams = () => workProjects.map((p) => ({ slug: p.slug }));
 

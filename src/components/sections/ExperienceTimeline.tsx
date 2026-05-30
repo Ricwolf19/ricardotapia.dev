@@ -1,7 +1,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import { experiences } from "@/data/experience";
 import { getExperienceDescription } from "@/data/localize";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/Badge";
 import { formatDateRange } from "@/lib/utils";
 
 /** Timeline vertical de experiencia laboral (spec §10.6). */

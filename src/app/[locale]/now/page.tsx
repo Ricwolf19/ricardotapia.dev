@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { nowProjects } from "@/data/projects";
-import { Section } from "@/components/layout/section";
-import { ProjectCard } from "@/components/sections/project-card";
+import { Section } from "@/components/layout/Section";
+import { ProjectCard } from "@/components/sections/ProjectCard";
 
 export const generateMetadata = async ({
   params,

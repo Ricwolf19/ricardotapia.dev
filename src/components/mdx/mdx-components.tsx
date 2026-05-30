@@ -1,5 +1,5 @@
 import type { MDXComponents } from "mdx/types";
-import { MdxImage } from "./mdx-image";
+import { MdxImage } from "./MdxImage";
 
 /**
  * Mapping de componentes para el renderer MDX (spec §10 mdx-components).

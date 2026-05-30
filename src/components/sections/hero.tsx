@@ -1,9 +1,10 @@
 import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
-import { Container } from "@/components/layout/container";
-import { buttonVariants } from "@/components/ui/button";
-import { Stagger, StaggerItem } from "@/components/motion/motion-primitives";
+import { Container } from "@/components/layout/Container";
+import { buttonVariants } from "@/components/ui/Button";
+import { Stagger } from "@/components/motion/Stagger";
+import { StaggerItem } from "@/components/motion/StaggerItem";
 import { cn } from "@/lib/utils";
 
 /** Hero del Home (spec §10.2). Dark-first, con stagger de entrada y señal de disponibilidad. */

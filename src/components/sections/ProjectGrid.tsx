@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import type { Project } from "@/types";
 import { workFilters, type WorkFilter } from "@/data/constants";
-import { ProjectCard } from "./project-card";
+import { ProjectCard } from "./ProjectCard";
 import { cn } from "@/lib/utils";
 
 interface ProjectGridProps {

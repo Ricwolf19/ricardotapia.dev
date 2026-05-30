@@ -5,9 +5,9 @@ import { Menu, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/routing";
 import { navLinks } from "@/data/constants";
-import { Container } from "./container";
-import { ThemeToggle } from "@/components/sections/theme-toggle";
-import { LocaleSwitcher } from "@/components/sections/locale-switcher";
+import { Container } from "./Container";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
 import { cn } from "@/lib/utils";
 
 export const Header = () => {

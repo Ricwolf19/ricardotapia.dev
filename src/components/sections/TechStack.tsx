@@ -1,6 +1,6 @@
 import type { Technology, TechnologyCategory } from "@/types";
 import { tech } from "@/data/technologies";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/Badge";
 
 const CATEGORY_ORDER: TechnologyCategory[] = [
   "frontend",

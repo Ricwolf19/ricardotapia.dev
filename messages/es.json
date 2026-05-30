@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "work": "Proyectos",
+    "about": "Sobre mí",
+    "now": "Ahora",
+    "contact": "Contacto"
+  },
+  "home": {
+    "hero": {
+      "title": "Ricardo Tapia",
+      "subtitle": "Desarrollador de Software Multiplataforma",
+      "description": "Construyo software a la medida para negocios: ERP, e-commerce, plataformas y apps.",
+      "ctaProjects": "Ver proyectos",
+      "ctaContact": "Hablemos",
+      "available": "Disponible para nuevos proyectos"
+    },
+    "recent": {
+      "label": "// lanzamientos recientes",
+      "title": "Proyectos recientes",
+      "subtitle": "Landings y sitios públicos que puedes visitar ahora mismo.",
+      "viewAll": "Ver todos los proyectos",
+      "viewLive": "Ver app",
+      "comingSoon": "Próximamente"
+    }
+  },
+  "work": {
+    "title": "Proyectos",
+    "subtitle": "Sistemas completos en producción: ERP, SaaS, e-commerce y plataformas.",
+    "filterAll": "Todos",
+    "filterSaas": "SaaS",
+    "filterErp": "ERP",
+    "filterEcommerce": "E-commerce",
+    "filterPlatform": "Plataforma",
+    "filterMarketing": "Marketing",
+    "filterOss": "Open Source",
+    "priority": "Prioritario",
+    "privateAccess": "Acceso con cuenta",
+    "public": "Público",
+    "private": "Privado",
+    "empty": "No hay proyectos en esta categoría.",
+    "caseStudy": {
+      "backToWork": "Volver a proyectos",
+      "links": "Enlaces",
+      "stack": "Stack",
+      "status": "Estado",
+      "category": "Categoría",
+      "timeline": "Periodo",
+      "subApps": "Aplicaciones del sistema",
+      "prev": "Anterior",
+      "next": "Siguiente"
+    }
+  },
+  "about": {
+    "title": "Sobre mí",
+    "bio": "Desarrollador full-stack basado en Chihuahua, México. Construyo sistemas de software de extremo a extremo, priorizando arquitecturas mantenibles y experiencias de producto que resuelven problemas reales de negocio.",
+    "experienceTitle": "Experiencia",
+    "stackTitle": "Stack actual",
+    "githubTitle": "Actividad en GitHub",
+    "current": "Actual",
+    "type": {
+      "full-time": "Tiempo completo",
+      "part-time": "Medio tiempo",
+      "freelance": "Freelance",
+      "contract": "Contrato",
+      "internship": "Prácticas"
+    }
+  },
+  "now": {
+    "title": "Ahora",
+    "subtitle": "En lo que estoy trabajando actualmente.",
+    "empty": "Sin proyectos activos por ahora."
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "¿Tienes un proyecto en mente? Hablemos.",
+    "form": {
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "subject": "Asunto",
+      "message": "Mensaje",
+      "submit": "Enviar mensaje",
+      "sending": "Enviando...",
+      "success": "Mensaje enviado. Te responderé pronto.",
+      "error": "Hubo un error. Intenta de nuevo.",
+      "subjects": {
+        "project": "Proyecto",
+        "consulting": "Consultoría",
+        "collaboration": "Colaboración",
+        "other": "Otro"
+      },
+      "errors": {
+        "validation": "Revisa los campos del formulario.",
+        "rateLimit": "Demasiados intentos. Espera unos minutos.",
+        "recaptcha": "No pudimos verificar que seas humano.",
+        "email": "No se pudo enviar el mensaje. Intenta de nuevo.",
+        "unavailable": "El formulario no está disponible ahora. Usa WhatsApp o email."
+      }
+    },
+    "whatsapp": {
+      "label": "¿Prefieres WhatsApp?",
+      "cta": "Enviar mensaje",
+      "tooltip": "¿Hablamos?"
+    },
+    "directEmail": "O escríbeme directo a"
+  },
+  "status": {
+    "production": "Producción",
+    "development": "Desarrollo",
+    "archived": "Archivado",
+    "internal": "Interno"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "builtWith": "Software a la medida, de la idea a producción."
+  },
+  "theme": {
+    "toggle": "Cambiar tema",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema"
+  }
+}

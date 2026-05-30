@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "work": "Work",
+    "about": "About",
+    "now": "Now",
+    "contact": "Contact"
+  },
+  "home": {
+    "hero": {
+      "title": "Ricardo Tapia",
+      "subtitle": "Cross-Platform Software Developer",
+      "description": "I build custom software for businesses: ERP, e-commerce, platforms, and apps. From idea to production.",
+      "ctaProjects": "View projects",
+      "ctaContact": "Let's talk",
+      "available": "Available for new projects"
+    },
+    "recent": {
+      "label": "// recent launches",
+      "title": "Recent projects",
+      "subtitle": "Landings and public sites you can visit right now.",
+      "viewAll": "View all projects",
+      "viewLive": "View app",
+      "comingSoon": "Coming soon"
+    }
+  },
+  "work": {
+    "title": "Work",
+    "subtitle": "Complete systems in production: ERP, SaaS, e-commerce, and platforms.",
+    "filterAll": "All",
+    "filterSaas": "SaaS",
+    "filterErp": "ERP",
+    "filterEcommerce": "E-commerce",
+    "filterPlatform": "Platform",
+    "filterMarketing": "Marketing",
+    "filterOss": "Open Source",
+    "priority": "Priority",
+    "privateAccess": "Account required",
+    "public": "Public",
+    "private": "Private",
+    "empty": "No projects in this category.",
+    "caseStudy": {
+      "backToWork": "Back to work",
+      "links": "Links",
+      "stack": "Stack",
+      "status": "Status",
+      "category": "Category",
+      "timeline": "Timeline",
+      "subApps": "System applications",
+      "prev": "Previous",
+      "next": "Next"
+    }
+  },
+  "about": {
+    "title": "About",
+    "bio": "Full-stack developer based in Chihuahua, Mexico. I build software systems end to end, prioritizing maintainable architectures and product experiences that solve real business problems.",
+    "experienceTitle": "Experience",
+    "stackTitle": "Current stack",
+    "githubTitle": "GitHub activity",
+    "current": "Current",
+    "type": {
+      "full-time": "Full-time",
+      "part-time": "Part-time",
+      "freelance": "Freelance",
+      "contract": "Contract",
+      "internship": "Internship"
+    }
+  },
+  "now": {
+    "title": "Now",
+    "subtitle": "What I'm currently working on.",
+    "empty": "No active projects right now."
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Have a project in mind? Let's talk.",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message",
+      "submit": "Send message",
+      "sending": "Sending...",
+      "success": "Message sent. I'll get back to you soon.",
+      "error": "Something went wrong. Please try again.",
+      "subjects": {
+        "project": "Project",
+        "consulting": "Consulting",
+        "collaboration": "Collaboration",
+        "other": "Other"
+      },
+      "errors": {
+        "validation": "Please check the form fields.",
+        "rateLimit": "Too many attempts. Please wait a few minutes.",
+        "recaptcha": "We couldn't verify you're human.",
+        "email": "The message couldn't be sent. Please try again.",
+        "unavailable": "The form is unavailable right now. Use WhatsApp or email."
+      }
+    },
+    "whatsapp": {
+      "label": "Prefer WhatsApp?",
+      "cta": "Send message",
+      "tooltip": "Let's talk?"
+    },
+    "directEmail": "Or email me directly at"
+  },
+  "status": {
+    "production": "Production",
+    "development": "Development",
+    "archived": "Archived",
+    "internal": "Internal"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "builtWith": "Custom software, from idea to production."
+  },
+  "theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  }
+}

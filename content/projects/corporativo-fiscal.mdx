@@ -1,0 +1,36 @@
+---
+title: "Corporativo Fiscal"
+slug: "corporativo-fiscal"
+tagline: "Plataforma fiscal corporativa en microservicios con 8 aplicaciones privadas y presentaciones live."
+status: "production"
+visibility: "private"
+category: "saas"
+startDate: "2025-05"
+thumbnail: "/images/projects/corporativo-fiscal-thumb.jpg"
+tags: ["saas", "microservicios", "express", "websockets"]
+---
+
+## Contexto
+
+Corporativo Fiscal opera una suite de servicios fiscales y legales que requería digitalizarse en una plataforma única, con módulos especializados por área y un sistema de presentaciones colaborativas en tiempo real.
+
+## Arquitectura
+
+Arquitectura de microservicios sobre Express con 8 aplicaciones privadas: Legal, Clientes, Materialización, Recepción, RH, Admin, Landiabar y Visión Fiscal. El frontend usa React + Vite y la persistencia MongoDB.
+
+El módulo de presentaciones live combina **WebSockets** para tiempo real, **Excalidraw** para pizarra colaborativa y **YJS** (CRDT) para resolución de conflictos sin servidor de verdad central.
+
+{/* TODO: diagrama de microservicios y comunicación entre servicios */}
+
+## Retos Técnicos
+
+- **Colaboración en tiempo real:** sincronización CRDT con YJS sobre WebSockets para edición concurrente.
+- **Aislamiento de módulos:** 8 apps con dominios de negocio separados pero autenticación y datos compartidos.
+
+{/* TODO: completar con detalles reales de infraestructura */}
+
+## Resultado
+
+Plataforma en producción operando los 8 módulos para el corporativo.
+
+{/* TODO: métricas internas y screenshots */}

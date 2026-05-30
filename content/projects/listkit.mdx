@@ -1,0 +1,40 @@
+---
+title: "listkit"
+slug: "listkit"
+tagline: "Paquete open source de utilidades para listas, publicado en npm."
+status: "production"
+visibility: "public"
+category: "oss"
+startDate: "2025-02"
+thumbnail: "/images/projects/listkit-thumb.jpg"
+tags: ["oss", "typescript", "npm"]
+---
+
+## Contexto
+
+listkit es una librería open source de utilidades para manipulación de listas y colecciones, publicada bajo el scope `@pibytelabs` en npm.
+
+{/* TODO: motivación del paquete y casos de uso */}
+
+## Arquitectura
+
+Librería en TypeScript con API tree-shakeable y tipado estricto.
+
+```typescript
+import { chunk, uniqueBy } from "@pibytelabs/listkit";
+
+const groups = chunk([1, 2, 3, 4, 5], 2); // [[1,2],[3,4],[5]]
+```
+
+{/* TODO: reemplazar el snippet con la API real del paquete */}
+
+## Retos Técnicos
+
+- **Tipado genérico** preciso sin sacrificar ergonomía.
+- **Bundling** dual ESM/CJS y publicación en npm.
+
+## Resultado
+
+Publicado en [npm](https://www.npmjs.com/package/@pibytelabs/listkit).
+
+{/* TODO: descargas y versión actual */}

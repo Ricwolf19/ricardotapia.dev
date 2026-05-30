@@ -1,0 +1,37 @@
+---
+title: "Facturalandia"
+slug: "facturalandia"
+tagline: "SaaS de facturación white-label (Sonolife)."
+status: "production"
+visibility: "private"
+category: "saas"
+startDate: "2025-03"
+thumbnail: "/images/projects/facturalandia-thumb.jpg"
+tags: ["saas", "facturacion", "white-label"]
+---
+
+## Contexto
+
+Facturalandia es una solución **SaaS de facturación electrónica** entregada en modelo **white-label** para Sonolife. El producto debía operar bajo la marca del cliente, manteniendo una base técnica única capaz de servir a distintos contextos sin reescrituras.
+
+## Arquitectura
+
+Stack moderno con **Next.js**, **React** y **TypeScript** sobre **Node.js**, con persistencia en **PostgreSQL**. El diseño white-label separa la **marca configurable** (tema, logos, dominios) de la **lógica de facturación**, de modo que la misma plataforma se adapta a cada cliente vía configuración.
+
+- Capa de facturación aislada de la capa de presentación.
+- Theming y branding parametrizables.
+- Tipado estricto de extremo a extremo.
+
+{/* TODO: precisar integración de timbrado/CFDI y modelo multi-tenant */}
+
+## Retos Técnicos
+
+- **White-label real:** una sola base que sirve marcas distintas sin forks.
+- **Facturación electrónica:** corrección y trazabilidad en cada comprobante.
+- **Aislamiento por cliente** de datos y configuración.
+
+## Resultado
+
+En producción como producto privado bajo la marca de Sonolife.
+
+{/* TODO: métricas de uso y detalles de despliegue */}

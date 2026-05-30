@@ -1,0 +1,36 @@
+---
+title: "Espau"
+slug: "espau"
+tagline: "Plataforma de gestión con panel administrativo y sitio público."
+status: "production"
+visibility: "hybrid"
+category: "platform"
+startDate: "2024-09"
+thumbnail: "/images/projects/espau-thumb.jpg"
+tags: ["platform", "react", "nextjs", "tailwind"]
+---
+
+## Contexto
+
+Espau opera con dos caras de un mismo producto: un **sitio público** que comunica y capta, y un **panel administrativo** donde el equipo gestiona la operación día a día. El reto era construir ambas sobre una misma base de código y design system, sin duplicar lógica ni romper la coherencia visual entre lo público y lo privado.
+
+## Arquitectura
+
+Aplicación full-stack en **Next.js** con App Router. La capa pública se renderiza de forma estática para máxima velocidad y SEO, mientras que el panel administrativo corre como zona autenticada con datos dinámicos. Tipos y componentes de UI se comparten entre ambas zonas para mantener una sola fuente de verdad.
+
+- **Público:** páginas estáticas/ISR, optimizadas para carga rápida y posicionamiento.
+- **Admin:** rutas protegidas, formularios con validación y estados de servidor.
+
+{/* TODO: precisar proveedor de auth y modelo de datos exacto */}
+
+## Retos Técnicos
+
+- **Una base, dos audiencias:** separar claramente lo público de lo privado sin fragmentar el código ni el design system.
+- **Consistencia de UI:** mismos tokens y componentes en marketing y administración.
+- **Performance del lado público** sin sacrificar la riqueza del panel interno.
+
+## Resultado
+
+Plataforma en producción con panel administrativo operativo y sitio público desplegado en Vercel.
+
+{/* TODO: agregar URL del sitio público, métricas de uso y screenshots */}

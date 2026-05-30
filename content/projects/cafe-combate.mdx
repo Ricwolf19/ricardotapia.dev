@@ -1,0 +1,34 @@
+---
+title: "Café Combate"
+slug: "cafe-combate"
+tagline: "ERP de 13 aplicaciones para tostador de café con facturación CFDI, almacén, producción y tienda pública."
+status: "production"
+visibility: "hybrid"
+category: "erp"
+startDate: "2024-01"
+launchDate: "2024-06"
+thumbnail: "/images/projects/cafe-combate-thumb.jpg"
+tags: ["erp", "cfdi", "react", "vite", "tailwind", "offline-sync"]
+---
+
+## Contexto
+
+Café Combate es un grupo tostador con operaciones en México. Requerían un sistema integral que unificara almacén, compras, producción, ventas, facturación electrónica y tienda pública en una sola plataforma operada por más de 40 usuarios concurrentes.
+
+## Arquitectura
+
+Monorepo con 13 aplicaciones desplegadas de forma independiente, cada una con su propio subdominio (`almacen`, `compras`, `produccion`, `ventas`, `facturacion`, `pagos`, `publico`, `auth`, entre otras). La autenticación está centralizada y los módulos comparten una capa común de tipos y utilidades.
+
+{/* TODO: detallar diagrama de servicios y estrategia de despliegue por subdominio */}
+
+## Retos Técnicos
+
+- **Offline-first sync:** Implementación de Dexie (IndexedDB) para que las terminales de almacén y producción operen sin conexión y sincronicen al recuperar red.
+- **CFDI 4.0:** Integración con servicios de facturación electrónica SAT, timbrado y manejo de complementos.
+- **Concurrencia:** Diseño de la capa de datos para soportar 40+ usuarios concurrentes sin condiciones de carrera en inventario.
+
+## Resultado
+
+Sistema operando 6 días a la semana con más de 40 usuarios concurrentes, cubriendo el ciclo completo desde la compra de grano hasta la venta al cliente final.
+
+{/* TODO: agregar métricas reales de adopción y screenshots de gallery */}

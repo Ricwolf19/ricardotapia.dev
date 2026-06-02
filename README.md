@@ -1,10 +1,13 @@
-# ricardotapia.dev
-
-Personal portfolio and professional site of Ricardo Tapia, a full-stack
-developer based in Chihuahua, Mexico. Bilingual (Spanish/English), statically
-generated, with a developer-focused aesthetic.
-
-Live: https://ricardotapia.dev
+<div align="center">
+  <img src="public/android-chrome-192x192.png" alt="ricardotapia.dev" width="88" height="88" />
+  <h1>ricardotapia.dev</h1>
+  <p>
+    Personal portfolio and professional site of Ricardo Tapia, a full-stack
+    developer based in Chihuahua, Mexico.<br />
+    Bilingual (Spanish/English), statically generated, with a developer-focused aesthetic.
+  </p>
+  <p><a href="https://ricardotapia.dev"><strong>ricardotapia.dev</strong></a></p>
+</div>
 
 ## Stack
 

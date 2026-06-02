@@ -5,6 +5,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { Section } from "@/components/layout/Section";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { siteConfig } from "@/data/site";
+import { features } from "@/lib/env";
 
 export const generateMetadata = async ({
   params,
@@ -22,7 +23,7 @@ const ContactPage = async ({ params }: { params: Promise<{ locale: string }> }) 
   const t = await getTranslations({ locale, namespace: "contact" });
 
   const whatsappHref = siteConfig.whatsappNumber
-    ? `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent("Hola Ricardo, me interesa hablar sobre un proyecto.")}`
+    ? `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent("Hola Ricardo, <Inserte mensaje aquí>")}`
     : undefined;
 
   return (
@@ -33,9 +34,13 @@ const ContactPage = async ({ params }: { params: Promise<{ locale: string }> }) 
       </header>
 
       <div className="grid gap-12 lg:grid-cols-[1fr_20rem]">
-        <ContactForm email={siteConfig.email} />
+        <ContactForm
+          email={siteConfig.email}
+          live={features.resend}
+          recaptchaSiteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+        />
 
-        {/* Canales directos */}
+        {/* Direct channels */}
         <aside className="space-y-4">
           {whatsappHref && (
             <a

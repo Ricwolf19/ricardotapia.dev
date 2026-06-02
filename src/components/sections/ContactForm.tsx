@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useActionState, useEffect, useRef, useState, useTransition, type FormEvent } from "react";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Mail, MessageSquare, Send, Tag, User } from "lucide-react";
@@ -9,7 +9,9 @@ import { Textarea } from "@/components/ui/Textarea";
 import { Select } from "@/components/ui/Select";
 import { Label } from "@/components/ui/Label";
 import { Button } from "@/components/ui/Button";
-import type { ContactSubject } from "@/types";
+import { contactAction } from "@/actions/contact";
+import { useRecaptcha } from "@/lib/recaptcha-client";
+import type { ContactResult, ContactSubject } from "@/types";
 
 const SUBJECTS: ContactSubject[] = ["project", "consulting", "collaboration", "other"];
 
@@ -24,34 +26,67 @@ const field = {
 };
 
 interface ContactFormProps {
-  /** Email destino (pasado desde el server para usar la env real). */
+  /** Destination email (passed from the server to use the real env value). */
   email: string;
+  /** Whether email delivery (Resend) is configured; enables the Server Action. */
+  live: boolean;
+  /** Public reCAPTCHA v3 site key, if configured. */
+  recaptchaSiteKey?: string;
 }
 
 /**
- * Formulario de contacto (UI rica). Hasta cablear el Server Action (Fase 2),
- * compone un `mailto:` con los datos -> ruta de contacto real y honesta.
+ * Contact form.
+ *
+ * When `live` is true the submission goes through the `contactAction` Server
+ * Action (Resend + reCAPTCHA + rate limit). Otherwise it composes a `mailto:`
+ * link as a graceful fallback, so the form is useful before any integration is
+ * configured.
  */
-export const ContactForm = ({ email }: ContactFormProps) => {
+export const ContactForm = ({ email, live, recaptchaSiteKey }: ContactFormProps) => {
   const t = useTranslations("contact.form");
-  const [sent, setSent] = useState(false);
+  const [state, formAction] = useActionState<ContactResult | null, FormData>(contactAction, null);
+  const [isPending, startTransition] = useTransition();
+  const { getToken } = useRecaptcha(recaptchaSiteKey);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  // mailto fallback state (used when `live` is false)
+  const [mailtoSent, setMailtoSent] = useState(false);
+
+  useEffect(() => {
+    if (state?.success) formRef.current?.reset();
+  }, [state]);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const name = String(data.get("name") ?? "");
-    const subjectKey = String(data.get("subject") ?? "other");
-    const message = String(data.get("message") ?? "");
-    const from = String(data.get("email") ?? "");
+    const formEl = e.currentTarget;
 
-    const subject = `[ricardotapia.dev] ${t(`subjects.${subjectKey}`)} — ${name}`;
-    const body = `${message}\n\n— ${name} (${from})`;
-    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+    if (!live) {
+      const data = new FormData(formEl);
+      const name = String(data.get("name") ?? "");
+      const subjectKey = String(data.get("subject") ?? "other");
+      const message = String(data.get("message") ?? "");
+      const from = String(data.get("email") ?? "");
+      const subject = `[ricardotapia.dev] ${t(`subjects.${subjectKey}`)} — ${name}`;
+      const body = `${message}\n\n— ${name} (${from})`;
+      window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      setMailtoSent(true);
+      return;
+    }
+
+    const fd = new FormData(formEl);
+    if (recaptchaSiteKey) {
+      const token = await getToken("contact");
+      if (token) fd.set("recaptchaToken", token);
+    }
+    startTransition(() => formAction(fd));
   };
+
+  const success = live ? state?.success === true : mailtoSent;
+  const errorCode = live && state && !state.success ? state.error : undefined;
 
   return (
     <motion.form
+      ref={formRef}
       onSubmit={handleSubmit}
       className="space-y-5"
       variants={container}
@@ -110,18 +145,27 @@ export const ContactForm = ({ email }: ContactFormProps) => {
         />
       </motion.div>
 
-      <motion.div variants={field} className="flex items-center gap-3">
-        <Button type="submit" className="group shadow-primary/20 shadow-lg">
-          {t("submit")}
+      <motion.div variants={field} className="flex flex-wrap items-center gap-3">
+        <Button type="submit" disabled={isPending} className="group shadow-primary/20 shadow-lg">
+          {isPending ? t("sending") : t("submit")}
           <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </Button>
-        {sent && (
+        {success && (
           <motion.span
             initial={{ opacity: 0, x: -6 }}
             animate={{ opacity: 1, x: 0 }}
             className="text-success font-mono text-xs"
           >
             {t("success")}
+          </motion.span>
+        )}
+        {errorCode && (
+          <motion.span
+            initial={{ opacity: 0, x: -6 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="text-error font-mono text-xs"
+          >
+            {t(`errors.${errorCode}`)}
           </motion.span>
         )}
       </motion.div>

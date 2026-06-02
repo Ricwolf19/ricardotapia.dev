@@ -14,7 +14,6 @@ export const siteConfig: SiteConfig = {
   locale: "es",
   socials: {
     github: `https://github.com/${githubUsername}`,
-    linkedin: "https://www.linkedin.com/in/ricardo-tapia",
   },
 };
 

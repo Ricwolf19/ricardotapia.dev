@@ -29,7 +29,7 @@ const NowPage = async ({ params }: { params: Promise<{ locale: string }> }) => {
       {nowProjects.length === 0 ? (
         <p className="text-foreground-muted py-12 text-center">{t("empty")}</p>
       ) : (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {nowProjects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}

@@ -8,11 +8,11 @@ interface FadeUpProps {
   children: ReactNode;
   className?: string;
   delay?: number;
-  /** "view" anima al entrar al viewport; "mount" anima al montar (above the fold). */
+  /** "view" animates on entering the viewport; "mount" animates on mount (above the fold). */
   trigger?: "view" | "mount";
 }
 
-/** Entrada fade + slide-up reutilizable. Respeta prefers-reduced-motion vía MotionConfig. */
+/** Reusable fade + slide-up entrance. Respects prefers-reduced-motion via MotionConfig. */
 export const FadeUp = ({ children, className, delay = 0, trigger = "view" }: FadeUpProps) => {
   const activation =
     trigger === "mount"

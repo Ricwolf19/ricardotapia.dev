@@ -8,18 +8,18 @@ interface ProjectThumbnailProps {
   className?: string;
   priority?: boolean;
   sizes?: string;
-  /** Texto más pequeño para thumbnails reducidos (filas de lista). */
+  /** Smaller text for reduced thumbnails (list rows). */
   compact?: boolean;
 }
 
 /**
- * Thumbnail de proyecto listo para imágenes reales.
- * - Si `project.thumbnailReady` es true: renderiza next/image (local o R2).
- * - Si no: placeholder programático con gradiente por categoría (spec §15.2).
+ * Project thumbnail, ready for real images.
+ * - If `project.thumbnailReady` is true: renders next/image (local or R2).
+ * - Otherwise: a programmatic placeholder with a per-category gradient (spec §15.2).
  *
- * Para adjuntar una imagen real luego: coloca el archivo en
- * `public/images/projects/<slug>-thumb.jpg` (o una URL de R2 en `thumbnail`)
- * y marca `thumbnailReady: true` en `src/data/projects.ts`.
+ * To attach a real image later: place the file at
+ * `public/images/projects/<slug>-thumb.jpg` (or an R2 URL in `thumbnail`)
+ * and set `thumbnailReady: true` in `src/data/projects.ts`.
  */
 export const ProjectThumbnail = ({
   project,
@@ -51,7 +51,7 @@ export const ProjectThumbnail = ({
         className,
       )}
     >
-      {/* Textura sutil sobre el gradiente */}
+      {/* Subtle texture over the gradient */}
       <div
         aria-hidden
         className="absolute inset-0 [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:16px_16px] opacity-[0.07]"

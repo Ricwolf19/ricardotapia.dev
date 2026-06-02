@@ -2,9 +2,9 @@ import type { MDXComponents } from "mdx/types";
 import { MdxImage } from "./MdxImage";
 
 /**
- * Mapping de componentes para el renderer MDX (spec §10 mdx-components).
- * rehype-pretty-code maneja el syntax highlighting de los code blocks,
- * por lo que `pre`/`code` solo reciben estilos de contenedor.
+ * Component mapping for the MDX renderer (spec §10 mdx-components).
+ * rehype-pretty-code handles syntax highlighting of code blocks,
+ * so `pre`/`code` only receive container styles.
  */
 export const mdxComponents: MDXComponents = {
   Image: MdxImage,

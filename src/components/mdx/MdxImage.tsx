@@ -7,7 +7,7 @@ interface MdxImageProps {
   height?: number;
 }
 
-/** Imagen optimizada para uso dentro de MDX. */
+/** Optimized image for use within MDX. */
 export const MdxImage = ({ src, alt, width = 1200, height = 800 }: MdxImageProps) => (
   <Image
     src={src}

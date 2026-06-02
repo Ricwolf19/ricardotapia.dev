@@ -1,6 +1,6 @@
 import type { Variants } from "motion/react";
 
-/** Curva de easing compartida por las animaciones de entrada. */
+/** Easing curve shared by the entrance animations. */
 export const EASE = [0.22, 1, 0.36, 1] as const;
 
 export const fadeUp: Variants = {
@@ -13,7 +13,7 @@ export const staggerContainer: Variants = {
   show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
 };
 
-/** Contenedor/ítem para listas (RecentProjects). */
+/** Container/item for lists (RecentProjects). */
 export const listContainer: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.07 } },

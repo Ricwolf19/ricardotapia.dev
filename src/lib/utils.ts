@@ -1,14 +1,14 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-/** Combina clases condicionales y resuelve conflictos de Tailwind. */
+/** Combines conditional classes and resolves Tailwind conflicts. */
 export const cn = (...inputs: ClassValue[]): string => twMerge(clsx(inputs));
 
-/** Devuelve la traducción inglesa si el locale es "en" y existe; si no, el texto base (es). */
+/** Returns the English translation if the locale is "en" and it exists; otherwise the base text (es). */
 export const localized = (locale: string, base: string, en: string | undefined): string =>
   locale === "en" && en ? en : base;
 
-/** Formatea un rango de fechas ISO ("2024-01") a etiqueta legible por locale. */
+/** Formats an ISO date range ("2024-01") into a locale-readable label. */
 export const formatDateRange = (
   start: string,
   end: string | undefined,

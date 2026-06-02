@@ -5,7 +5,7 @@ import { useTransition } from "react";
 import { usePathname, useRouter, routing } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
-/** Cambia el locale preservando la ruta actual (spec §14.3). */
+/** Switches the locale while preserving the current route (spec §14.3). */
 export const LocaleSwitcher = () => {
   const router = useRouter();
   const pathname = usePathname();
@@ -16,7 +16,7 @@ export const LocaleSwitcher = () => {
   const switchTo = (locale: string) => {
     if (locale === active) return;
     startTransition(() => {
-      // @ts-expect-error -- pathname es válido para la config de routing actual
+      // @ts-expect-error -- pathname is valid for the current routing config
       router.replace({ pathname, params }, { locale });
     });
   };

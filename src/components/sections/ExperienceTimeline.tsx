@@ -4,7 +4,7 @@ import { getExperienceDescription } from "@/data/localize";
 import { Badge } from "@/components/ui/Badge";
 import { formatDateRange } from "@/lib/utils";
 
-/** Timeline vertical de experiencia laboral (spec §10.6). */
+/** Vertical work experience timeline (spec §10.6). */
 export const ExperienceTimeline = () => {
   const t = useTranslations("about");
   const locale = useLocale();

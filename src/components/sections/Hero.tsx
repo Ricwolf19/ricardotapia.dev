@@ -7,13 +7,13 @@ import { Stagger } from "@/components/motion/Stagger";
 import { StaggerItem } from "@/components/motion/StaggerItem";
 import { cn } from "@/lib/utils";
 
-/** Hero del Home (spec §10.2). Dark-first, con stagger de entrada y señal de disponibilidad. */
+/** Home hero (spec §10.2). Dark-first, with entrance stagger and availability signal. */
 export const Hero = () => {
   const t = useTranslations("home.hero");
 
   return (
     <section className="border-border relative overflow-hidden border-b">
-      {/* Glow sutil + grid de fondo (vibe developer, performance-first) */}
+      {/* Subtle glow + background grid (developer vibe, performance-first) */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_-10%,_color-mix(in_srgb,_var(--color-primary)_22%,_transparent),_transparent)]"
@@ -28,7 +28,7 @@ export const Hero = () => {
           trigger="mount"
           className="relative flex min-h-[78vh] flex-col justify-center py-20"
         >
-          {/* Badge de disponibilidad — gancho para no-developers */}
+          {/* Availability badge — a hook for non-developers */}
           <StaggerItem>
             <span className="border-success/30 bg-success/10 text-success inline-flex w-fit items-center gap-2 rounded-full border px-3 py-1 font-mono text-xs">
               <span className="relative flex h-2 w-2">

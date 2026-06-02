@@ -10,8 +10,8 @@ import { Section } from "@/components/layout/Section";
 import { ProjectRow } from "./ProjectRow";
 
 /**
- * Lista numerada e interactiva de proyectos recientes con landing pública (Home).
- * Cada fila enlaza al case study y ofrece un atajo directo a la app en vivo.
+ * Numbered, interactive list of recent projects with a public landing (Home).
+ * Each row links to the case study and offers a direct shortcut to the live app.
  */
 export const RecentProjects = () => {
   const t = useTranslations("home.recent");

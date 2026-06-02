@@ -37,7 +37,7 @@ const AboutPage = async ({ params }: { params: Promise<{ locale: string }> }) =>
           <TechStack />
         </div>
 
-        {/* GitHubStats → Fase 3 */}
+        {/* GitHubStats → Phase 3 */}
       </div>
     </Section>
   );

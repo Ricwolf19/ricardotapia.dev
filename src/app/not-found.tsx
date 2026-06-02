@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 /**
- * Not-found global. Como el <html> vive en [locale]/layout.tsx, este
- * fallback (fuera de cualquier locale) debe renderizar su propio documento.
+ * Global not-found. Since the <html> lives in [locale]/layout.tsx, this
+ * fallback (outside any locale) must render its own document.
  */
 const NotFound = () => (
   <html lang="es" style={{ colorScheme: "dark" }}>

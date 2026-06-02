@@ -1,34 +1,35 @@
 ---
 title: "Chachitos"
 slug: "chachitos"
-tagline: "Sitio web de marketing con diseño a medida."
+tagline: "Sitio web institucional de Chachitos, con localizador de tiendas en Google Maps."
 status: "production"
 visibility: "public"
 category: "marketing"
 startDate: "2024-05"
 thumbnail: "/images/projects/chachitos-thumb.jpg"
-tags: ["marketing", "react", "tailwind"]
+tags: ["marketing", "nextjs", "google-maps", "tailwind"]
 ---
 
 ## Contexto
 
-Chachitos requería un sitio de marketing con personalidad propia para presentar su oferta y captar clientes. La prioridad fue una interfaz atractiva, clara y rápida, capaz de comunicar la propuesta de valor en segundos.
+Chachitos es una empresa mexicana con más de 70 años produciendo cereales de trigo inflado. El proyecto es su sitio web oficial: una presencia moderna, rápida y responsive.
 
 ## Arquitectura
 
-Sitio en **React** + **Tailwind CSS**, desplegado en **Vercel**. Estructura por secciones, componentes reutilizables y diseño responsivo desde el primer breakpoint.
+Sitio Next.js con App Router organizado en rutas claras (Home, Nosotros, Sabores, Menú, Encuéntranos):
 
-- Layout por secciones con jerarquía visual clara.
-- Optimización de assets para carga ágil.
-- Despliegue continuo en Vercel.
+- `components/` — componentes reutilizables, incluida la integración de Google Maps y el localizador de tiendas.
+- `const/` — constantes institucionales (valores, direcciones, redes sociales).
+- `mocks/` — datos de ejemplo (productos y sabores).
+- `utils/` — utilidades como el cálculo de distancia con la fórmula de Haversine.
 
-## Retos Técnicos
+## Stack
 
-- **Diseño distintivo** que evitara la sensación de plantilla.
-- **Equilibrio entre estética y velocidad** de carga.
+- Next.js 15 + React 19 + Tailwind CSS + TypeScript.
+- Google Maps API para el localizador de tiendas (con marker clustering).
+- reCAPTCHA y Resend para los formularios de contacto.
+- scrollreveal para animaciones de entrada.
 
 ## Resultado
 
-En producción y accesible públicamente en [el sitio](https://webpage-indol-five.vercel.app/).
-
-{/* TODO: migrar a dominio final y agregar screenshots */}
+Un sitio institucional con un localizador de tiendas funcional que calcula la distancia del usuario a cada punto de venta. [Ver sitio](https://webpage-indol-five.vercel.app/).

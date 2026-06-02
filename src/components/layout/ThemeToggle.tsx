@@ -6,13 +6,13 @@ import { Moon, Sun } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 
-/** Toggle light/dark con persistencia (next-themes). Default light (spec §10.10). */
+/** Light/dark toggle with persistence (next-themes). Default light (spec §10.10). */
 export const ThemeToggle = () => {
   const { resolvedTheme, setTheme } = useTheme();
   const t = useTranslations("theme");
   const [mounted, setMounted] = useState(false);
 
-  // Evitar hydration mismatch: el icono depende del tema resuelto en cliente.
+  // Avoid hydration mismatch: the icon depends on the theme resolved on the client.
   useEffect(() => setMounted(true), []);
 
   const isDark = resolvedTheme === "dark";

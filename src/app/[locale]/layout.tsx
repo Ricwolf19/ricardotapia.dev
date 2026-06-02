@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { routing } from "@/i18n/routing";
 import { siteConfig } from "@/data/site";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
@@ -10,6 +12,7 @@ import { MotionProvider } from "@/components/motion/MotionProvider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppWidget } from "@/components/layout/WhatsAppWidget";
+import { JsonLd } from "@/components/seo/JsonLd";
 import "@/styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -33,6 +36,13 @@ export const generateMetadata = async ({
     metadataBase: new URL(siteConfig.url),
     title: { default: siteConfig.title, template: `%s | ${siteConfig.name}` },
     description: t("description"),
+    alternates: {
+      canonical: `${siteConfig.url}/${locale}`,
+      languages: {
+        es: `${siteConfig.url}/es`,
+        en: `${siteConfig.url}/en`,
+      },
+    },
     openGraph: {
       title: siteConfig.title,
       description: t("description"),
@@ -65,6 +75,7 @@ const LocaleLayout = async ({
       className={`${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="min-h-screen">
+        <JsonLd />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <NextIntlClientProvider messages={messages}>
             <MotionProvider>
@@ -77,6 +88,8 @@ const LocaleLayout = async ({
             </MotionProvider>
           </NextIntlClientProvider>
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

@@ -1,40 +1,52 @@
 ---
 title: "listkit"
 slug: "listkit"
-tagline: "Paquete open source de utilidades para listas, publicado en npm."
+tagline: "Librería React para vistas de lista estandarizadas: tabla/tarjetas, búsqueda, filtros, paginación y theming desde una sola config."
 status: "production"
 visibility: "public"
 category: "oss"
 startDate: "2025-02"
 thumbnail: "/images/projects/listkit-thumb.jpg"
-tags: ["oss", "typescript", "npm"]
+tags: ["oss", "react", "library", "typescript"]
 ---
 
 ## Contexto
 
-listkit es una librería open source de utilidades para manipulación de listas y colecciones, publicada bajo el scope `@pibytelabs` en npm.
-
-{/* TODO: motivación del paquete y casos de uso */}
+listkit (`@pibytelabs/listkit`) nació para eliminar la repetición de construir, una y otra vez, las mismas vistas de lista CRUD: toolbar, tabla, tarjetas, búsqueda, filtros y paginación. Una sola configuración describe toda la vista.
 
 ## Arquitectura
 
-Librería en TypeScript con API tree-shakeable y tipado estricto.
+Monorepo pnpm con el paquete publicable en `packages/listkit` y un playground Vite para desarrollo. El código se organiza en `adapters/` (memory, fetch, serverAction, dexie), `components/`, `hooks/` (incluidos los router adapters), `theme/` y `types/`. Se compila con tsup a ESM + CJS + `.d.ts` con subpath exports (`/next`, `/react-router`, `/adapters`, `/server`).
 
-```typescript
-import { chunk, uniqueBy } from "@pibytelabs/listkit";
+## Stack y API
 
-const groups = chunk([1, 2, 3, 4, 5], 2); // [[1,2],[3,4],[5]]
+`defineListConfig()` describe columnas, tarjetas, filtros, acciones y theme. `ListView` recibe la config más `data` (en memoria) o un `adapter` (asíncrono):
+
+```tsx
+import { ListView, serverActionAdapter } from "@pibytelabs/listkit";
+
+const adapter = serverActionAdapter<Product>(async (query) => {
+  const { rows, total } = await listProductsAction(query);
+  return { data: rows, total };
+});
+
+<ListView config={productsConfig} adapter={adapter} />;
 ```
 
-{/* TODO: reemplazar el snippet con la API real del paquete */}
+Características clave:
 
-## Retos Técnicos
+- Responsive por defecto (alterna tabla/tarjetas según viewport).
+- Filtros avanzados (`text`, `select`, `multi-select`, `date-range`, `number-range`, `boolean`) validados con Zod y sincronizados a la URL.
+- Ordenamiento de columnas, caché integrada (stale-while-revalidate) o inyección de TanStack Query.
+- SSR con `initialData` + `buildListQuery` (entry `@pibytelabs/listkit/server`).
+- Router adapters para Next.js, React Router o el navegador.
 
-- **Tipado genérico** preciso sin sacrificar ergonomía.
-- **Bundling** dual ESM/CJS y publicación en npm.
+## Retos técnicos
+
+- Mantener compatibilidad con React Server Components: un entry `/server` sin contexto cliente para no romper el render de Server Components.
+- Evitar mismatches de hidratación recomputando la query exacta en servidor con `buildListQuery`.
+- Empaquetado dual ESM/CJS con presupuestos de tamaño (size-limit) y validación de publicación (publint).
 
 ## Resultado
 
-Publicado en [npm](https://www.npmjs.com/package/@pibytelabs/listkit).
-
-{/* TODO: descargas y versión actual */}
+Una librería tipada y reutilizable (MIT) que ya alimenta listas administrativas en proyectos reales como Agates From Mexico e Increscendo. El release está automatizado con Changesets. Código en [GitHub](https://github.com/Ricwolf19/listkit).

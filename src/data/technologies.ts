@@ -1,8 +1,8 @@
 import type { Technology } from "@/types";
 
 /**
- * Catálogo central de tecnologías. Reutilizar estas referencias en
- * projects.ts y experience.ts en lugar de redefinir objetos inline (DRY).
+ * Central technology catalog. Reuse these references in
+ * projects.ts and experience.ts instead of redefining inline objects (DRY).
  */
 export const tech = {
   // frontend
@@ -30,6 +30,13 @@ export const tech = {
   // backend
   node: { name: "Node.js", slug: "nodejs", category: "backend", url: "https://nodejs.org" },
   express: { name: "Express", slug: "express", category: "backend" },
+  authjs: { name: "Auth.js", slug: "authjs", category: "backend", url: "https://authjs.dev" },
+  socketio: { name: "Socket.io", slug: "socketio", category: "backend", url: "https://socket.io" },
+  stripe: { name: "Stripe", slug: "stripe", category: "backend", url: "https://stripe.com" },
+  paypal: { name: "PayPal", slug: "paypal", category: "backend" },
+  facturapi: { name: "FACTURAPI", slug: "facturapi", category: "backend" },
+  resend: { name: "Resend", slug: "resend", category: "backend", url: "https://resend.com" },
+  reactRouter: { name: "React Router", slug: "react-router", category: "frontend" },
   java: { name: "Java", slug: "java", category: "backend" },
   struts: { name: "Struts", slug: "struts", category: "backend" },
   vbnet: { name: "VB.NET", slug: "vbnet", category: "backend" },
@@ -41,6 +48,7 @@ export const tech = {
 
   // database
   postgres: { name: "PostgreSQL", slug: "postgresql", category: "database" },
+  redis: { name: "Redis", slug: "redis", category: "database" },
   mongodb: { name: "MongoDB", slug: "mongodb", category: "database" },
   mysql: { name: "MySQL", slug: "mysql", category: "database" },
   sqlServer: { name: "SQL Server", slug: "sql-server", category: "database" },
@@ -51,9 +59,12 @@ export const tech = {
   // devops
   heroku: { name: "Heroku", slug: "heroku", category: "devops" },
   vercel: { name: "Vercel", slug: "vercel", category: "devops" },
+  awsS3: { name: "AWS S3", slug: "aws-s3", category: "devops" },
+  gcs: { name: "Google Cloud Storage", slug: "gcs", category: "devops" },
+  cloudinary: { name: "Cloudinary", slug: "cloudinary", category: "devops" },
 } as const satisfies Record<string, Technology>;
 
 export type TechKey = keyof typeof tech;
 
-/** Helper para construir arrays de Technology a partir de keys del catálogo. */
+/** Helper to build Technology arrays from catalog keys. */
 export const techList = (...keys: TechKey[]): Technology[] => keys.map((k) => tech[k]);

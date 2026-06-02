@@ -19,7 +19,7 @@ interface ProjectCardProps {
   priority?: boolean;
 }
 
-/** Tarjeta de proyecto (spec §10.3). Altura uniforme y thumbnail listo para imágenes. */
+/** Project card (spec §10.3). Uniform height and image-ready thumbnail. */
 export const ProjectCard = ({ project, priority = false }: ProjectCardProps) => {
   const t = useTranslations();
   const locale = useLocale();
@@ -32,7 +32,7 @@ export const ProjectCard = ({ project, priority = false }: ProjectCardProps) => 
     >
       <ProjectThumbnail project={project} priority={priority} className="aspect-[16/10] w-full" />
 
-      {/* Tag público / privado */}
+      {/* Public / private tag */}
       <span className="absolute top-3 left-3">
         <Badge variant={isPublic ? "production" : "internal"} className="gap-1 backdrop-blur">
           {isPublic ? <Globe className="h-3 w-3" /> : <Lock className="h-3 w-3" />}
@@ -40,7 +40,7 @@ export const ProjectCard = ({ project, priority = false }: ProjectCardProps) => 
         </Badge>
       </span>
 
-      {/* Indicador de hover */}
+      {/* Hover indicator */}
       <span className="bg-background/70 text-foreground absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full opacity-0 backdrop-blur transition-all duration-300 group-hover:opacity-100">
         <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
       </span>

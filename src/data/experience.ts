@@ -2,8 +2,8 @@ import type { Experience } from "@/types";
 import { techList } from "./technologies";
 
 /**
- * Timeline laboral reconciliado (spec §9). Ordenado del más reciente
- * al más antiguo para render directo en ExperienceTimeline.
+ * Reconciled work timeline (spec §9). Ordered from most recent
+ * to oldest for direct rendering in ExperienceTimeline.
  */
 export const experiences: Experience[] = [
   {

@@ -5,7 +5,7 @@
 
 /* ============================================
    DESIGN TOKENS (spec §3 — zed.dev inspired)
-   Light = default al cargar. Dark via .dark
+   Light = default on load. Dark via .dark
    ============================================ */
 :root {
   /* Light Mode */
@@ -25,7 +25,7 @@
   --warning: #d97706;
   --error: #dc2626;
 
-  /* Fonts (inyectadas por next/font como vars en <html>) */
+  /* Fonts (injected by next/font as vars on <html>) */
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 }
@@ -48,7 +48,7 @@
   --error: #ef4444;
 }
 
-/* Mapear tokens CSS -> utilidades Tailwind v4 */
+/* Map CSS tokens -> Tailwind v4 utilities */
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
@@ -102,7 +102,7 @@
   }
 }
 
-/* Utilidad: texto mono para labels/nav/botones (vibe developer) */
+/* Utility: mono text for labels/nav/buttons (developer vibe) */
 @utility font-ui {
   font-family: var(--font-mono);
   font-weight: 500;

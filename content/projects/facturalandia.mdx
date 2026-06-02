@@ -1,37 +1,48 @@
 ---
 title: "Facturalandia"
 slug: "facturalandia"
-tagline: "SaaS de facturación white-label (Sonolife)."
+tagline: "Plataforma de facturación electrónica CFDI 4.0 para México, en monorepo con API y apps de cliente."
 status: "production"
 visibility: "private"
 category: "saas"
 startDate: "2025-03"
 thumbnail: "/images/projects/facturalandia-thumb.jpg"
-tags: ["saas", "facturacion", "white-label"]
+tags: ["saas", "facturacion", "cfdi", "mongodb", "firebase"]
 ---
 
 ## Contexto
 
-Facturalandia es una solución **SaaS de facturación electrónica** entregada en modelo **white-label** para Sonolife. El producto debía operar bajo la marca del cliente, manteniendo una base técnica única capaz de servir a distintos contextos sin reescrituras.
+Facturalandia es una plataforma de facturación electrónica para México conforme a CFDI 4.0. Está estructurada como un monorepo TypeScript con una API y varias apps de cliente independientes.
 
 ## Arquitectura
 
-Stack moderno con **Next.js**, **React** y **TypeScript** sobre **Node.js**, con persistencia en **PostgreSQL**. El diseño white-label separa la **marca configurable** (tema, logos, dominios) de la **lógica de facturación**, de modo que la misma plataforma se adapta a cada cliente vía configuración.
+```
+facturalandia/
+├─ apps/
+│  ├─ api/             # Express API
+│  ├─ auth/            # React (login + 2FA)
+│  ├─ invoicing/       # React (app principal)
+│  └─ materialization/
+└─ shared/             # cliente API, design system, catálogos SAT, tipos Zod, utils
+```
 
-- Capa de facturación aislada de la capa de presentación.
-- Theming y branding parametrizables.
-- Tipado estricto de extremo a extremo.
+El monorepo usa Yarn 4 (Corepack) y los servicios se levantan de forma concurrente en desarrollo.
 
-{/* TODO: precisar integración de timbrado/CFDI y modelo multi-tenant */}
+## Stack
 
-## Retos Técnicos
+- Runtime: Node.js.
+- Backend: Express + Mongoose (MongoDB).
+- Frontend: React 19 + Vite + TanStack Query + React Hook Form.
+- Facturación: FACTURAPI (CFDI 4.0).
+- Auth: Firebase Auth con sesiones por cookie. Tiempo real: Firestore (notificaciones de cancelación).
+- Caché: Redis. Almacenamiento: Google Cloud Storage (PDFs y evidencias).
 
-- **White-label real:** una sola base que sirve marcas distintas sin forks.
-- **Facturación electrónica:** corrección y trazabilidad en cada comprobante.
-- **Aislamiento por cliente** de datos y configuración.
+## Retos técnicos
+
+- Generación y timbrado de CFDI 4.0 con FACTURAPI, incluyendo catálogos SAT compartidos entre apps.
+- Notificaciones de cancelación en tiempo real vía Firestore.
+- Configuración estricta de variables de entorno: la API falla al arrancar si falta alguna.
 
 ## Resultado
 
-En producción como producto privado bajo la marca de Sonolife.
-
-{/* TODO: métricas de uso y detalles de despliegue */}
+Una plataforma de facturación cohesionada donde la misma capa compartida (cliente HTTP, design system, catálogos SAT y tipos Zod) alimenta autenticación, facturación y materialización.

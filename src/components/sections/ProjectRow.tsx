@@ -16,7 +16,7 @@ interface ProjectRowProps {
   index: number;
 }
 
-/** Fila de la lista de proyectos recientes (Home). Enlaza al case study + atajo a la app en vivo. */
+/** Row in the recent projects list (Home). Links to the case study + shortcut to the live app. */
 export const ProjectRow = ({ project, index }: ProjectRowProps) => {
   const t = useTranslations("home.recent");
   const tStatus = useTranslations("status");
@@ -26,14 +26,14 @@ export const ProjectRow = ({ project, index }: ProjectRowProps) => {
   return (
     <motion.li variants={listItem} className="border-border border-b">
       <div className="group/row relative flex items-center gap-4 py-5 sm:gap-5 sm:px-3">
-        {/* Barra de acento al hover */}
+        {/* Accent bar on hover */}
         <span className="bg-accent absolute top-0 left-0 h-full w-0.5 origin-top scale-y-0 transition-transform duration-200 group-hover/row:scale-y-100" />
 
         <span className="text-foreground-dim group-hover/row:text-accent w-7 shrink-0 font-mono text-sm tabular-nums transition-colors">
           {String(index + 1).padStart(2, "0")}
         </span>
 
-        {/* Área principal -> case study */}
+        {/* Main area -> case study */}
         <Link href={`/work/${project.slug}`} className="flex min-w-0 flex-1 items-center gap-4">
           <ProjectThumbnail
             project={project}
@@ -58,25 +58,26 @@ export const ProjectRow = ({ project, index }: ProjectRowProps) => {
           </div>
         </Link>
 
-        {/* Atajo rápido a la app hosteada */}
+        {/* Quick shortcut to the hosted app — also visible on mobile */}
         {liveUrl ? (
           <a
             href={liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="border-accent/40 bg-accent/10 text-accent hover:border-accent hover:bg-accent hidden shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-1.5 font-mono text-xs font-medium transition-all hover:text-white sm:inline-flex"
+            aria-label={`${t("viewLive")} — ${project.title}`}
+            className="border-accent/40 bg-accent/10 text-accent hover:border-accent hover:bg-accent inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 font-mono text-xs font-medium transition-all hover:text-white sm:px-3.5"
           >
             {t("viewLive")}
             <ExternalLink className="h-3.5 w-3.5" />
           </a>
         ) : (
-          <span className="border-border text-foreground-dim hidden shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-1.5 font-mono text-xs sm:inline-flex">
+          <span className="border-border text-foreground-dim inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 font-mono text-xs sm:px-3.5">
             <Lock className="h-3.5 w-3.5" />
             {t("comingSoon")}
           </span>
         )}
 
-        <ArrowUpRight className="text-foreground-dim group-hover/row:text-accent h-5 w-5 shrink-0 transition-all group-hover/row:translate-x-0.5 group-hover/row:-translate-y-0.5 sm:hidden" />
+        <ArrowUpRight className="text-foreground-dim group-hover/row:text-accent hidden h-5 w-5 shrink-0 transition-all group-hover/row:translate-x-0.5 group-hover/row:-translate-y-0.5 sm:block" />
       </div>
     </motion.li>
   );

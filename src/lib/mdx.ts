@@ -11,9 +11,9 @@ export interface ProjectContent {
 }
 
 /**
- * Lee y parsea el MDX de un proyecto. Devuelve frontmatter + body crudo.
- * El render del body se hace con compileMDX en la página (RSC).
- * Devuelve null si el archivo no existe (proyecto sin case study).
+ * Reads and parses a project's MDX. Returns frontmatter + raw body.
+ * The body is rendered with compileMDX on the page (RSC).
+ * Returns null if the file does not exist (project without a case study).
  */
 export const getProjectContent = async (slug: string): Promise<ProjectContent | null> => {
   const filePath = path.join(CONTENT_DIR, `${slug}.mdx`);
@@ -26,7 +26,7 @@ export const getProjectContent = async (slug: string): Promise<ProjectContent | 
   }
 };
 
-/** Slugs que tienen archivo MDX en content/projects. */
+/** Slugs that have an MDX file in content/projects. */
 export const getContentSlugs = async (): Promise<string[]> => {
   try {
     const files = await fs.readdir(CONTENT_DIR);

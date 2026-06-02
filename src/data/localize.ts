@@ -2,56 +2,68 @@ import type { Project, Experience } from "@/types";
 import { localized } from "@/lib/utils";
 
 /**
- * Traducciones al inglés del copy de proyectos y experiencia.
- * El español vive en projects.ts / experience.ts (fuente base); aquí solo el
- * override en inglés, keyed por slug / id. Mantiene el array de datos limpio.
+ * English translations of the projects and experience copy.
+ * The Spanish lives in projects.ts / experience.ts (base source); here only the
+ * English override, keyed by slug / id. Keeps the data array clean.
  */
 const projectCopyEn: Record<string, { tagline: string; description: string }> = {
   "cafe-combate": {
     tagline:
-      "13-app ERP for a coffee roaster: CFDI invoicing, warehouse, production and public store.",
+      "Operations monorepo for Café Combate: warehouse, CFDI invoicing, sales and production in a single ecosystem.",
     description:
-      "Comprehensive monorepo-style system with 13 independently deployed apps: warehouse, purchasing, production, sales, CFDI 4.0 invoicing, payments and a public store, with offline-first sync.",
+      "A TypeScript monorepo unifying more than ten applications and shared modules to run warehouse, electronic invoicing (CFDI/SAT), sales, purchasing, production and administration. Built with React, Vite and React Router on top of Yarn Workspaces and Turborepo, with local-first sync via Dexie.",
   },
   espau: {
-    tagline: "Management platform with an admin panel and a public site.",
+    tagline:
+      "Institutional site and admin platform for Esperanza para el Autismo I.A.P. (ESPAU) in Chihuahua, Mexico.",
     description:
-      "Platform with an admin dashboard deployed on Vercel and an associated public site. Modern full-stack architecture.",
+      "Institutional website and admin panel for ESPAU, a nonprofit dedicated to the diagnosis and therapy of Autism Spectrum Disorder. Built with Next.js (App Router), PostgreSQL with type-safe queries, and Auth.js authentication.",
   },
   "agates-from-mexico": {
-    tagline: "E-commerce for Mexican agates and minerals, with catalog and checkout.",
+    tagline:
+      "Custom e-commerce platform for Agates From Mexico, with storefront, admin panel and role-based access control.",
     description:
-      "Online store for Mexican agates and minerals, with a product catalog, cart and an optimized buying experience.",
+      "A full online store built with Next.js: catalog, cart, Stripe and PayPal payments, ShipStation shipping, and a role-based admin panel. Backed by PostgreSQL with type-safe queries and integrated with Cloudinary, Redis, Resend and PostHog.",
   },
   "danny-cuevas": {
-    tagline: "Personal brand site and digital presence.",
-    description: "Marketing and personal-brand site with custom design and a conversion focus.",
+    tagline: "Photography portfolio with an admin panel for managing albums and images.",
+    description:
+      "A portfolio site for photographer Daniel Cuevas, with public portfolio and contact pages plus an admin panel to manage albums and images. Built with Next.js, PostgreSQL with generated typing, and image uploads to AWS S3.",
   },
   chachitos: {
-    tagline: "Marketing website with custom design.",
-    description: "Landing and marketing site with a tailor-made design.",
+    tagline: "Official website for Chachitos, featuring a Google Maps store locator.",
+    description:
+      "Website for Chachitos, a Mexican puffed-wheat cereal company with over 70 years of tradition. Built with Next.js and React, it includes institutional pages and a Google Maps store locator with distance calculation.",
   },
   "corporativo-fiscal": {
-    tagline: "Corporate tax platform in microservices: 8 private apps and live presentations.",
+    tagline:
+      "Multi-app fiscal suite for an accounting firm: CFDI invoicing, reception, HR and collaborative tools.",
     description:
-      "Tax platform on an Express microservices architecture with 8 apps: Legal, Clients, Materialization, Reception, HR, Admin, Landiabar and Visión Fiscal. Includes a live presentation system with WebSockets, Excalidraw and YJS.",
+      "A TypeScript monorepo bundling several applications for a tax/accounting firm: web portal, authentication, administration, customer service, reception, HR and a collaborative whiteboard module. The Express + MongoDB backend integrates FACTURAPI for CFDI, Stripe, and WhatsApp notifications.",
   },
   facturalandia: {
-    tagline: "White-label invoicing SaaS (Sonolife).",
-    description: "White-label electronic-invoicing SaaS for Sonolife. Private project.",
+    tagline:
+      "Electronic invoicing platform (CFDI 4.0) for Mexico, built as a monorepo with an API and client apps.",
+    description:
+      "An electronic invoicing platform (CFDI 4.0) built as a TypeScript monorepo with an Express + MongoDB API and React + Vite apps. It integrates FACTURAPI for stamping, Firebase for auth and realtime notifications, Redis for caching, and Google Cloud Storage for PDFs and evidence.",
   },
   increscendo: {
-    tagline: "Event management platform.",
-    description: "Platform for organizing and managing events.",
+    tagline:
+      "Corporate site and admin panel for Increscendo, with blog, events, quotes and customer management.",
+    description:
+      "A website and admin platform built with Next.js for Increscendo: public pages (services, blog, events, FAQs) and an admin panel with customer management, event types and quotes. Backed by PostgreSQL with type-safe queries, admin lists powered by listkit, and AWS S3 storage.",
   },
   "portillo-y-young": {
-    tagline: "Institutional / marketing site.",
-    description: "Institutional site focused on a professional presence.",
+    tagline:
+      "Multilingual corporate site for Portillo y Young, with a portfolio and contact forms.",
+    description:
+      "A corporate website built with Next.js and React, featuring multilingual routing driven by a URL language segment. It includes services pages, a portfolio with per-project detail, and contact forms validated with Zod and protected by reCAPTCHA.",
   },
   listkit: {
-    tagline: "Open-source list utilities package, published on npm.",
+    tagline:
+      "A React library for standardized list views: table/cards, search, filters, pagination and theming from a single config.",
     description:
-      "Open-source utility library for working with lists and collections, published under @pibytelabs on npm.",
+      "@pibytelabs/listkit is a React library that produces a complete list view (toolbar, table, cards, pagination and filters) from a single declarative config. It works with any data source (REST, Next.js server actions, IndexedDB or in-memory arrays) and ships URL sync, a built-in cache, and SSR support.",
   },
   "honeywell-internal": {
     tagline: "20+ internal automation solutions at Honeywell Intelligrated Chihuahua.",

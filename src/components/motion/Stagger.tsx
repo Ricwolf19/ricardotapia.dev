@@ -7,11 +7,11 @@ import { staggerContainer } from "./variants";
 interface StaggerProps {
   children: ReactNode;
   className?: string;
-  /** "view" anima al entrar al viewport; "mount" anima al montar (above the fold). */
+  /** "view" animates on entering the viewport; "mount" animates on mount (above the fold). */
   trigger?: "view" | "mount";
 }
 
-/** Contenedor que escalona la entrada de sus <StaggerItem> hijos. */
+/** Container that staggers the entrance of its <StaggerItem> children. */
 export const Stagger = ({ children, className, trigger = "view" }: StaggerProps) => {
   const activation =
     trigger === "mount"

@@ -1,7 +1,7 @@
 /**
- * Root layout passthrough. El documento <html> real se renderiza en
- * [locale]/layout.tsx; este nivel existe para que rutas fuera de locale
- * (p.ej. not-found global) tengan un root layout válido.
+ * Root layout passthrough. The actual <html> document is rendered in
+ * [locale]/layout.tsx; this level exists so that routes outside a locale
+ * (e.g. the global not-found) have a valid root layout.
  */
 const RootLayout = ({ children }: { children: React.ReactNode }) => children;
 

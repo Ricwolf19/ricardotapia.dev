@@ -1,34 +1,44 @@
 ---
 title: "Agates From Mexico"
 slug: "agates-from-mexico"
-tagline: "E-commerce de ágatas y minerales mexicanos con catálogo y checkout."
+tagline: "Plataforma de e-commerce a medida para Agates From Mexico, con tienda, panel administrativo y control de acceso por roles."
 status: "production"
 visibility: "public"
 category: "ecommerce"
 startDate: "2024-08"
 thumbnail: "/images/projects/agates-from-mexico-thumb.jpg"
-tags: ["ecommerce", "react", "nextjs", "tailwind"]
+tags: ["ecommerce", "nextjs", "stripe", "rbac", "postgresql"]
 ---
 
 ## Contexto
 
-Agates From Mexico necesitaba una tienda en línea para comercializar ágatas y minerales mexicanos a un público internacional, con catálogo visual y proceso de compra claro.
+Agates From Mexico es una tienda en línea construida a medida sobre Next.js. El proyecto cubre toda la experiencia: storefront público, flujo de compra y un panel administrativo con control de acceso por roles.
 
 ## Arquitectura
 
-E-commerce construido con Next.js, con catálogo de productos, carrito y checkout. Diseño orientado a destacar la fotografía de producto.
+El App Router se organiza en route groups —`(landing)`, `(shop)`, `(auth)`— más las secciones `admin` y `api`. El código sigue una separación estricta:
 
-{/* TODO: detallar pasarela de pago, gestión de inventario y envíos */}
+- `services/` — única capa de consultas a base de datos, por dominio (producto, carrito, orden, descuentos, envíos, roles, permisos), con consultas tipadas.
+- `integrations/` — wrappers por proveedor (Stripe, PayPal, Cloudinary, ShipStation, PostHog, Redis, SMTP, reCAPTCHA).
+- `lib/` — autenticación, pool de base de datos, server actions, validadores y carrito.
+- `migrations/` — migraciones SQL con `node-pg-migrate`.
 
-## Retos Técnicos
+La autorización es un modelo RBAC: catálogo de permisos en código, membresía de roles en base de datos y enforcement vía `requirePermission()` en páginas y server actions.
 
-- **Performance de imágenes:** optimización del catálogo visual con `next/image`.
-- **SEO de producto** para captar tráfico orgánico internacional.
+## Stack
 
-{/* TODO: completar retos reales */}
+- Next.js + TypeScript + Tailwind CSS.
+- PostgreSQL con consultas tipadas.
+- Pagos: Stripe y PayPal. Envíos: ShipStation.
+- Media: Cloudinary y Backblaze B2. Caché: Redis.
+- Email transaccional: Resend + React Email. Analítica: PostHog.
+- Listas administrativas con `@pibytelabs/listkit`.
+
+## Retos técnicos
+
+- Orquestar múltiples proveedores externos (pagos duales, envíos, almacenamiento, mensajería) detrás de una capa de integraciones limpia.
+- Implementar un RBAC editable por administradores manteniendo invariantes de seguridad en cada server action.
 
 ## Resultado
 
-Tienda en producción en [agatesfrommexico.com](https://agatesfrommexico.com/).
-
-{/* TODO: métricas de ventas/tráfico y screenshots */}
+Un e-commerce completo y extensible —catálogo, pagos, envíos automatizados y administración tipada— en producción en [agatesfrommexico.com](https://agatesfrommexico.com/).

@@ -9,7 +9,7 @@
     "hero": {
       "title": "Ricardo Tapia",
       "subtitle": "Desarrollador de Software Multiplataforma",
-      "description": "Construyo software a la medida para negocios: ERP, e-commerce, plataformas y apps.",
+      "description": "Diseño y desarrollo software a medida para empresas: ERP, e-commerce, plataformas y aplicaciones web.",
       "ctaProjects": "Ver proyectos",
       "ctaContact": "Hablemos",
       "available": "Disponible para nuevos proyectos"
@@ -17,7 +17,7 @@
     "recent": {
       "label": "// lanzamientos recientes",
       "title": "Proyectos recientes",
-      "subtitle": "Landings y sitios públicos que puedes visitar ahora mismo.",
+      "subtitle": "Sitios y aplicaciones en producción que puedes visitar ahora mismo.",
       "viewAll": "Ver todos los proyectos",
       "viewLive": "Ver app",
       "comingSoon": "Próximamente"
@@ -41,6 +41,8 @@
     "caseStudy": {
       "backToWork": "Volver a proyectos",
       "links": "Enlaces",
+      "publicLinks": "Públicos",
+      "privateLinks": "Privados (acceso con cuenta)",
       "stack": "Stack",
       "status": "Estado",
       "category": "Categoría",
@@ -111,7 +113,7 @@
   },
   "footer": {
     "rights": "Todos los derechos reservados.",
-    "builtWith": "Software a la medida, de la idea a producción."
+    "builtWith": "Desarrollo de software a medida para empresas."
   },
   "theme": {
     "toggle": "Cambiar tema",

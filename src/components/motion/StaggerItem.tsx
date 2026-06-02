@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import type { ReactNode } from "react";
 import { fadeUp } from "./variants";
 
-/** Ítem hijo de <Stagger>; hereda el escalonado del contenedor. */
+/** Child item of <Stagger>; inherits the staggering from the container. */
 export const StaggerItem = ({
   children,
   className,

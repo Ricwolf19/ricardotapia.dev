@@ -1,32 +1,38 @@
 ---
 title: "Danny Cuevas"
 slug: "danny-cuevas"
-tagline: "Sitio de marca personal y presencia digital."
+tagline: "Portafolio fotográfico con panel administrativo para gestión de álbumes e imágenes."
 status: "production"
 visibility: "public"
 category: "marketing"
 startDate: "2024-07"
 thumbnail: "/images/projects/danny-cuevas-thumb.jpg"
-tags: ["marketing", "nextjs", "tailwind"]
+tags: ["portfolio", "nextjs", "postgresql", "aws-s3"]
 ---
 
 ## Contexto
 
-Danny Cuevas necesitaba una presencia digital profesional que transmitiera su marca personal y funcionara como punto central de contacto. El objetivo: un sitio rápido, memorable y orientado a conversión, sin la rigidez de una plantilla genérica.
+Sitio de portafolio para el fotógrafo Daniel Cuevas. Además de la presencia pública, incluye un panel administrativo para que el propio fotógrafo gestione sus álbumes e imágenes.
 
 ## Arquitectura
 
-Sitio construido con **Next.js** y **Tailwind CSS**, con diseño a medida y enfoque mobile-first. Renderizado estático para tiempos de carga mínimos y buen posicionamiento orgánico.
+Aplicación Next.js con App Router organizada en tres zonas:
 
-- Componentes reutilizables y design system propio.
-- Imágenes optimizadas con `next/image`.
-- Metadatos y Open Graph para compartir en redes.
+- `(main)` — páginas públicas: portafolio y contacto.
+- `admin` — gestión de álbumes e imágenes (las migraciones incluyen álbumes, fechas de prioridad y presentaciones).
+- `login` — autenticación con Auth.js.
 
-## Retos Técnicos
+La capa de datos sigue el patrón `actions/` (con un `schema.ts` por dominio) y `services/` para consultas. El tipado de base de datos se genera automáticamente (Kanel + PgTyped).
 
-- **Identidad visual única:** traducir la marca personal a una interfaz coherente y distintiva.
-- **Performance y SEO** como requisitos de primera clase, no como afterthought.
+## Stack
+
+- Next.js + TypeScript + Tailwind CSS.
+- PostgreSQL; tipos y validadores Zod generados con Kanel, consultas con PgTyped.
+- `node-pg-migrate` para migraciones SQL.
+- Auth.js (NextAuth) + next-safe-action; nuqs para estado en la URL.
+- AWS S3 con URLs prefirmadas para la subida de imágenes.
+- Resend para correo.
 
 ## Resultado
 
-En producción en [dannycuevas.com](https://www.dannycuevas.com/), con carga rápida y experiencia pulida en móvil y escritorio.
+Un portafolio autogestionable en [dannycuevas.com](https://www.dannycuevas.com/): el fotógrafo administra sus álbumes desde un panel privado mientras el sitio público presenta su trabajo con tipado de extremo a extremo.

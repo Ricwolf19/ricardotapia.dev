@@ -9,7 +9,7 @@
     "hero": {
       "title": "Ricardo Tapia",
       "subtitle": "Cross-Platform Software Developer",
-      "description": "I build custom software for businesses: ERP, e-commerce, platforms, and apps. From idea to production.",
+      "description": "I design and build custom software for businesses: ERP, e-commerce, platforms, and web applications.",
       "ctaProjects": "View projects",
       "ctaContact": "Let's talk",
       "available": "Available for new projects"
@@ -17,7 +17,7 @@
     "recent": {
       "label": "// recent launches",
       "title": "Recent projects",
-      "subtitle": "Landings and public sites you can visit right now.",
+      "subtitle": "Live sites and apps you can visit right now.",
       "viewAll": "View all projects",
       "viewLive": "View app",
       "comingSoon": "Coming soon"
@@ -39,8 +39,10 @@
     "private": "Private",
     "empty": "No projects in this category.",
     "caseStudy": {
-      "backToWork": "Back to work",
+      "backToWork": "Back to projects",
       "links": "Links",
+      "publicLinks": "Public",
+      "privateLinks": "Private (account required)",
       "stack": "Stack",
       "status": "Status",
       "category": "Category",
@@ -111,7 +113,7 @@
   },
   "footer": {
     "rights": "All rights reserved.",
-    "builtWith": "Custom software, from idea to production."
+    "builtWith": "Custom software development for businesses."
   },
   "theme": {
     "toggle": "Toggle theme",

@@ -1,11 +1,15 @@
-import type { Project } from "@/types";
+import type { Project, ProjectLink, SubApp } from "@/types";
 import { techList } from "./technologies";
 
 /**
- * Datos precargados (spec §8). IDs estáticos preparados para futura
- * migración a Neon como PK. Thumbnails son rutas locales; mientras no
- * existan screenshots reales, ProjectCard renderiza un placeholder
- * programático (spec §15.2).
+ * Preloaded data (spec §8). Static IDs prepared for a future migration to Neon
+ * as PK. Spanish is the source of truth; English copy lives in localize.ts.
+ * Thumbnails are local paths; until real screenshots exist, ProjectCard renders
+ * a programmatic placeholder (spec §15.2).
+ *
+ * Links and monorepo apps carry a `public` flag so the case study can surface
+ * what visitors can actually open and keep private (account-required) targets
+ * clearly separated.
  */
 export const projects: Project[] = [
   {
@@ -13,23 +17,34 @@ export const projects: Project[] = [
     slug: "cafe-combate",
     title: "Café Combate",
     tagline:
-      "ERP de 13 aplicaciones para tostador de café con facturación CFDI, almacén, producción y tienda pública.",
+      "Monorepo de gestión operativa para Café Combate: almacén, facturación CFDI, ventas y producción en un solo ecosistema.",
     description:
-      "Sistema integral tipo monorepo con 13 aplicaciones desplegadas de forma independiente: almacén, compras, producción, ventas, facturación CFDI 4.0, pagos y tienda pública, con sincronización offline-first.",
+      "Monorepo TypeScript que unifica más de diez aplicaciones y módulos compartidos para operar almacén, facturación electrónica (CFDI/SAT), ventas, compras, producción y administración. Construido con React, Vite y React Router sobre Yarn Workspaces y Turborepo, con sincronización local mediante Dexie.",
     status: "production",
     visibility: "hybrid",
     category: "erp",
     featured: true,
     thumbnail: "/images/projects/cafe-combate-thumb.jpg",
     links: [
-      { label: "Landing", url: "https://landing-ecommerce-henna.vercel.app/", type: "landing" },
-      { label: "Almacén", url: "https://almacen.cafecombate.mx", type: "admin" },
-      { label: "Tienda", url: "https://publico.cafecombate.mx", type: "live" },
+      {
+        label: "Landing",
+        url: "https://landing-ecommerce-henna.vercel.app/",
+        type: "landing",
+        public: true,
+      },
     ],
     startDate: "2024-01",
     launchDate: "2024-06",
     tags: ["erp", "cfdi", "react", "vite", "tailwind", "offline-sync"],
-    technologies: techList("react", "vite", "dexie", "heroku", "tailwind"),
+    technologies: techList(
+      "react",
+      "vite",
+      "reactRouter",
+      "typescript",
+      "tailwind",
+      "dexie",
+      "heroku",
+    ),
     isMonorepo: true,
     workspaceTool: "yarn",
     apps: [
@@ -40,6 +55,7 @@ export const projects: Project[] = [
         url: "https://almacen.cafecombate.mx",
         status: "production",
         features: ["Inventario en tiempo real", "Movimientos de stock"],
+        public: false,
       },
       {
         name: "Compras",
@@ -48,6 +64,7 @@ export const projects: Project[] = [
         url: "https://compras.cafecombate.mx",
         status: "production",
         features: ["Órdenes de compra", "Proveedores"],
+        public: false,
       },
       {
         name: "Producción",
@@ -56,6 +73,7 @@ export const projects: Project[] = [
         url: "https://produccion.cafecombate.mx",
         status: "production",
         features: ["Lotes de tostado", "Trazabilidad"],
+        public: false,
       },
       {
         name: "Ventas",
@@ -64,6 +82,7 @@ export const projects: Project[] = [
         url: "https://ventas.cafecombate.mx",
         status: "production",
         features: ["POS", "Reportes de venta"],
+        public: false,
       },
       {
         name: "Facturación",
@@ -72,6 +91,7 @@ export const projects: Project[] = [
         url: "https://facturacion.cafecombate.mx",
         status: "production",
         features: ["CFDI 4.0", "Timbrado SAT"],
+        public: false,
       },
       {
         name: "Pagos",
@@ -80,14 +100,16 @@ export const projects: Project[] = [
         url: "https://pagos.cafecombate.mx",
         status: "production",
         features: ["Conciliación", "Cuentas por cobrar"],
+        public: false,
       },
       {
-        name: "Tienda pública",
-        slug: "publico",
-        description: "E-commerce de cara al cliente.",
-        url: "https://publico.cafecombate.mx",
+        name: "Admin",
+        slug: "admin",
+        description: "Administración central y configuración.",
+        url: "https://admin.cafecombate.mx",
         status: "production",
-        features: ["Catálogo", "Carrito", "Checkout"],
+        features: ["Configuración", "Usuarios", "Roles"],
+        public: false,
       },
       {
         name: "Auth",
@@ -96,6 +118,7 @@ export const projects: Project[] = [
         url: "https://auth.cafecombate.mx",
         status: "production",
         features: ["SSO", "Roles y permisos"],
+        public: false,
       },
     ],
     infrastructure: {
@@ -108,155 +131,198 @@ export const projects: Project[] = [
     id: "11111111-0000-0000-0000-000000000002",
     slug: "espau",
     title: "Espau",
-    tagline: "Plataforma de gestión con panel administrativo y sitio público.",
+    tagline:
+      "Sitio institucional y plataforma administrativa para Esperanza para el Autismo I.A.P. (ESPAU) en Chihuahua.",
     description:
-      "Plataforma con panel administrativo desplegado en Vercel y sitio público asociado. Arquitectura moderna full-stack.",
+      "Sitio web institucional y panel administrativo para ESPAU, organización civil dedicada al diagnóstico y terapia del Trastorno del Espectro Autista. Construido con Next.js (App Router), PostgreSQL con consultas tipadas y autenticación con Auth.js.",
     status: "production",
     visibility: "hybrid",
     category: "platform",
     featured: true,
     thumbnail: "/images/projects/espau-thumb.jpg",
     links: [
-      { label: "Sitio", url: "https://www.espau.com/", type: "live" },
-      { label: "Admin", url: "https://app-espau.vercel.app/", type: "admin" },
+      { label: "Sitio", url: "https://espau.com/", type: "live", public: true },
+      { label: "Admin", url: "https://app-espau.vercel.app/", type: "admin", public: false },
     ],
     startDate: "2024-09",
-    tags: ["platform", "react", "nextjs", "tailwind"],
-    technologies: techList("next", "react", "typescript", "tailwind", "node"),
+    tags: ["platform", "nextjs", "postgresql", "authjs", "tailwind"],
+    technologies: techList("next", "typescript", "tailwind", "postgres", "authjs", "node"),
   },
   {
     id: "11111111-0000-0000-0000-000000000003",
     slug: "agates-from-mexico",
     title: "Agates From Mexico",
-    tagline: "E-commerce de ágatas y minerales mexicanos con catálogo y checkout.",
+    tagline:
+      "Plataforma de e-commerce a medida para Agates From Mexico, con tienda, panel administrativo y control de acceso por roles.",
     description:
-      "Tienda en línea para venta de ágatas y minerales mexicanos, con catálogo de productos, carrito y experiencia de compra optimizada.",
+      "Tienda en línea completa construida con Next.js: catálogo, carrito, pagos con Stripe y PayPal, envíos vía ShipStation y un panel administrativo con control de acceso por roles. Usa PostgreSQL con consultas tipadas e integra Cloudinary, Redis, Resend y PostHog.",
     status: "production",
     visibility: "public",
     category: "ecommerce",
     featured: true,
     thumbnail: "/images/projects/agates-from-mexico-thumb.jpg",
-    links: [{ label: "Tienda", url: "https://agatesfrommexico.com/", type: "live" }],
+    links: [{ label: "Tienda", url: "https://agatesfrommexico.com/", type: "live", public: true }],
     startDate: "2024-08",
-    tags: ["ecommerce", "react", "nextjs", "tailwind"],
-    technologies: techList("next", "react", "typescript", "tailwind"),
+    tags: ["ecommerce", "nextjs", "stripe", "rbac", "postgresql"],
+    technologies: techList(
+      "next",
+      "typescript",
+      "tailwind",
+      "postgres",
+      "stripe",
+      "paypal",
+      "redis",
+      "cloudinary",
+      "resend",
+    ),
   },
   {
     id: "11111111-0000-0000-0000-000000000004",
     slug: "danny-cuevas",
     title: "Danny Cuevas",
-    tagline: "Sitio de marca personal y presencia digital.",
-    description: "Sitio de marketing y marca personal con diseño a medida y enfoque en conversión.",
+    tagline: "Portafolio fotográfico con panel administrativo para gestión de álbumes e imágenes.",
+    description:
+      "Sitio de portafolio para el fotógrafo Daniel Cuevas, con páginas públicas de portafolio y contacto más un panel administrativo para gestionar álbumes e imágenes. Construido con Next.js, PostgreSQL con tipado generado y subida de imágenes a AWS S3.",
     status: "production",
     visibility: "public",
     category: "marketing",
     thumbnail: "/images/projects/danny-cuevas-thumb.jpg",
-    links: [{ label: "Sitio", url: "https://www.dannycuevas.com/", type: "live" }],
+    links: [{ label: "Sitio", url: "https://www.dannycuevas.com/", type: "live", public: true }],
     startDate: "2024-07",
-    tags: ["marketing", "nextjs", "tailwind"],
-    technologies: techList("next", "react", "tailwind"),
+    tags: ["portfolio", "nextjs", "postgresql", "aws-s3"],
+    technologies: techList(
+      "next",
+      "typescript",
+      "tailwind",
+      "postgres",
+      "authjs",
+      "awsS3",
+      "resend",
+    ),
   },
   {
     id: "11111111-0000-0000-0000-000000000005",
     slug: "chachitos",
     title: "Chachitos",
-    tagline: "Sitio web de marketing con diseño a medida.",
-    description: "Landing y sitio de marketing con diseño personalizado.",
+    tagline: "Sitio web institucional de Chachitos, con localizador de tiendas en Google Maps.",
+    description:
+      "Sitio web de Chachitos, empresa mexicana de cereales de trigo inflado con más de 70 años de tradición. Construido con Next.js y React, incluye páginas institucionales y un localizador de tiendas sobre Google Maps con cálculo de distancia.",
     status: "production",
     visibility: "public",
     category: "marketing",
     thumbnail: "/images/projects/chachitos-thumb.jpg",
-    links: [{ label: "Sitio", url: "https://webpage-indol-five.vercel.app/", type: "live" }],
+    links: [
+      { label: "Sitio", url: "https://webpage-indol-five.vercel.app/", type: "live", public: true },
+    ],
     startDate: "2024-05",
-    tags: ["marketing", "react", "tailwind"],
-    technologies: techList("react", "tailwind", "vercel"),
+    tags: ["marketing", "nextjs", "google-maps", "tailwind"],
+    technologies: techList("next", "react", "typescript", "tailwind", "resend"),
   },
   {
     id: "11111111-0000-0000-0000-000000000006",
     slug: "corporativo-fiscal",
     title: "Corporativo Fiscal",
     tagline:
-      "Plataforma fiscal corporativa en microservicios con 8 aplicaciones privadas y presentaciones live.",
+      "Suite fiscal multi-app para un corporativo contable: facturación CFDI, recepción, RH y herramientas colaborativas.",
     description:
-      "Plataforma fiscal en arquitectura de microservicios Express con 8 aplicaciones: Legal, Clientes, Materialización, Recepción, RH, Admin, Landiabar y Visión Fiscal. Incluye sistema de presentaciones live con WebSockets, Excalidraw y YJS.",
+      "Monorepo TypeScript que agrupa varias aplicaciones para un despacho fiscal: portal web, autenticación, administración, atención a clientes, recepción, recursos humanos y un módulo de pizarra colaborativa. El backend en Express + MongoDB integra FACTURAPI para CFDI, Stripe y notificaciones por WhatsApp.",
     status: "production",
     visibility: "private",
     category: "saas",
     priority: true,
     loginRequired: true,
     thumbnail: "/images/projects/corporativo-fiscal-thumb.jpg",
-    links: [{ label: "Legal", url: "https://legal.corpfiscal.com.mx/", type: "admin" }],
+    links: [
+      { label: "Legal", url: "https://legal.corpfiscal.com.mx/", type: "admin", public: false },
+    ],
     startDate: "2025-05",
-    tags: ["saas", "microservicios", "express", "websockets"],
+    tags: ["saas", "microservicios", "express", "websockets", "cfdi"],
     technologies: techList(
       "node",
       "express",
       "react",
       "vite",
       "mongodb",
-      "websockets",
-      "yjs",
+      "socketio",
+      "facturapi",
+      "stripe",
       "excalidraw",
+      "yjs",
     ),
     isMonorepo: true,
-    workspaceTool: "npm",
+    workspaceTool: "yarn",
     apps: [
       {
         name: "Legal",
         slug: "legal",
-        description: "Gestión de servicios legales.",
+        description: "Gestión de servicios legales y expedientes.",
         url: "https://legal.corpfiscal.com.mx/",
         status: "production",
         features: ["Expedientes", "Documentos"],
+        public: false,
       },
       {
         name: "Clientes",
-        slug: "clientes",
-        description: "CRM de clientes corporativos.",
+        slug: "customers",
+        description: "Atención y seguimiento de clientes.",
+        url: "https://clientes.corpfiscal.com.mx/",
         status: "production",
         features: ["CRM", "Seguimiento"],
-      },
-      {
-        name: "Materialización",
-        slug: "materializacion",
-        description: "Materialización de operaciones.",
-        status: "production",
-        features: ["Operaciones"],
+        public: false,
       },
       {
         name: "Recepción",
-        slug: "recepcion",
+        slug: "reception",
         description: "Recepción y control de documentos.",
+        url: "https://recepcion.corpfiscal.com.mx/",
         status: "production",
         features: ["Documentos entrantes"],
+        public: false,
       },
       {
         name: "RH",
         slug: "rh",
         description: "Recursos humanos.",
+        url: "https://rh.corpfiscal.com.mx/",
         status: "production",
         features: ["Nómina", "Personal"],
+        public: false,
       },
       {
-        name: "Admin",
-        slug: "admin",
-        description: "Administración central.",
+        name: "Materialización",
+        slug: "materialization",
+        description: "Materialización de operaciones.",
+        url: "https://materializacion.corpfiscal.com.mx/",
         status: "production",
-        features: ["Configuración", "Usuarios"],
+        features: ["Operaciones"],
+        public: false,
+      },
+      {
+        name: "Visión Fiscal",
+        slug: "visionfiscal",
+        description: "Pizarra colaborativa en tiempo real con Excalidraw y Yjs.",
+        url: "https://visionfiscal.corpfiscal.com.mx/",
+        status: "production",
+        features: ["Tiempo real (Socket.io)", "Excalidraw", "Yjs CRDT"],
+        public: false,
       },
       {
         name: "Landiabar",
         slug: "landiabar",
-        description: "Módulo Landiabar.",
+        description: "Módulo Landiabar del corporativo.",
+        url: "https://landiabar.corpfiscal.com.mx/",
         status: "production",
         features: ["Módulo especializado"],
+        public: false,
       },
       {
-        name: "Visión Fiscal",
-        slug: "vision-fiscal",
-        description: "Presentaciones live fiscales.",
+        name: "Admin",
+        slug: "admin",
+        description: "Administración central y configuración.",
+        url: "https://admin.corpfiscal.com.mx/",
         status: "production",
-        features: ["Live con WebSockets", "Excalidraw", "YJS"],
+        features: ["Configuración", "Usuarios"],
+        public: false,
       },
     ],
     infrastructure: {
@@ -269,9 +335,10 @@ export const projects: Project[] = [
     id: "11111111-0000-0000-0000-000000000007",
     slug: "facturalandia",
     title: "Facturalandia",
-    tagline: "SaaS de facturación white-label (Sonolife).",
+    tagline:
+      "Plataforma de facturación electrónica CFDI 4.0 para México, en monorepo con API y apps de cliente.",
     description:
-      "Solución SaaS de facturación electrónica en modelo white-label para Sonolife. Proyecto privado.",
+      "Plataforma de facturación electrónica (CFDI 4.0) construida como monorepo TypeScript con una API en Express + MongoDB y apps en React + Vite. Integra FACTURAPI para timbrado, Firebase para autenticación y notificaciones en tiempo real, Redis para caché y Google Cloud Storage para PDFs y evidencias.",
     status: "production",
     visibility: "private",
     category: "saas",
@@ -280,58 +347,87 @@ export const projects: Project[] = [
     thumbnail: "/images/projects/facturalandia-thumb.jpg",
     links: [],
     startDate: "2025-03",
-    tags: ["saas", "facturacion", "white-label"],
-    technologies: techList("next", "react", "typescript", "node", "postgres"),
+    tags: ["saas", "facturacion", "cfdi", "mongodb", "firebase"],
+    technologies: techList(
+      "react",
+      "vite",
+      "node",
+      "express",
+      "mongodb",
+      "firebase",
+      "redis",
+      "facturapi",
+      "gcs",
+      "typescript",
+    ),
   },
   {
     id: "11111111-0000-0000-0000-000000000008",
     slug: "increscendo",
     title: "Increscendo Eventos",
-    tagline: "Plataforma para gestión de eventos.",
-    description: "Plataforma para organización y gestión de eventos.",
+    tagline:
+      "Sitio corporativo y panel administrativo para Increscendo, con blog, eventos, cotizaciones y gestión de clientes.",
+    description:
+      "Sitio web y plataforma administrativa construidos con Next.js para Increscendo: páginas públicas (servicios, blog, eventos, FAQs) y un panel con gestión de clientes, tipos de evento y cotizaciones. Usa PostgreSQL con consultas tipadas, listas administrativas con listkit y almacenamiento en AWS S3.",
     status: "production",
-    visibility: "private",
+    visibility: "hybrid",
     category: "platform",
     thumbnail: "/images/projects/increscendo-thumb.jpg",
-    links: [{ label: "Sitio", url: "https://increscendoeventos.com/", type: "live" }],
+    links: [{ label: "Sitio", url: "https://increscendoeventos.com/", type: "live", public: true }],
     startDate: "2025-01",
-    tags: ["platform", "eventos", "nextjs"],
-    technologies: techList("next", "react", "typescript", "tailwind"),
+    tags: ["platform", "eventos", "nextjs", "postgresql"],
+    technologies: techList(
+      "next",
+      "typescript",
+      "tailwind",
+      "postgres",
+      "authjs",
+      "awsS3",
+      "resend",
+    ),
   },
   {
     id: "11111111-0000-0000-0000-000000000009",
     slug: "portillo-y-young",
     title: "Portillo y Young",
-    tagline: "Sitio institucional / de marketing.",
-    description: "Sitio institucional con enfoque en presencia profesional.",
+    tagline:
+      "Sitio corporativo multilingüe para Portillo y Young, con portafolio y formularios de contacto.",
+    description:
+      "Sitio web corporativo construido con Next.js y React, con enrutamiento multilingüe e idioma por segmento de URL. Incluye páginas de servicios, portafolio con detalle por proyecto y formularios de contacto validados con Zod y protegidos por reCAPTCHA.",
     status: "production",
-    visibility: "private",
+    visibility: "public",
     category: "marketing",
     thumbnail: "/images/projects/portillo-y-young-thumb.jpg",
-    links: [{ label: "Sitio", url: "https://portilloyyoung.com/en", type: "live" }],
+    links: [{ label: "Sitio", url: "https://portilloyyoung.com/en", type: "live", public: true }],
     startDate: "2024-11",
-    tags: ["marketing", "institucional"],
-    technologies: techList("next", "react", "tailwind"),
+    tags: ["marketing", "multilingual", "nextjs"],
+    technologies: techList("next", "react", "typescript", "tailwind", "resend"),
   },
   {
     id: "11111111-0000-0000-0000-000000000010",
     slug: "listkit",
     title: "listkit",
-    tagline: "Paquete open source de utilidades para listas, publicado en npm.",
+    tagline:
+      "Librería React para vistas de lista estandarizadas: tabla/tarjetas, búsqueda, filtros, paginación y theming desde una sola config.",
     description:
-      "Librería open source de utilidades para manipulación de listas y colecciones, publicada bajo @pibytelabs en npm.",
+      "@pibytelabs/listkit es una librería React que genera una vista de lista completa (toolbar, tabla, tarjetas, paginación y filtros) a partir de una única configuración declarativa. Funciona con cualquier fuente de datos (REST, server actions de Next.js, IndexedDB o arrays en memoria) e incluye sincronización con la URL, caché integrada y SSR.",
     status: "production",
     visibility: "public",
     category: "oss",
     thumbnail: "/images/projects/listkit-thumb.jpg",
     links: [
-      { label: "npm", url: "https://www.npmjs.com/package/@pibytelabs/listkit", type: "npm" },
+      {
+        label: "Repositorio",
+        url: "https://github.com/Ricwolf19/listkit",
+        type: "repo",
+        public: true,
+      },
     ],
     startDate: "2025-02",
-    tags: ["oss", "typescript", "npm"],
-    technologies: techList("typescript", "node"),
+    tags: ["oss", "react", "library", "typescript"],
+    technologies: techList("react", "typescript", "tailwind", "vite"),
   },
-  // Interno / histórico (spec §8). Se muestra en /about, no en /work ni /now.
+  // Internal / historical (spec §8). Shown in /about, not in /work or /now.
   {
     id: "11111111-0000-0000-0000-000000000012",
     slug: "honeywell-internal",
@@ -352,35 +448,53 @@ export const projects: Project[] = [
 ];
 
 // ============================================
-// Derived selectors (reutilizar en páginas)
+// Derived selectors (reuse across pages)
 // ============================================
 
 export const getProjectBySlug = (slug: string): Project | undefined =>
   projects.find((p) => p.slug === slug);
 
+/** Whether a link can be opened by anyone (admin links are private by default). */
+export const isPublicLink = (link: ProjectLink): boolean => link.public ?? link.type !== "admin";
+
+/** Whether a monorepo app is publicly reachable (private by default). */
+export const isPublicApp = (app: SubApp): boolean => app.public ?? false;
+
+/** Links split into public-first / private groups for the case study. */
+export const splitLinks = (links: ProjectLink[]) => ({
+  publicLinks: links.filter(isPublicLink),
+  privateLinks: links.filter((l) => !isPublicLink(l)),
+});
+
+/** Monorepo apps split into public-first / private groups for the case study. */
+export const splitApps = (apps: SubApp[]) => ({
+  publicApps: apps.filter(isPublicApp),
+  privateApps: apps.filter((a) => !isPublicApp(a)),
+});
+
 /**
- * URL pública visitable de un proyecto (landing o sitio live). Las apps de
- * cliente con login NO exponen URL pública -> devuelve undefined.
+ * Public, visitable URL of a project (landing or live site). Client apps that
+ * require login do not expose a public URL -> returns undefined.
  */
 export const getLiveUrl = (p: Project): string | undefined => {
   if (p.loginRequired) return undefined;
   return (
-    p.links.find((l) => l.type === "landing")?.url ?? p.links.find((l) => l.type === "live")?.url
+    p.links.find((l) => l.type === "landing" && isPublicLink(l))?.url ??
+    p.links.find((l) => l.type === "live" && isPublicLink(l))?.url
   );
 };
 
 /**
- * Proyectos visibles en /work (excluye internos/históricos).
- * Prioritarios primero (apps de cliente destacadas), resto después.
+ * Projects visible in /work (excludes internal/historical).
+ * Priority projects first (highlighted client apps), the rest after.
  */
 export const workProjects = [...projects.filter((p) => p.status !== "internal")].sort(
   (a, b) => Number(Boolean(b.priority)) - Number(Boolean(a.priority)),
 );
 
 /**
- * Proyectos RECIENTES con landing pública visitable (Home).
- * Orden explícito definido por Ricardo. Se priorizan las landings que
- * cualquier visitante puede abrir sin cuenta.
+ * Recent projects with a public landing (Home). Explicit order defined by
+ * Ricardo. Landings that any visitor can open without an account come first.
  */
 const RECENT_ORDER = [
   "cafe-combate",
@@ -396,7 +510,7 @@ export const recentProjects: Project[] = RECENT_ORDER.map(getProjectBySlug).filt
   (p): p is Project => Boolean(p),
 );
 
-/** Proyectos en curso (in-progress) para /now. */
+/** In-progress projects for /now. */
 const NOW_ORDER = [
   "cafe-combate",
   "agates-from-mexico",
@@ -409,5 +523,5 @@ export const nowProjects: Project[] = NOW_ORDER.map(getProjectBySlug).filter((p)
   Boolean(p),
 );
 
-/** Slugs con case study navegable (excluye internos sin página pública). */
+/** Slugs with a navigable case study (excludes internal projects without a public page). */
 export const projectSlugs = workProjects.map((p) => p.slug);

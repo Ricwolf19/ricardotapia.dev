@@ -34,6 +34,12 @@ export interface ProjectLink {
   label: string;
   url: string;
   type: ProjectLinkType;
+  /**
+   * Whether anyone can open the link without an account. Defaults are derived
+   * from `type` (admin = private, everything else = public); set explicitly to
+   * override (e.g. a public storefront vs. a private monorepo app).
+   */
+  public?: boolean;
 }
 
 export interface SubApp {
@@ -44,6 +50,8 @@ export interface SubApp {
   status: "production" | "development";
   features: string[];
   thumbnail?: string;
+  /** Monorepo apps are private (account required) unless marked public. */
+  public?: boolean;
 }
 
 export type WorkspaceTool = "yarn" | "pnpm" | "npm" | "turbo" | "nx";
@@ -61,23 +69,23 @@ export interface ProjectInfrastructure {
 }
 
 export interface Project {
-  id: string; // UUID string. Futuro: Neon PK.
+  id: string; // UUID string. Future: Neon PK.
   slug: string; // URL-friendly: "cafe-combate"
   title: string;
-  tagline: string; // One-liner SEO/meta (es). Traducción en src/data/localize.ts
+  tagline: string; // One-liner SEO/meta (es). Translation in src/data/localize.ts
   description: string; // Short paragraph for cards (es)
   status: ProjectStatus;
   visibility: ProjectVisibility;
   category: ProjectCategory;
 
   // Media
-  thumbnail: string; // R2 URL o /images/local
+  thumbnail: string; // R2 URL or /images/local
   ogImage?: string; // /opengraph-image.tsx dynamic
   gallery?: string[]; // R2 URLs
 
   // Links
   links: ProjectLink[];
-  repoUrl?: string; // GitHub (si público)
+  repoUrl?: string; // GitHub (if public)
 
   // Metadata
   startDate: string; // ISO 8601: "2024-03"
@@ -89,10 +97,10 @@ export interface Project {
   content?: string; // MDX file path or raw MDX
 
   // Flags
-  featured?: boolean; // Mostrar en Home
-  priority?: boolean; // Destacar en /work (proyectos prioritarios con acceso privado)
-  thumbnailReady?: boolean; // true cuando hay imagen real; si no, placeholder programático
-  loginRequired?: boolean; // App de cliente: requiere cuenta para verse
+  featured?: boolean; // Show on Home
+  priority?: boolean; // Highlight on /work (priority projects with private access)
+  thumbnailReady?: boolean; // true when a real image exists; otherwise a programmatic placeholder
+  loginRequired?: boolean; // Client app: requires an account to view
 
   // Stats (optional, for future)
   stats?: ProjectStats;
@@ -122,7 +130,7 @@ export interface Experience {
   startDate: string; // ISO 8601
   endDate?: string;
   isCurrent: boolean;
-  description: string; // MDX supported (es). Traducción en src/data/localize.ts
+  description: string; // MDX supported (es). Translation in src/data/localize.ts
   technologies: Technology[];
   projects?: Project["slug"][]; // Slug references
 }
@@ -137,13 +145,11 @@ export interface SiteConfig {
   url: string;
   ogImage: string;
   email: string; // ENV: CONTACT_EMAIL
-  whatsappNumber?: string; // ENV: WHATSAPP_NUMBER (formato internacional sin +)
+  whatsappNumber?: string; // ENV: WHATSAPP_NUMBER (international format without +)
   calendlyUrl?: string;
   locale: "es" | "en";
   socials: {
     github: string; // ENV: GITHUB_USERNAME
-    linkedin?: string;
-    x?: string;
   };
 }
 
@@ -165,7 +171,7 @@ export interface ContactSubmission {
   recaptchaScore?: number;
 }
 
-// Resultado tipado del Server Action de contacto (Fase 2)
+// Typed result of the contact Server Action (Phase 2)
 export type ContactErrorCode = "validation" | "rateLimit" | "recaptcha" | "email" | "unavailable";
 
 export type ContactResult = { success: true } | { success: false; error: ContactErrorCode };

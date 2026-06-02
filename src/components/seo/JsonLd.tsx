@@ -8,9 +8,11 @@ export const JsonLd = () => {
       "@type": "Person",
       name: siteConfig.name,
       url: siteConfig.url,
-      jobTitle: "Software Developer",
+      jobTitle: "Full-stack Developer",
       email: `mailto:${siteConfig.email}`,
-      sameAs: [siteConfig.socials.github],
+      address: { "@type": "PostalAddress", addressCountry: "MX" },
+      knowsAbout: ["Web Development", "Mobile Apps", "UI/UX Design", "Cloud Solutions"],
+      sameAs: [siteConfig.socials.github, siteConfig.socials.x].filter(Boolean),
     },
     {
       "@context": "https://schema.org",

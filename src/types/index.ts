@@ -148,8 +148,10 @@ export interface SiteConfig {
   whatsappNumber?: string; // ENV: WHATSAPP_NUMBER (international format without +)
   calendlyUrl?: string;
   locale: "es" | "en";
+  keywords: string[]; // SEO keywords (specialties, stack, name)
   socials: {
     github: string; // ENV: GITHUB_USERNAME
+    x?: string; // X/Twitter handle for twitter:creator, e.g. "@ricardotapia" (ENV: TWITTER_HANDLE)
   };
 }
 

@@ -7,13 +7,29 @@ export const siteConfig: SiteConfig = {
   title: "Ricardo Tapia — Desarrollador de Software Multiplataforma",
   description:
     "Diseño y construyo sistemas de software completos — ERP, SaaS, e-commerce y plataformas institucionales — de la arquitectura al deploy.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://ricardotapia.dev",
+  // Canonical domain. Override per-environment with NEXT_PUBLIC_SITE_URL.
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ricardotapia.dev",
   ogImage: "/opengraph-image",
-  email: process.env.CONTACT_EMAIL ?? "rhtc19@gmail.com",
+  email: process.env.CONTACT_EMAIL ?? "contacto@ricardotapia.dev",
   whatsappNumber: process.env.WHATSAPP_NUMBER ?? "526143965716",
   locale: "es",
+  keywords: [
+    "Ricardo Tapia",
+    "Full-stack Developer",
+    "Desarrollador full-stack",
+    "Web Development",
+    "Mobile Apps",
+    "UI/UX Design",
+    "Cloud Solutions",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "México",
+  ],
   socials: {
     github: `https://github.com/${githubUsername}`,
+    // Optional X/Twitter handle for twitter:creator (e.g. "@ricardotapia").
+    x: process.env.TWITTER_HANDLE,
   },
 };
 

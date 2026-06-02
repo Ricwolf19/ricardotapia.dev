@@ -33,11 +33,23 @@ export const generateMetadata = async ({
 }): Promise<Metadata> => {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "home.hero" });
+  const description = t("description");
+
+  // OG locales (full BCP-47 region codes for richer previews).
+  const ogLocale = locale === "es" ? "es_MX" : "en_US";
+  const ogAlternate = locale === "es" ? "en_US" : "es_MX";
 
   return {
     metadataBase: new URL(siteConfig.url),
     title: { default: siteConfig.title, template: `%s | ${siteConfig.name}` },
-    description: t("description"),
+    description,
+    keywords: siteConfig.keywords,
+    authors: [{ name: siteConfig.name, url: siteConfig.url }],
+    creator: siteConfig.name,
+    publisher: siteConfig.name,
+    category: "technology",
+
+    // Favicon, icons and PWA manifest (files live in public/).
     manifest: "/site.webmanifest",
     icons: {
       icon: [
@@ -47,22 +59,53 @@ export const generateMetadata = async ({
       ],
       apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
     },
+
+    // Indexing policy.
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
+
+    // Search Console ownership (set GOOGLE_SITE_VERIFICATION to enable).
+    verification: process.env.GOOGLE_SITE_VERIFICATION
+      ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+      : undefined,
+
+    // Canonical + hreflang alternates for i18n.
     alternates: {
       canonical: `${siteConfig.url}/${locale}`,
       languages: {
-        es: `${siteConfig.url}/es`,
+        "es-MX": `${siteConfig.url}/es`,
         en: `${siteConfig.url}/en`,
+        "x-default": `${siteConfig.url}/es`,
       },
     },
+
+    // Open Graph (og:image comes from app/opengraph-image.tsx automatically).
     openGraph: {
       title: siteConfig.title,
-      description: t("description"),
-      url: siteConfig.url,
+      description,
+      url: `${siteConfig.url}/${locale}`,
       siteName: siteConfig.name,
-      locale,
+      locale: ogLocale,
+      alternateLocale: ogAlternate,
       type: "website",
     },
-    twitter: { card: "summary_large_image", title: siteConfig.title },
+
+    // Twitter Cards (twitter:image comes from app/twitter-image.tsx automatically).
+    twitter: {
+      card: "summary_large_image",
+      title: siteConfig.title,
+      description,
+      creator: siteConfig.socials.x,
+    },
   };
 };
 

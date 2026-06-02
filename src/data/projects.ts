@@ -32,12 +32,6 @@ export const projects: Project[] = [
         type: "landing",
         public: true,
       },
-      {
-        label: "Tienda pública",
-        url: "https://publico.cafecombate.mx",
-        type: "live",
-        public: true,
-      },
     ],
     startDate: "2024-01",
     launchDate: "2024-06",

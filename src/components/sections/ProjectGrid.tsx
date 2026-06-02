@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import type { Project } from "@/types";
 import { workFilters, type WorkFilter } from "@/data/constants";
+import { EASE } from "@/components/motion/variants";
 import { ProjectCard } from "./ProjectCard";
 import { cn } from "@/lib/utils";
 
@@ -12,7 +13,7 @@ interface ProjectGridProps {
   projects: Project[];
 }
 
-/** Grid de proyectos con filtros pill client-side y animación de filtrado (spec §10.4). */
+/** Project grid with client-side pill filters and filtering animation (spec §10.4). */
 export const ProjectGrid = ({ projects }: ProjectGridProps) => {
   const t = useTranslations("work");
   const [filter, setFilter] = useState<WorkFilter>("all");
@@ -49,20 +50,24 @@ export const ProjectGrid = ({ projects }: ProjectGridProps) => {
         <motion.div
           layout
           className={cn(
-            "grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3",
-            isPending && "opacity-70",
+            "grid grid-cols-1 gap-6 transition-opacity duration-200 sm:grid-cols-2 lg:grid-cols-3",
+            isPending && "opacity-60",
           )}
         >
-          <AnimatePresence mode="popLayout">
+          <AnimatePresence mode="popLayout" initial={false}>
             {filtered.map((project) => (
               <motion.div
                 key={project.id}
                 layout
                 className="h-full"
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 8 }}
+                transition={{
+                  layout: { type: "spring", stiffness: 380, damping: 34 },
+                  opacity: { duration: 0.35, ease: EASE },
+                  y: { duration: 0.4, ease: EASE },
+                }}
               >
                 <ProjectCard project={project} />
               </motion.div>

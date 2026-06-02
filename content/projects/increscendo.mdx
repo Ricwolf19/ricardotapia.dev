@@ -1,36 +1,39 @@
 ---
 title: "Increscendo Eventos"
 slug: "increscendo"
-tagline: "Plataforma para gestión de eventos."
+tagline: "Sitio corporativo y panel administrativo para Increscendo, con blog, eventos, cotizaciones y gestión de clientes."
 status: "production"
-visibility: "private"
+visibility: "hybrid"
 category: "platform"
 startDate: "2025-01"
 thumbnail: "/images/projects/increscendo-thumb.jpg"
-tags: ["platform", "eventos", "nextjs"]
+tags: ["platform", "eventos", "nextjs", "postgresql"]
 ---
 
 ## Contexto
 
-Increscendo Eventos coordina la logística de eventos —desde la captación hasta la ejecución— y necesitaba centralizar esa operación en una plataforma única. El reto era convertir un flujo de trabajo disperso en herramientas manuales en un sistema ordenado, con información en un solo lugar.
+Increscendo necesitaba un sitio corporativo con presencia pública (servicios, blog, eventos, FAQs) y un panel administrativo para operar clientes, tipos de evento y cotizaciones.
 
 ## Arquitectura
 
-Plataforma construida con **Next.js**, **React** y **TypeScript**, con UI en **Tailwind CSS**. Arquitectura orientada a módulos por etapa del evento, con tipado estricto en toda la capa de datos.
+Aplicación Next.js con App Router. Las páginas públicas (`quienes-somos`, `servicios`, `blog`, `eventos`, `faqs`, `contacto`) se renderizan en servidor para SEO, mientras que las listas del panel administrativo (clientes, tipos de evento, contenido, usuarios) usan `@pibytelabs/listkit`.
 
-- Componentes compartidos y design system consistente.
-- Flujos guiados para reducir errores operativos.
-- Estados de servidor para mantener la información sincronizada.
+Cada vista de lista vive en su propia carpeta con una configuración declarativa, un componente cliente conectado al adaptador de server actions y un wrapper de servidor. Los datos provienen de server actions que construyen SQL parametrizado.
 
-{/* TODO: detallar módulos (agenda, asistentes, proveedores) y modelo de datos */}
+## Stack
 
-## Retos Técnicos
+- Next.js + TypeScript + Tailwind CSS.
+- PostgreSQL con consultas tipadas; migraciones con `node-pg-migrate`.
+- Auth.js (NextAuth) + next-safe-action para server actions tipadas.
+- `@pibytelabs/listkit` y `@pibytelabs/next-kit` para listas administrativas.
+- AWS S3 (subidas con URLs prefirmadas), Google Maps con marker clustering.
+- TipTap (editor), pdf-lib/pdfjs (documentos), Resend + React Email.
 
-- **Modelar la operación real** de un evento sin sobre-complejizar la interfaz.
-- **Consistencia de datos** entre las distintas etapas del proceso.
+## Retos técnicos
+
+- Mantener las páginas públicas server-rendered para SEO mientras las listas administrativas cargan en cliente vía listkit.
+- Sincronizar búsqueda, filtros y paginación con la URL a través del adaptador de server actions.
 
 ## Resultado
 
-Plataforma en operación para la gestión de eventos del cliente.
-
-{/* TODO: agregar URL pública (si aplica), métricas y screenshots */}
+Una plataforma que combina un sitio público optimizado para buscadores ([increscendoeventos.com](https://increscendoeventos.com/)) con un panel administrativo consistente basado en configuraciones declarativas de listas.

@@ -1,36 +1,43 @@
 ---
 title: "Corporativo Fiscal"
 slug: "corporativo-fiscal"
-tagline: "Plataforma fiscal corporativa en microservicios con 8 aplicaciones privadas y presentaciones live."
+tagline: "Suite fiscal multi-app para un corporativo contable: facturación CFDI, recepción, RH y herramientas colaborativas."
 status: "production"
 visibility: "private"
 category: "saas"
 startDate: "2025-05"
 thumbnail: "/images/projects/corporativo-fiscal-thumb.jpg"
-tags: ["saas", "microservicios", "express", "websockets"]
+tags: ["saas", "microservicios", "express", "websockets", "cfdi"]
 ---
 
 ## Contexto
 
-Corporativo Fiscal opera una suite de servicios fiscales y legales que requería digitalizarse en una plataforma única, con módulos especializados por área y un sistema de presentaciones colaborativas en tiempo real.
+CorpFiscal es la plataforma interna de un despacho contable y fiscal. Reúne en un monorepo las distintas áreas operativas del corporativo —portal de clientes, recepción, recursos humanos, administración— junto con su API central.
 
 ## Arquitectura
 
-Arquitectura de microservicios sobre Express con 8 aplicaciones privadas: Legal, Clientes, Materialización, Recepción, RH, Admin, Landiabar y Visión Fiscal. El frontend usa React + Vite y la persistencia MongoDB.
+Monorepo con Yarn 4 Workspaces dividido en `apps/*` y `shared/*`:
 
-El módulo de presentaciones live combina **WebSockets** para tiempo real, **Excalidraw** para pizarra colaborativa y **YJS** (CRDT) para resolución de conflictos sin servidor de verdad central.
+- Frontends (`web`, `auth`, `admin`, `customers`, `reception`, `rh`, `materialization`, `visionfiscal`, `landiabar`) en React 18 + Vite + React Router 7.
+- `api` — backend Express 5 con MongoDB/Mongoose, Socket.io y un amplio conjunto de integraciones.
+- `shared/*` — componentes, hooks, catálogos SAT, librerías y tipos compartidos.
 
-{/* TODO: diagrama de microservicios y comunicación entre servicios */}
+`visionfiscal` destaca como módulo de pizarra colaborativa en tiempo real, construido con Excalidraw, Yjs y Socket.io.
 
-## Retos Técnicos
+## Stack
 
-- **Colaboración en tiempo real:** sincronización CRDT con YJS sobre WebSockets para edición concurrente.
-- **Aislamiento de módulos:** 8 apps con dominios de negocio separados pero autenticación y datos compartidos.
+- Backend: Express 5, Mongoose/MongoDB, Socket.io.
+- Facturación: FACTURAPI (CFDI/SAT). Pagos: Stripe.
+- Generación de documentos: Puppeteer y pdf-lib; imágenes con Sharp.
+- Mensajería: WhatsApp. Seguridad: JWT, 2FA (Speakeasy), Helmet y rate limiting.
+- Almacenamiento: Google Cloud Storage. Tareas programadas: node-cron.
 
-{/* TODO: completar con detalles reales de infraestructura */}
+## Retos técnicos
+
+- Coordinar múltiples frontends y un backend compartido manteniendo tipos y catálogos SAT consistentes.
+- Colaboración en tiempo real con CRDTs (Yjs) sincronizada por sockets en el módulo de pizarra.
+- Integración de facturación CFDI, pagos y notificaciones automatizadas por WhatsApp.
 
 ## Resultado
 
-Plataforma en producción operando los 8 módulos para el corporativo.
-
-{/* TODO: métricas internas y screenshots */}
+Una suite fiscal modular donde cada área del despacho tiene su propia app, todas alimentadas por una API central con facturación electrónica y automatizaciones.

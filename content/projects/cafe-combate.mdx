@@ -1,7 +1,7 @@
 ---
 title: "Café Combate"
 slug: "cafe-combate"
-tagline: "ERP de 13 aplicaciones para tostador de café con facturación CFDI, almacén, producción y tienda pública."
+tagline: "Monorepo de gestión operativa para Café Combate: almacén, facturación CFDI, ventas y producción en un solo ecosistema."
 status: "production"
 visibility: "hybrid"
 category: "erp"
@@ -13,22 +13,32 @@ tags: ["erp", "cfdi", "react", "vite", "tailwind", "offline-sync"]
 
 ## Contexto
 
-Café Combate es un grupo tostador con operaciones en México. Requerían un sistema integral que unificara almacén, compras, producción, ventas, facturación electrónica y tienda pública en una sola plataforma operada por más de 40 usuarios concurrentes.
+Café Combate opera múltiples dominios de negocio —almacén, facturación, ventas, compras, producción y administración— que históricamente vivían en sistemas separados. El monorepo centraliza todas esas aplicaciones, sus contratos de backend y sus librerías compartidas en un único ecosistema TypeScript.
 
 ## Arquitectura
 
-Monorepo con 13 aplicaciones desplegadas de forma independiente, cada una con su propio subdominio (`almacen`, `compras`, `produccion`, `ventas`, `facturacion`, `pagos`, `publico`, `auth`, entre otras). La autenticación está centralizada y los módulos comparten una capa común de tipos y utilidades.
+El repositorio usa Yarn 4 Workspaces orquestado con Turborepo y se divide en tres grupos:
 
-{/* TODO: detallar diagrama de servicios y estrategia de despliegue por subdominio */}
+- `apps/*` — aplicaciones independientes: `auth`, `api`, `admin`, `warehouse`, `invoicing`, `sales`, `production`, `purchasing`, `payments`, `stores` y `public`.
+- `shared/*` — librería de UI en React, utilidades, catálogos SAT, tipos y mocks reutilizados por todas las apps.
+- `domain_modules/*` — lógica de negocio por dominio (solicitudes, clientes, facturas y dashboards de cada área).
 
-## Retos Técnicos
+La autenticación está centralizada y cada app se despliega de forma independiente en Heroku mediante el buildpack multi-procfile.
 
-- **Offline-first sync:** Implementación de Dexie (IndexedDB) para que las terminales de almacén y producción operen sin conexión y sincronicen al recuperar red.
-- **CFDI 4.0:** Integración con servicios de facturación electrónica SAT, timbrado y manejo de complementos.
-- **Concurrencia:** Diseño de la capa de datos para soportar 40+ usuarios concurrentes sin condiciones de carrera en inventario.
+## Stack
+
+- React 18 + Vite como base de cada app frontend.
+- React Router v7 para navegación.
+- React Hook Form + Zod para formularios y validación.
+- Dexie (IndexedDB) para persistencia y sincronización local en el navegador.
+- Tailwind CSS para estilos.
+
+## Retos técnicos
+
+- Facturación electrónica CFDI conforme al SAT, con manejo de IVA, IEPS e ISR y pre-facturación.
+- Modelo de roles y permisos consistente entre todas las apps.
+- Compartir tipos TypeScript y un único design system a lo largo de un monorepo grande sin duplicar lógica.
 
 ## Resultado
 
-Sistema operando 6 días a la semana con más de 40 usuarios concurrentes, cubriendo el ciclo completo desde la compra de grano hasta la venta al cliente final.
-
-{/* TODO: agregar métricas reales de adopción y screenshots de gallery */}
+Un ecosistema unificado que despliega cada app de forma independiente, manteniendo tipado, estilos y reglas de calidad centralizados.

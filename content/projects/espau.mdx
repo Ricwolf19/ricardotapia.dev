@@ -1,36 +1,37 @@
 ---
 title: "Espau"
 slug: "espau"
-tagline: "Plataforma de gestión con panel administrativo y sitio público."
+tagline: "Sitio institucional y plataforma administrativa para Esperanza para el Autismo I.A.P. (ESPAU) en Chihuahua."
 status: "production"
 visibility: "hybrid"
 category: "platform"
 startDate: "2024-09"
 thumbnail: "/images/projects/espau-thumb.jpg"
-tags: ["platform", "react", "nextjs", "tailwind"]
+tags: ["platform", "nextjs", "postgresql", "authjs", "tailwind"]
 ---
 
 ## Contexto
 
-Espau opera con dos caras de un mismo producto: un **sitio público** que comunica y capta, y un **panel administrativo** donde el equipo gestiona la operación día a día. El reto era construir ambas sobre una misma base de código y design system, sin duplicar lógica ni romper la coherencia visual entre lo público y lo privado.
+ESPAU (Esperanza para el Autismo, I.A.P.) es una organización civil de Chihuahua dedicada al apoyo, diagnóstico y terapia de personas con Trastorno del Espectro Autista. El proyecto cubre tanto el sitio institucional público como la plataforma administrativa interna.
 
 ## Arquitectura
 
-Aplicación full-stack en **Next.js** con App Router. La capa pública se renderiza de forma estática para máxima velocidad y SEO, mientras que el panel administrativo corre como zona autenticada con datos dinámicos. Tipos y componentes de UI se comparten entre ambas zonas para mantener una sola fuente de verdad.
+El sitio organiza el contenido en áreas claras: información de la organización y mesa directiva, contenido educativo sobre el TEA, los programas de servicios (evaluación y diagnóstico con ADOS-2, ADI-R y ABAS-II; terapia individual y grupal; modelo Denver; acompañamiento a padres; y capacitación profesional), donativos y voluntariado, transparencia financiera, contacto y galería.
 
-- **Público:** páginas estáticas/ISR, optimizadas para carga rápida y posicionamiento.
-- **Admin:** rutas protegidas, formularios con validación y estados de servidor.
+## Stack
 
-{/* TODO: precisar proveedor de auth y modelo de datos exacto */}
+- Next.js con App Router y TypeScript.
+- Tailwind CSS para estilos.
+- PostgreSQL como base de datos, con consultas fuertemente tipadas (PgTyped).
+- `node-pg-migrate` para migraciones SQL versionadas.
+- Auth.js (NextAuth) para autenticación.
+- React Hook Form + Zod para formularios.
 
-## Retos Técnicos
+## Retos técnicos
 
-- **Una base, dos audiencias:** separar claramente lo público de lo privado sin fragmentar el código ni el design system.
-- **Consistencia de UI:** mismos tokens y componentes en marketing y administración.
-- **Performance del lado público** sin sacrificar la riqueza del panel interno.
+- Garantizar tipado de extremo a extremo entre la base de datos y la aplicación mediante codegen.
+- Modelar la información de transparencia y los programas terapéuticos de forma mantenible para el equipo.
 
 ## Resultado
 
-Plataforma en producción con panel administrativo operativo y sitio público desplegado en Vercel.
-
-{/* TODO: agregar URL del sitio público, métricas de uso y screenshots */}
+Una plataforma en producción ([espau.com](https://espau.com/)) que combina presencia institucional con un backend administrativo tipado y migraciones reproducibles.

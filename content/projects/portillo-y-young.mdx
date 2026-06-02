@@ -1,34 +1,30 @@
 ---
 title: "Portillo y Young"
 slug: "portillo-y-young"
-tagline: "Sitio institucional / de marketing."
+tagline: "Sitio corporativo multilingüe para Portillo y Young, con portafolio y formularios de contacto."
 status: "production"
-visibility: "private"
+visibility: "public"
 category: "marketing"
 startDate: "2024-11"
 thumbnail: "/images/projects/portillo-y-young-thumb.jpg"
-tags: ["marketing", "institucional"]
+tags: ["marketing", "multilingual", "nextjs"]
 ---
 
 ## Contexto
 
-Portillo y Young necesitaba una presencia institucional sólida que transmitiera confianza y profesionalismo a sus clientes. El sitio debía comunicar servicios y trayectoria con un tono serio, manteniendo una navegación clara y directa.
+Sitio web corporativo para Portillo y Young. El objetivo fue una presencia profesional, multilingüe, con portafolio de proyectos y captación de contactos.
 
 ## Arquitectura
 
-Construido con **Next.js**, **React** y **Tailwind CSS**. Renderizado estático para velocidad y SEO, con estructura por secciones y componentes reutilizables.
+Aplicación Next.js con App Router e internacionalización por segmento de ruta: todas las páginas viven bajo `app/[lang]/` (home, about, services, contact y portfolio con detalle `[slug]`). La lógica de formularios se implementa como server action en `actions/forms.ts`.
 
-- Diseño sobrio orientado a credibilidad.
-- Optimización de imágenes y metadatos.
-- Despliegue continuo.
+## Stack
 
-## Retos Técnicos
-
-- **Tono institucional** sin caer en lo genérico.
-- **Claridad de navegación** para distintos perfiles de visitante.
+- Next.js 15 + React 19 + Tailwind CSS + TypeScript.
+- next-safe-action para server actions tipadas.
+- React Hook Form + Zod para validación de formularios.
+- Resend + React Email para correo. reCAPTCHA para protección anti-spam.
 
 ## Resultado
 
-Sitio institucional en producción.
-
-{/* TODO: agregar URL pública y screenshots */}
+Un sitio multilingüe con portafolio navegable por proyecto y formularios de contacto validados y protegidos, listo para crecer en nuevos idiomas gracias al enrutamiento por `[lang]`. [Ver sitio](https://portilloyyoung.com/en).

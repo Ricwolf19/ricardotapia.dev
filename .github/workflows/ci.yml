@@ -27,10 +27,13 @@ jobs:
           node-version: 24
           cache: npm
 
-      # Reproducible install from the lockfile. --no-audit/--no-fund keep
-      # logs clean and avoid network flakiness on optional metadata.
+      # Prefer a reproducible install from the lockfile. npm prunes
+      # platform-specific optional transitive deps (e.g. @emnapi/* under sharp's
+      # wasm runtime) from a lockfile generated on a different OS, which can make
+      # `npm ci` fail its strict sync check on Linux. Fall back to `npm install`
+      # so CI self-heals while still preferring the lockfile when it is in sync.
       - name: Install dependencies
-        run: npm ci --no-audit --no-fund
+        run: npm ci --no-audit --no-fund || npm install --no-audit --no-fund
 
       - name: Format
         run: npm run format

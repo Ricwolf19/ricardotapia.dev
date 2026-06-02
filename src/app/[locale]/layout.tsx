@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
@@ -24,6 +24,8 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const generateStaticParams = () => routing.locales.map((locale) => ({ locale }));
 
+export const viewport: Viewport = { themeColor: "#0a0a0f" };
+
 export const generateMetadata = async ({
   params,
 }: {
@@ -36,6 +38,15 @@ export const generateMetadata = async ({
     metadataBase: new URL(siteConfig.url),
     title: { default: siteConfig.title, template: `%s | ${siteConfig.name}` },
     description: t("description"),
+    manifest: "/site.webmanifest",
+    icons: {
+      icon: [
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+        { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      ],
+      apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    },
     alternates: {
       canonical: `${siteConfig.url}/${locale}`,
       languages: {

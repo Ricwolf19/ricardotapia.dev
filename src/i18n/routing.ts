@@ -8,7 +8,7 @@ export const routing = defineRouting({
   // Auto-detect the visitor's language from the browser's Accept-Language header
   // (and the NEXT_LOCALE cookie). Falls back to `defaultLocale` (es) when neither
   // matches a supported locale.
-  localeDetection: true,
+  localeDetection: false,
 });
 
 export type Locale = (typeof routing.locales)[number];

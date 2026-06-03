@@ -47,9 +47,7 @@ export const Header = () => {
           </nav>
 
           <div className="flex items-center gap-3">
-            <div className="hidden md:block">
-              <LocaleSwitcher />
-            </div>
+            <LocaleSwitcher />
             <ThemeToggle />
             <button
               type="button"
@@ -80,9 +78,6 @@ export const Header = () => {
                 {t(link.key)}
               </Link>
             ))}
-            <div className="px-3 pt-3">
-              <LocaleSwitcher />
-            </div>
           </nav>
         )}
       </Container>

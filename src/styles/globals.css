@@ -19,10 +19,11 @@
   --foreground-dim: #64748b;
   --primary: #4f46e5;
   --primary-hover: #4338ca;
-  --accent: #0891b2;
-  --accent-hover: #0e7490;
-  --success: #16a34a;
-  --warning: #d97706;
+  --accent: #0e7490;
+  --accent-hover: #155e75;
+  /* Darker green so "public/production" badges read clearly on light surfaces. */
+  --success: #15803d;
+  --warning: #b45309;
   --error: #dc2626;
 
   /* Fonts (injected by next/font as vars on <html>) */
@@ -77,6 +78,12 @@
     border-color: var(--color-border);
   }
 
+  /* Every interactive button shows the pointer cursor on hover (unless disabled). */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
@@ -106,4 +113,45 @@
 @utility font-ui {
   font-family: var(--font-mono);
   font-weight: 500;
+}
+
+/* ============================================
+   Entrance animations — CSS only, no JavaScript.
+   `.reveal` is scroll-driven where supported and otherwise a no-op (content is
+   already visible, so nothing is ever hidden from crawlers). `.fade-in` is a
+   plain mount fade for client re-renders (e.g. project filtering). Both are
+   disabled under prefers-reduced-motion.
+   ============================================ */
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal-rise both linear;
+      animation-timeline: view();
+      animation-range: entry 0% cover 20%;
+    }
+  }
+
+  .fade-in {
+    animation: fade-in 0.25s ease both;
+  }
 }

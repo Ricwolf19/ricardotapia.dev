@@ -3,11 +3,10 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { Container } from "@/components/layout/Container";
 import { buttonVariants } from "@/components/ui/Button";
-import { Stagger } from "@/components/motion/Stagger";
-import { StaggerItem } from "@/components/motion/StaggerItem";
 import { cn } from "@/lib/utils";
 
-/** Home hero (spec §10.2). Dark-first, with entrance stagger and availability signal. */
+/** Home hero (spec §10.2). Server-rendered and static — the LCP heading paints
+ * immediately, with no entrance animation to delay it. */
 export const Hero = () => {
   const t = useTranslations("home.hero");
 
@@ -24,57 +23,44 @@ export const Hero = () => {
       />
 
       <Container>
-        <Stagger
-          trigger="mount"
-          className="relative flex min-h-[78vh] flex-col justify-center py-20"
-        >
+        <div className="relative flex min-h-[78vh] flex-col justify-center py-20">
           {/* Availability badge — a hook for non-developers */}
-          <StaggerItem>
-            <span className="border-success/30 bg-success/10 text-success inline-flex w-fit items-center gap-2 rounded-full border px-3 py-1 font-mono text-xs">
-              <span className="relative flex h-2 w-2">
-                <span className="bg-success absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" />
-                <span className="bg-success relative inline-flex h-2 w-2 rounded-full" />
-              </span>
-              {t("available")}
+          <span className="border-success/30 bg-success/10 text-success inline-flex w-fit items-center gap-2 rounded-full border px-3 py-1 font-mono text-xs">
+            <span className="relative flex h-2 w-2">
+              <span className="bg-success absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" />
+              <span className="bg-success relative inline-flex h-2 w-2 rounded-full" />
             </span>
-          </StaggerItem>
+            {t("available")}
+          </span>
 
-          <StaggerItem>
-            <p className="text-accent mt-6 font-mono text-sm tracking-[0.2em] uppercase">
-              {t("subtitle")}
-            </p>
-          </StaggerItem>
+          <p className="text-accent mt-6 font-mono text-sm tracking-[0.2em] uppercase">
+            {t("subtitle")}
+          </p>
 
-          <StaggerItem>
-            <h1 className="from-foreground to-foreground-muted mt-3 bg-gradient-to-br bg-clip-text text-5xl font-medium tracking-tight text-transparent sm:text-6xl lg:text-8xl">
-              {t("title")}
-            </h1>
-          </StaggerItem>
+          <h1 className="from-foreground to-foreground-muted mt-3 bg-gradient-to-br bg-clip-text text-5xl font-medium tracking-tight text-transparent sm:text-6xl lg:text-8xl">
+            {t("title")}
+          </h1>
 
-          <StaggerItem>
-            <p className="text-foreground-muted mt-6 max-w-2xl text-lg leading-relaxed sm:text-xl">
-              {t("description")}
-            </p>
-          </StaggerItem>
+          <p className="text-foreground-muted mt-6 max-w-2xl text-lg leading-relaxed sm:text-xl">
+            {t("description")}
+          </p>
 
-          <StaggerItem>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link
-                href="/work"
-                className={cn(buttonVariants({ size: "lg" }), "group shadow-primary/20 shadow-lg")}
-              >
-                {t("ctaProjects")}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-              <Link
-                href="/contact"
-                className={cn(buttonVariants({ variant: "secondary", size: "lg" }))}
-              >
-                {t("ctaContact")}
-              </Link>
-            </div>
-          </StaggerItem>
-        </Stagger>
+          <div className="mt-10 flex flex-wrap gap-4">
+            <Link
+              href="/work"
+              className={cn(buttonVariants({ size: "lg" }), "group shadow-primary/20 shadow-lg")}
+            >
+              {t("ctaProjects")}
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+            <Link
+              href="/contact"
+              className={cn(buttonVariants({ variant: "secondary", size: "lg" }))}
+            >
+              {t("ctaContact")}
+            </Link>
+          </div>
+        </div>
       </Container>
     </section>
   );

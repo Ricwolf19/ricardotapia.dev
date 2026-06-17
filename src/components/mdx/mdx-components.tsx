@@ -18,8 +18,11 @@ export const mdxComponents: MDXComponents = {
   a: (props) => <a className="text-accent underline-offset-4 hover:underline" {...props} />,
   strong: (props) => <strong className="text-foreground font-semibold" {...props} />,
   pre: (props) => (
+    // Syntax highlighting uses the `github-dark-dimmed` theme, so the block keeps
+    // a dark surface in both light and dark mode — otherwise the dimmed token
+    // colors wash out on a light background.
     <pre
-      className="border-border bg-surface-elevated my-6 overflow-x-auto rounded-lg border p-4 text-sm leading-7"
+      className="my-6 overflow-x-auto rounded-lg border border-[#2d333b] bg-[#1c2128] p-4 text-sm leading-7 text-[#adbac7]"
       {...props}
     />
   ),

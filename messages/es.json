@@ -14,13 +14,47 @@
       "ctaContact": "Hablemos",
       "available": "Disponible para nuevos proyectos"
     },
-    "recent": {
-      "label": "// lanzamientos recientes",
-      "title": "Proyectos recientes",
-      "subtitle": "Sitios y aplicaciones en producción que puedes visitar ahora mismo.",
+    "featured": {
+      "label": "// proyectos destacados",
+      "title": "Proyectos destacados",
+      "subtitle": "Trabajo de acceso público —sitios en vivo y repos— que puedes abrir ahora mismo.",
       "viewAll": "Ver todos los proyectos",
       "viewLive": "Ver app",
+      "viewRepo": "Ver repo",
       "comingSoon": "Próximamente"
+    },
+    "expertise": {
+      "label": "// qué hago",
+      "title": "Diseño y construyo sistemas de software completos",
+      "intro": "Acompaño el producto de extremo a extremo —arquitectura, desarrollo, base de datos y deploy— priorizando soluciones mantenibles que resuelven problemas reales de negocio.",
+      "services": {
+        "web": {
+          "title": "Plataformas web & SaaS",
+          "desc": "Aplicaciones web y productos SaaS a medida con Next.js y React, de la arquitectura al deploy."
+        },
+        "ecommerce": {
+          "title": "E-commerce",
+          "desc": "Tiendas en línea con pagos, envíos, catálogo y panel administrativo con control de acceso por roles."
+        },
+        "erp": {
+          "title": "Sistemas ERP & internos",
+          "desc": "Monorepos y sistemas operativos: inventario, facturación electrónica CFDI, ventas y producción."
+        },
+        "mobile": {
+          "title": "Aplicaciones móviles",
+          "desc": "Apps móviles offline-first con React Native y Expo, con datos siempre disponibles."
+        }
+      },
+      "sectorsTitle": "Sectores",
+      "sectors": {
+        "fintech": "Fintech & facturación",
+        "ecommerce": "E-commerce & retail",
+        "health": "Salud",
+        "education": "Educación",
+        "institutional": "Institucional & ONG",
+        "professional": "Despachos fiscales"
+      },
+      "stackTitle": "Stack principal"
     }
   },
   "work": {
@@ -56,7 +90,7 @@
     "title": "Sobre mí",
     "bio": "Desarrollador full-stack basado en Chihuahua, México. Construyo sistemas de software de extremo a extremo, priorizando arquitecturas mantenibles y experiencias de producto que resuelven problemas reales de negocio.",
     "experienceTitle": "Experiencia",
-    "stackTitle": "Stack actual",
+    "stackTitle": "Experiencia con tecnologías",
     "githubTitle": "Actividad en GitHub",
     "current": "Actual",
     "type": {
@@ -103,7 +137,12 @@
       "cta": "Enviar mensaje",
       "tooltip": "¿Hablamos?"
     },
-    "directEmail": "O escríbeme directo a"
+    "directEmail": "O escríbeme directo a",
+    "composer": {
+      "note": "Escribe tu mensaje y lo abrimos por WhatsApp o correo con el texto ya listo —sin enviar nada a un servidor.",
+      "whatsappBtn": "Enviar por WhatsApp",
+      "emailBtn": "Enviar por correo"
+    }
   },
   "status": {
     "production": "Producción",

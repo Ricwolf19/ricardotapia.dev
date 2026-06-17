@@ -17,10 +17,12 @@ const statusVariant: Record<Project["status"], BadgeProps["variant"]> = {
 interface ProjectCardProps {
   project: Project;
   priority?: boolean;
+  /** On the "Now" page, flag the card as actively in development. */
+  activeNow?: boolean;
 }
 
 /** Project card (spec §10.3). Uniform height and image-ready thumbnail. */
-export const ProjectCard = ({ project, priority = false }: ProjectCardProps) => {
+export const ProjectCard = ({ project, priority = false, activeNow = false }: ProjectCardProps) => {
   const t = useTranslations();
   const locale = useLocale();
   const isPublic = Boolean(getLiveUrl(project)) || project.visibility === "public";
@@ -48,6 +50,9 @@ export const ProjectCard = ({ project, priority = false }: ProjectCardProps) => 
       <div className="flex flex-1 flex-col gap-3 p-5">
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant={statusVariant[project.status]}>{t(`status.${project.status}`)}</Badge>
+          {activeNow && project.status !== "development" && (
+            <Badge variant="development">{t("status.development")}</Badge>
+          )}
           <Badge variant="accent">{project.category.toUpperCase()}</Badge>
           {project.priority && (
             <Badge variant="default" className="gap-1">

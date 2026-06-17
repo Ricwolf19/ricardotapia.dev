@@ -3,6 +3,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Section } from "@/components/layout/Section";
 import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline";
 import { TechStack } from "@/components/sections/TechStack";
+import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
+import { pageMetadata } from "@/lib/seo";
 
 export const generateMetadata = async ({
   params,
@@ -11,7 +13,7 @@ export const generateMetadata = async ({
 }): Promise<Metadata> => {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "about" });
-  return { title: t("title"), description: t("bio") };
+  return pageMetadata(locale, "/about", { title: t("title"), description: t("bio") });
 };
 
 const AboutPage = async ({ params }: { params: Promise<{ locale: string }> }) => {
@@ -21,6 +23,7 @@ const AboutPage = async ({ params }: { params: Promise<{ locale: string }> }) =>
 
   return (
     <Section>
+      <Breadcrumbs locale={locale} trail={[{ name: t("title"), path: "/about" }]} />
       <header className="max-w-2xl">
         <h1 className="text-4xl tracking-tight">{t("title")}</h1>
         <p className="text-foreground-muted mt-4 text-lg leading-relaxed">{t("bio")}</p>

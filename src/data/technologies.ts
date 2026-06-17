@@ -20,9 +20,23 @@ export const tech = {
     category: "frontend",
     url: "https://tailwindcss.com",
   },
+  reactNative: {
+    name: "React Native",
+    slug: "react-native",
+    category: "frontend",
+    url: "https://reactnative.dev",
+  },
+  nativewind: {
+    name: "NativeWind",
+    slug: "nativewind",
+    category: "frontend",
+    url: "https://www.nativewind.dev",
+  },
 
   // tooling
   vite: { name: "Vite", slug: "vite", category: "tooling", url: "https://vitejs.dev" },
+  expo: { name: "Expo", slug: "expo", category: "tooling", url: "https://expo.dev" },
+  posthog: { name: "PostHog", slug: "posthog", category: "tooling", url: "https://posthog.com" },
   excalidraw: { name: "Excalidraw", slug: "excalidraw", category: "tooling" },
   yjs: { name: "YJS", slug: "yjs", category: "tooling" },
   powerAutomate: { name: "Power Automate", slug: "power-automate", category: "tooling" },
@@ -36,6 +50,12 @@ export const tech = {
   paypal: { name: "PayPal", slug: "paypal", category: "backend" },
   facturapi: { name: "FACTURAPI", slug: "facturapi", category: "backend" },
   resend: { name: "Resend", slug: "resend", category: "backend", url: "https://resend.com" },
+  betterAuth: {
+    name: "Better Auth",
+    slug: "better-auth",
+    category: "backend",
+    url: "https://www.better-auth.com",
+  },
   reactRouter: { name: "React Router", slug: "react-router", category: "frontend" },
   java: { name: "Java", slug: "java", category: "backend" },
   struts: { name: "Struts", slug: "struts", category: "backend" },
@@ -55,6 +75,15 @@ export const tech = {
   oracleErp: { name: "Oracle ERP", slug: "oracle-erp", category: "database" },
   dexie: { name: "Dexie", slug: "dexie", category: "database" },
   firebase: { name: "Firebase", slug: "firebase", category: "database" },
+  drizzle: {
+    name: "Drizzle ORM",
+    slug: "drizzle",
+    category: "database",
+    url: "https://orm.drizzle.team",
+  },
+  neon: { name: "Neon", slug: "neon", category: "database", url: "https://neon.tech" },
+  sqlite: { name: "SQLite", slug: "sqlite", category: "database", url: "https://www.sqlite.org" },
+  mmkv: { name: "MMKV", slug: "mmkv", category: "database" },
 
   // devops
   heroku: { name: "Heroku", slug: "heroku", category: "devops" },

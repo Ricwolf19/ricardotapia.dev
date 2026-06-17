@@ -8,7 +8,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { routing } from "@/i18n/routing";
 import { siteConfig } from "@/data/site";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
-import { MotionProvider } from "@/components/motion/MotionProvider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppWidget } from "@/components/layout/WhatsAppWidget";
@@ -53,6 +52,8 @@ export const generateMetadata = async ({
     manifest: "/site.webmanifest",
     icons: {
       icon: [
+        // SVG mark first — modern browsers prefer it and it adapts to light/dark.
+        { url: "/logo.svg", type: "image/svg+xml" },
         { url: "/favicon.ico", sizes: "any" },
         { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
         { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
@@ -78,15 +79,9 @@ export const generateMetadata = async ({
       ? { google: process.env.GOOGLE_SITE_VERIFICATION }
       : undefined,
 
-    // Canonical + hreflang alternates for i18n.
-    alternates: {
-      canonical: `${siteConfig.url}/${locale}`,
-      languages: {
-        "es-MX": `${siteConfig.url}/es`,
-        en: `${siteConfig.url}/en`,
-        "x-default": `${siteConfig.url}/es`,
-      },
-    },
+    // Canonical + hreflang alternates are set per-page (see lib/seo.ts), so the
+    // layout intentionally does not declare `alternates` — otherwise every page
+    // would inherit it and self-canonicalize to the locale home.
 
     // Open Graph (og:image comes from app/opengraph-image.tsx automatically).
     openGraph: {
@@ -120,7 +115,15 @@ const LocaleLayout = async ({
   if (!(routing.locales as readonly string[]).includes(locale)) notFound();
 
   setRequestLocale(locale);
+  // Only the namespaces actually read by client components are sent to the
+  // browser — server components resolve their own messages via `getTranslations`
+  // and don't need the provider. Keep this list in sync with client `useTranslations`.
   const messages = await getMessages();
+  const clientMessages = Object.fromEntries(
+    (["nav", "theme", "work", "contact", "status"] as const)
+      .filter((ns) => ns in messages)
+      .map((ns) => [ns, messages[ns]]),
+  ) as typeof messages;
 
   return (
     <html
@@ -131,15 +134,13 @@ const LocaleLayout = async ({
       <body className="min-h-screen">
         <JsonLd />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <NextIntlClientProvider messages={messages}>
-            <MotionProvider>
-              <div className="flex min-h-screen flex-col">
-                <Header />
-                <main className="flex-1">{children}</main>
-                <Footer />
-              </div>
-              <WhatsAppWidget />
-            </MotionProvider>
+          <NextIntlClientProvider messages={clientMessages}>
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+            <WhatsAppWidget />
           </NextIntlClientProvider>
         </ThemeProvider>
         <Analytics />

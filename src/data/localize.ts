@@ -7,6 +7,18 @@ import { localized } from "@/lib/utils";
  * English override, keyed by slug / id. Keeps the data array clean.
  */
 const projectCopyEn: Record<string, { tagline: string; description: string }> = {
+  "metri-info": {
+    tagline:
+      "Open-source fitness web toolkit: 16 calculators, a bilingual knowledge base and installable PWA, with server-first SEO.",
+    description:
+      "Web companion to the Metri mobile app, built with Next.js 16 (App Router, React Server Components). It bundles 16 health and training calculators, a bilingual MDX knowledge base (EN/ES) and an optional accounts layer. Server-first SEO with the Metadata API, JSON-LD, sitemap and dynamic OG; analytics via PostHog and GA4; installable as a PWA with offline calculators. Drizzle ORM + Neon and Better Auth power accounts, while the content renders with no database.",
+  },
+  metri: {
+    tagline:
+      "Offline-first fitness mobile app for logging training and body metrics, with the UI driven directly by SQLite.",
+    description:
+      "Open-source mobile app built with Expo (SDK 56) and React Native. Offline-first architecture: SQLite with Drizzle ORM is the single source of truth and its `useLiveQuery` drives the UI with no global state library; MMKV handles synchronous setting reads. It ships encrypted local auth, profiles with BMR/TDEE calculation, reminders with notifications, a progress-photo gallery, EN/ES i18n and light/dark themes via design tokens. Drizzle Kit runs automatic migrations on every launch.",
+  },
   "cafe-combate": {
     tagline:
       "Operations monorepo for Café Combate: warehouse, CFDI invoicing, sales and production in a single ecosystem.",

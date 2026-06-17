@@ -1,11 +1,9 @@
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
-import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import type { Project } from "@/types";
 import { workFilters, type WorkFilter } from "@/data/constants";
-import { EASE } from "@/components/motion/variants";
 import { ProjectCard } from "./ProjectCard";
 import { cn } from "@/lib/utils";
 
@@ -13,7 +11,9 @@ interface ProjectGridProps {
   projects: Project[];
 }
 
-/** Project grid with client-side pill filters and filtering animation (spec §10.4). */
+/** Project grid with client-side pill filters (spec §10.4). The only JS here is
+ * the filtering state; the grid fades in on filter change via a CSS animation
+ * (`.fade-in`, keyed on the active filter) — no animation library. */
 export const ProjectGrid = ({ projects }: ProjectGridProps) => {
   const t = useTranslations("work");
   const [filter, setFilter] = useState<WorkFilter>("all");
@@ -47,33 +47,17 @@ export const ProjectGrid = ({ projects }: ProjectGridProps) => {
       {filtered.length === 0 ? (
         <p className="text-foreground-muted py-12 text-center">{t("empty")}</p>
       ) : (
-        <motion.div
-          layout
+        <div
+          key={filter}
           className={cn(
-            "grid grid-cols-1 gap-6 transition-opacity duration-200 sm:grid-cols-2 lg:grid-cols-3",
+            "fade-in grid grid-cols-1 gap-6 transition-opacity duration-200 sm:grid-cols-2 lg:grid-cols-3",
             isPending && "opacity-60",
           )}
         >
-          <AnimatePresence mode="popLayout" initial={false}>
-            {filtered.map((project) => (
-              <motion.div
-                key={project.id}
-                layout
-                className="h-full"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 8 }}
-                transition={{
-                  layout: { type: "spring", stiffness: 380, damping: 34 },
-                  opacity: { duration: 0.35, ease: EASE },
-                  y: { duration: 0.4, ease: EASE },
-                }}
-              >
-                <ProjectCard project={project} />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+          {filtered.map((project) => (
+            <ProjectCard key={project.id} project={project} />
+          ))}
+        </div>
       )}
     </div>
   );

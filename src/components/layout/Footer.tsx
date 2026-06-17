@@ -16,10 +16,6 @@ export const Footer = () => {
       <Container>
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           <div className="flex items-center gap-3 text-center sm:text-left">
-            <Logo className="h-9" />
-            <span className="text-foreground-dim font-mono" aria-hidden="true">
-              ·
-            </span>
             <div>
               <p className="text-foreground font-mono text-sm">Ricardo Tapia</p>
               <p className="text-foreground-dim text-xs">{t("builtWith")}</p>

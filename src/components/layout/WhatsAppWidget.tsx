@@ -20,7 +20,7 @@ export const WhatsAppWidget = () => {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={t("tooltip")}
-      className="group fixed bottom-4 left-4 z-40 sm:bottom-6 sm:left-6"
+      className="group fixed right-4 bottom-4 z-40 sm:right-6 sm:bottom-6"
     >
       {/* Fixed circle (aspect 1:1) -> perfectly round */}
       <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/40 transition-transform duration-200 group-hover:scale-110">

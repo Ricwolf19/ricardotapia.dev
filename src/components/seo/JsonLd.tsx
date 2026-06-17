@@ -8,10 +8,12 @@ export const JsonLd = () => {
       "@type": "Person",
       name: siteConfig.name,
       url: siteConfig.url,
+      image: `${siteConfig.url}/apple-touch-icon.png`,
       jobTitle: "Full-stack Developer",
       email: `mailto:${siteConfig.email}`,
-      address: { "@type": "PostalAddress", addressCountry: "MX" },
+      address: { "@type": "PostalAddress", addressLocality: "Chihuahua", addressCountry: "MX" },
       knowsAbout: ["Web Development", "Mobile Apps", "UI/UX Design", "Cloud Solutions"],
+      knowsLanguage: ["es", "en"],
       sameAs: [siteConfig.socials.github, siteConfig.socials.x].filter(Boolean),
     },
     {

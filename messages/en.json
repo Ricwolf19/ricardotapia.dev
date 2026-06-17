@@ -14,13 +14,47 @@
       "ctaContact": "Let's talk",
       "available": "Available for new projects"
     },
-    "recent": {
-      "label": "// recent launches",
-      "title": "Recent projects",
-      "subtitle": "Live sites and apps you can visit right now.",
+    "featured": {
+      "label": "// featured projects",
+      "title": "Featured projects",
+      "subtitle": "Public-access work — live sites and repos — you can open right now.",
       "viewAll": "View all projects",
       "viewLive": "View app",
+      "viewRepo": "View repo",
       "comingSoon": "Coming soon"
+    },
+    "expertise": {
+      "label": "// what I do",
+      "title": "I design and build complete software systems",
+      "intro": "I own the product end to end — architecture, development, database and deploy — favoring maintainable solutions that solve real business problems.",
+      "services": {
+        "web": {
+          "title": "Web platforms & SaaS",
+          "desc": "Custom web apps and SaaS products with Next.js and React, from architecture to deploy."
+        },
+        "ecommerce": {
+          "title": "E-commerce",
+          "desc": "Online stores with payments, shipping, catalog and a role-based admin panel."
+        },
+        "erp": {
+          "title": "ERP & internal systems",
+          "desc": "Monorepos and operations systems: inventory, CFDI electronic invoicing, sales and production."
+        },
+        "mobile": {
+          "title": "Mobile apps",
+          "desc": "Offline-first mobile apps with React Native and Expo, with data always available."
+        }
+      },
+      "sectorsTitle": "Sectors",
+      "sectors": {
+        "fintech": "Fintech & invoicing",
+        "ecommerce": "E-commerce & retail",
+        "health": "Health",
+        "education": "Education",
+        "institutional": "Institutional & nonprofit",
+        "professional": "Tax & accounting firms"
+      },
+      "stackTitle": "Core stack"
     }
   },
   "work": {
@@ -56,7 +90,7 @@
     "title": "About",
     "bio": "Full-stack developer based in Chihuahua, Mexico. I build software systems end to end, prioritizing maintainable architectures and product experiences that solve real business problems.",
     "experienceTitle": "Experience",
-    "stackTitle": "Current stack",
+    "stackTitle": "Experience with technologies",
     "githubTitle": "GitHub activity",
     "current": "Current",
     "type": {
@@ -103,7 +137,12 @@
       "cta": "Send message",
       "tooltip": "Let's talk?"
     },
-    "directEmail": "Or email me directly at"
+    "directEmail": "Or email me directly at",
+    "composer": {
+      "note": "Write your message and we'll open it in WhatsApp or email with the text ready to go — nothing is sent to a server.",
+      "whatsappBtn": "Send via WhatsApp",
+      "emailBtn": "Send via email"
+    }
   },
   "status": {
     "production": "Production",

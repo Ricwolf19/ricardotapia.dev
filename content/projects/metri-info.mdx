@@ -1,0 +1,43 @@
+---
+title: "Metri Web"
+slug: "metri-info"
+tagline: "Toolkit web open-source de fitness: 16 calculadoras, base de conocimiento bilingüe e instalación como PWA con SEO server-first."
+status: "production"
+visibility: "public"
+category: "platform"
+startDate: "2026-01"
+thumbnail: "/images/projects/metri-info-thumb.jpg"
+tags: ["platform", "nextjs", "pwa", "seo", "i18n", "open-source"]
+---
+
+## Contexto
+
+Metri Web ([metri.info](https://metri.info)) es el companion web de la app móvil Metri: misma marca, mismas fórmulas y misma filosofía de internacionalización, pero pensado para la web. Reúne en un solo lugar 16 calculadoras de salud y entrenamiento y una base de conocimiento, accesibles sin instalar nada y sin necesidad de crear una cuenta.
+
+## Arquitectura
+
+Construido con Next.js 16 (App Router) y React Server Components. El contenido —calculadoras y documentación— se renderiza en el servidor sin tocar la base de datos, mientras que una capa de cuentas opcional (favoritos, historial de cálculos) se apoya en Drizzle ORM + Neon (Postgres) y Better Auth, todo activado por variables de entorno y apagado cuando faltan las claves.
+
+## Stack
+
+- Next.js 16 con App Router y React Server Components.
+- TypeScript en modo estricto y Tailwind CSS v4 (tokens de diseño, sin hex).
+- Drizzle ORM + Neon (Postgres) y Better Auth para el layer de cuentas.
+- Base de conocimiento en MDX, bilingüe EN/ES con claves i18n planas.
+- PostHog y Google Analytics 4 para producto y tráfico, tras un proxy `/ingest`.
+
+## SEO y rendimiento
+
+- SEO server-first: Metadata API, JSON-LD (`SoftwareApplication`, `FAQPage`, `BreadcrumbList`, `MedicalWebPage`), `sitemap.ts`/`robots.ts` basados en archivos y OG dinámico.
+- i18n con hreflang (EN en la raíz, ES bajo `/es`).
+- Señales E-E-A-T / YMYL en las calculadoras y docs de salud: autoría, fuentes científicas, fecha de última revisión y aviso médico.
+- PWA instalable con calculadoras offline vía service worker.
+
+## Retos técnicos
+
+- Patrones de caché y revalidación correctos por endpoint con la nueva API de Next 16 (`updateTag`, tags de caché).
+- Mantener `en` y `es` en paridad total y la documentación de SEO/analítica sincronizada.
+
+## Resultado
+
+Una plataforma en producción, instalable y optimizada para buscadores, que sirve como vitrina técnica de SEO server-first, i18n y arquitectura RSC sobre Next.js 16.

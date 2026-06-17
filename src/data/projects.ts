@@ -13,6 +13,68 @@ import { techList } from "./technologies";
  */
 export const projects: Project[] = [
   {
+    id: "11111111-0000-0000-0000-000000000014",
+    slug: "metri-info",
+    title: "Metri Web",
+    tagline:
+      "Toolkit web open-source de fitness: 16 calculadoras, base de conocimiento bilingüe e instalación como PWA con SEO server-first.",
+    description:
+      "Companion web de la app móvil Metri, construido con Next.js 16 (App Router, React Server Components). Reúne 16 calculadoras de salud y entrenamiento, una base de conocimiento MDX bilingüe (EN/ES) y una capa de cuentas opcional. SEO server-first con Metadata API, JSON-LD, sitemap y OG dinámico; analítica con PostHog y GA4; instalable como PWA con calculadoras offline. Drizzle ORM + Neon y Better Auth respaldan las cuentas; el contenido se renderiza sin base de datos.",
+    status: "production",
+    visibility: "public",
+    category: "platform",
+    featured: true,
+    thumbnail: "/images/projects/metri-info-thumb.jpg",
+    links: [{ label: "Sitio", url: "https://metri.info", type: "live", public: true }],
+    startDate: "2026-01",
+    tags: ["platform", "nextjs", "pwa", "seo", "i18n", "open-source"],
+    technologies: techList(
+      "next",
+      "react",
+      "typescript",
+      "tailwind",
+      "drizzle",
+      "neon",
+      "betterAuth",
+      "posthog",
+      "resend",
+    ),
+  },
+  {
+    id: "11111111-0000-0000-0000-000000000013",
+    slug: "metri",
+    title: "Metri",
+    tagline:
+      "App móvil de fitness offline-first para registrar entrenamiento y métricas corporales, con la UI dirigida directamente por SQLite.",
+    description:
+      "Aplicación móvil open-source construida con Expo (SDK 56) y React Native. Arquitectura offline-first: SQLite con Drizzle ORM es la única fuente de verdad y su `useLiveQuery` dirige la UI sin librería de estado global; MMKV cubre lecturas síncronas de ajustes. Incluye autenticación local cifrada, perfiles con cálculo de BMR/TDEE, recordatorios con notificaciones, galería de fotos de progreso, i18n EN/ES y temas claro/oscuro mediante tokens de diseño. Migraciones automáticas con Drizzle Kit en cada arranque.",
+    status: "development",
+    visibility: "public",
+    category: "oss",
+    featured: true,
+    thumbnail: "/images/projects/metri-thumb.jpg",
+    links: [
+      {
+        label: "Repositorio",
+        url: "https://github.com/Ricwolf19/metri",
+        type: "repo",
+        public: true,
+      },
+    ],
+    repoUrl: "https://github.com/Ricwolf19/metri",
+    startDate: "2025-09",
+    tags: ["oss", "react-native", "expo", "offline-first", "mobile"],
+    technologies: techList(
+      "reactNative",
+      "expo",
+      "typescript",
+      "drizzle",
+      "sqlite",
+      "nativewind",
+      "mmkv",
+    ),
+  },
+  {
     id: "11111111-0000-0000-0000-000000000001",
     slug: "cafe-combate",
     title: "Café Combate",
@@ -423,7 +485,9 @@ export const projects: Project[] = [
         public: true,
       },
     ],
+    repoUrl: "https://github.com/Ricwolf19/listkit",
     startDate: "2025-02",
+    launchDate: "2025-04",
     tags: ["oss", "react", "library", "typescript"],
     technologies: techList("react", "typescript", "tailwind", "vite"),
   },
@@ -485,6 +549,19 @@ export const getLiveUrl = (p: Project): string | undefined => {
 };
 
 /**
+ * Any URL a visitor can open without an account, with its kind: a live/landing
+ * site first, otherwise a public source repository. Returns undefined for
+ * login-gated client apps. Used to surface only quickly-viewable work.
+ */
+export const getPublicUrl = (p: Project): { url: string; kind: "live" | "repo" } | undefined => {
+  const live = getLiveUrl(p);
+  if (live) return { url: live, kind: "live" };
+  if (p.loginRequired) return undefined;
+  const repo = p.links.find((l) => l.type === "repo" && isPublicLink(l))?.url ?? p.repoUrl;
+  return repo ? { url: repo, kind: "repo" } : undefined;
+};
+
+/**
  * Projects visible in /work (excludes internal/historical).
  * Priority projects first (highlighted client apps), the rest after.
  */
@@ -493,25 +570,31 @@ export const workProjects = [...projects.filter((p) => p.status !== "internal")]
 );
 
 /**
- * Recent projects with a public landing (Home). Explicit order defined by
- * Ricardo. Landings that any visitor can open without an account come first.
+ * Featured projects (Home). Explicit order defined by Ricardo. Only projects a
+ * visitor can open right now — a live site or a public repo — so the homepage
+ * showcases work that can be inspected immediately. Each entry is sanity-checked
+ * to actually expose a public URL.
  */
-const RECENT_ORDER = [
+const FEATURED_ORDER = [
+  "metri-info",
   "cafe-combate",
   "espau",
+  "agates-from-mexico",
   "increscendo",
+  "listkit",
   "danny-cuevas",
   "chachitos",
-  "agates-from-mexico",
   "portillo-y-young",
 ] as const;
 
-export const recentProjects: Project[] = RECENT_ORDER.map(getProjectBySlug).filter(
-  (p): p is Project => Boolean(p),
+export const featuredProjects: Project[] = FEATURED_ORDER.map(getProjectBySlug).filter(
+  (p): p is Project => Boolean(p) && Boolean(getPublicUrl(p as Project)),
 );
 
 /** In-progress projects for /now. */
 const NOW_ORDER = [
+  "metri",
+  "metri-info",
   "cafe-combate",
   "agates-from-mexico",
   "corporativo-fiscal",

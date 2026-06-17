@@ -5,11 +5,14 @@ import rehypePrettyCode from "rehype-pretty-code";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowLeft, ArrowRight, ExternalLink, Globe, Lock } from "lucide-react";
 import { Link } from "@/i18n/routing";
-import { getProjectBySlug, workProjects, splitLinks, splitApps } from "@/data/projects";
+import { getProjectBySlug, workProjects, splitLinks, splitApps, getLiveUrl } from "@/data/projects";
 import { getTagline, getDescription } from "@/data/localize";
+import { siteConfig } from "@/data/site";
+import { localeAlternates } from "@/lib/seo";
 import { getProjectContent } from "@/lib/mdx";
 import { MdxContent } from "@/components/mdx/MdxContent";
 import { Section } from "@/components/layout/Section";
+import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Badge } from "@/components/ui/Badge";
 import type { ProjectLink, SubApp } from "@/types";
 
@@ -75,7 +78,13 @@ export const generateMetadata = async ({
   return {
     title: project.title,
     description: tagline,
-    openGraph: { title: project.title, description: tagline },
+    alternates: localeAlternates(locale, `/work/${slug}`),
+    openGraph: {
+      title: project.title,
+      description: tagline,
+      url: `${siteConfig.url}/${locale}/work/${slug}`,
+      type: "article",
+    },
   };
 };
 
@@ -88,6 +97,7 @@ const CaseStudyPage = async ({ params }: { params: Promise<{ locale: string; slu
 
   const t = await getTranslations({ locale, namespace: "work.caseStudy" });
   const tStatus = await getTranslations({ locale, namespace: "status" });
+  const tWork = await getTranslations({ locale, namespace: "work" });
   const fileContent = await getProjectContent(slug);
 
   const mdxSource = fileContent
@@ -107,15 +117,38 @@ const CaseStudyPage = async ({ params }: { params: Promise<{ locale: string; slu
     ? splitApps(project.apps)
     : { publicApps: [], privateApps: [] };
 
+  // Per-project structured data: a CreativeWork for the case study (the breadcrumb
+  // trail is emitted by <Breadcrumbs/>), so search engines can surface a rich result.
+  const projectUrl = `${siteConfig.url}/${locale}/work/${slug}`;
+  const liveUrl = getLiveUrl(project);
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    headline: project.title,
+    description: getTagline(project, locale),
+    url: projectUrl,
+    inLanguage: locale,
+    datePublished: project.launchDate ?? project.startDate,
+    keywords: project.tags.join(", "),
+    author: { "@type": "Person", name: siteConfig.name, url: siteConfig.url },
+    ...(liveUrl ? { sameAs: liveUrl } : {}),
+    ...(project.repoUrl ? { codeRepository: project.repoUrl } : {}),
+  };
+
   return (
     <Section>
-      <Link
-        href="/work"
-        className="text-foreground-muted hover:text-foreground inline-flex items-center gap-1.5 font-mono text-sm"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        {t("backToWork")}
-      </Link>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <Breadcrumbs
+        locale={locale}
+        trail={[
+          { name: tWork("title"), path: "/work" },
+          { name: project.title, path: `/work/${slug}` },
+        ]}
+      />
 
       <div className="mt-8 grid gap-12 lg:grid-cols-[1fr_18rem]">
         {/* Main content */}

@@ -31,8 +31,8 @@ const Image = () =>
         Ricardo Tapia
       </div>
 
-      {/* Decorative separator */}
-      <div style={{ width: 160, height: 5, background: "#6366f1", margin: "36px 0" }} />
+      {/* Decorative separator — brand green accent */}
+      <div style={{ width: 160, height: 5, background: "#14D27A", margin: "36px 0" }} />
 
       <div style={{ fontSize: 46, color: "#cbd5e1", fontWeight: 500 }}>Full-stack Developer</div>
 
@@ -46,7 +46,7 @@ const Image = () =>
           bottom: 88,
           left: 96,
           fontSize: 27,
-          color: "#6366f1",
+          color: "#14D27A",
           fontWeight: 500,
         }}
       >

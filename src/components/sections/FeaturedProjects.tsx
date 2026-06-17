@@ -1,20 +1,17 @@
-"use client";
-
-import { motion } from "motion/react";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
-import { recentProjects } from "@/data/projects";
-import { listContainer } from "@/components/motion/variants";
+import { featuredProjects } from "@/data/projects";
 import { Section } from "@/components/layout/Section";
 import { ProjectRow } from "./ProjectRow";
 
 /**
- * Numbered, interactive list of recent projects with a public landing (Home).
- * Each row links to the case study and offers a direct shortcut to the live app.
+ * Numbered list of featured projects (Home). Server-rendered — only public-access
+ * work (live sites or public repos) so every row can be opened right away. Each
+ * row links to the case study and offers a direct shortcut. Entrance is CSS-only.
  */
-export const RecentProjects = () => {
-  const t = useTranslations("home.recent");
+export const FeaturedProjects = async () => {
+  const t = await getTranslations("home.featured");
 
   return (
     <Section>
@@ -33,17 +30,11 @@ export const RecentProjects = () => {
         </Link>
       </div>
 
-      <motion.ol
-        className="border-border border-t"
-        variants={listContainer}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-60px" }}
-      >
-        {recentProjects.map((project, i) => (
+      <ol className="border-border border-t">
+        {featuredProjects.map((project, i) => (
           <ProjectRow key={project.id} project={project} index={i} />
         ))}
-      </motion.ol>
+      </ol>
 
       <Link
         href="/work"

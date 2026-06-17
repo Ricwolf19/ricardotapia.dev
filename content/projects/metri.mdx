@@ -1,0 +1,45 @@
+---
+title: "Metri"
+slug: "metri"
+tagline: "App móvil de fitness offline-first para registrar entrenamiento y métricas corporales, con la UI dirigida directamente por SQLite."
+status: "development"
+visibility: "public"
+category: "oss"
+startDate: "2025-09"
+thumbnail: "/images/projects/metri-thumb.jpg"
+tags: ["oss", "react-native", "expo", "offline-first", "mobile"]
+---
+
+## Contexto
+
+Metri es una app móvil de fitness pensada para quienes entrenan en serio y necesitan sus datos rápido, privados y siempre disponibles —incluso en el gimnasio sin conexión—. La app corre por completo en el dispositivo y es totalmente usable sin iniciar sesión, priorizando la privacidad y la propiedad de los datos del usuario. El código es open-source bajo licencia MIT.
+
+## Arquitectura
+
+La decisión central es que **la base de datos dirige la UI**: no hay Zustand, Redux ni TanStack Query. SQLite (con Drizzle ORM) es la única fuente de verdad y su `useLiveQuery` reacciona directamente a las escrituras, eliminando bugs de sincronización de estado. MMKV cubre las lecturas síncronas de la ruta caliente (tema, unidades, sesión, onboarding) sin reemplazar al store relacional. Drizzle Kit genera y aplica las migraciones SQL automáticamente en cada arranque.
+
+## Stack
+
+- Expo (SDK 56) + React Native con TypeScript estricto.
+- Expo Router (enrutamiento por archivos con rutas tipadas).
+- SQLite + Drizzle ORM como fuente de verdad offline-first.
+- MMKV para almacenamiento clave-valor síncrono.
+- NativeWind v4 (Tailwind para React Native) con tokens de diseño.
+- `expo-notifications`, `expo-crypto` y `expo-file-system`.
+
+## Características
+
+- Autenticación local cifrada (sal + key-stretching con `expo-crypto`).
+- Perfiles con métricas corporales y cálculo de BMR/TDEE (Harris–Benedict).
+- Recordatorios diarios/semanales con notificaciones del sistema.
+- Galería de fotos de progreso (imagen completa + miniatura en disco).
+- Base de conocimiento bilingüe (EN/ES) y temas claro/oscuro/sistema.
+
+## Retos técnicos
+
+- Diseñar un motor de fórmulas puro y síncrono, seguro de llamar en cada pulsación sin parpadeo de UI.
+- Sistema de tokens de diseño que intercambia valores por esquema claro/oscuro sin hardcodear colores.
+
+## Resultado
+
+Una base sólida en desarrollo activo ([repositorio público](https://github.com/Ricwolf19/metri)) que demuestra una arquitectura offline-first poco común: UI reactiva dirigida por la base de datos, almacenamiento dual y migraciones automáticas.

@@ -2,7 +2,6 @@ import { useTranslations } from "next-intl";
 import { Mail } from "lucide-react";
 import { FaGithub, FaWhatsapp } from "react-icons/fa";
 import { Container } from "./Container";
-import { Logo } from "@/components/layout/Logo";
 import { siteConfig } from "@/data/site";
 
 export const Footer = () => {

@@ -1,14 +1,15 @@
 import type { ProjectCategory } from "@/types";
 
-/** Header navigation links (spec §7). href relative to the locale. */
+/** `href` is relative to the locale segment; the Link component prefixes it. */
 export const navLinks = [
   { href: "/work", key: "work" },
   { href: "/about", key: "about" },
   { href: "/now", key: "now" },
+  { href: "/certificaciones", key: "certifications" },
   { href: "/contact", key: "contact" },
 ] as const;
 
-/** Category filters for /work (spec §10.4). "all" = no filter. */
+/** Category filters for /work; "all" means no filter. */
 export type WorkFilter = "all" | ProjectCategory;
 
 export const workFilters: { value: WorkFilter; messageKey: string }[] = [
@@ -21,7 +22,7 @@ export const workFilters: { value: WorkFilter; messageKey: string }[] = [
   { value: "oss", messageKey: "filterOss" },
 ];
 
-/** Per-category gradients for programmatic placeholders (spec §15.2). */
+/** Per-category gradients for the thumbnail placeholders. */
 export const categoryGradients: Record<ProjectCategory, string> = {
   erp: "from-indigo-500/80 to-purple-600/80",
   saas: "from-cyan-500/80 to-blue-600/80",

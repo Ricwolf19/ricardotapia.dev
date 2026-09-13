@@ -136,6 +136,46 @@ export interface Experience {
 }
 
 // ============================================
+// EDUCATION
+// ============================================
+export interface Education {
+  id: string;
+  school: string;
+  degree: string; // Degree name (es). Translation in src/data/localize.ts
+  startDate: string; // ISO 8601
+  endDate?: string; // ISO 8601; omit when in progress
+  isCurrent: boolean;
+}
+
+// ============================================
+// CREDENTIALS
+// ============================================
+/**
+ * Structurally the FileViewer's `ViewableFile`, restated here because the data
+ * layer must not import from a component. The viewer's fields are optional; a
+ * credential always knows its name and type, so these are required.
+ */
+export interface CredentialFile {
+  url: string;
+  fileName: string;
+  mimeType: string;
+}
+
+export type CredentialId = "ingenieria" | "tsu" | "fullstack";
+
+export interface Credential {
+  id: CredentialId;
+  docType: "degree" | "certificate";
+  /** Study period (ISO 8601) — degrees, which span years. */
+  startDate?: string;
+  endDate?: string;
+  /** Single issue date (ISO 8601) — one-off certificates, which do not. */
+  issuedDate?: string;
+  /** One file = single preview; several = gallery with arrows in the viewer. */
+  files: CredentialFile[];
+}
+
+// ============================================
 // SITE CONFIG
 // ============================================
 export interface SiteConfig {
@@ -151,6 +191,7 @@ export interface SiteConfig {
   keywords: string[]; // SEO keywords (specialties, stack, name)
   socials: {
     github: string; // ENV: GITHUB_USERNAME
+    linkedin?: string;
     x?: string; // X/Twitter handle for twitter:creator, e.g. "@ricardotapia" (ENV: TWITTER_HANDLE)
   };
 }

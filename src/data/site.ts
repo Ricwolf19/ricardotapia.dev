@@ -7,8 +7,10 @@ export const siteConfig: SiteConfig = {
   title: "Ricardo Tapia — Desarrollador de Software Multiplataforma",
   description:
     "Diseño y construyo sistemas de software completos — ERP, SaaS, e-commerce y plataformas institucionales — de la arquitectura al deploy.",
-  // Canonical domain. Override per-environment with NEXT_PUBLIC_SITE_URL.
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ricardotapia.dev",
+  // Canonical domain: the apex, which is Vercel's primary domain here (www 308s to it).
+  // Pointing canonicals/hreflang at www would aim every signal at a redirect.
+  // Override per-environment with NEXT_PUBLIC_SITE_URL.
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://ricardotapia.dev",
   ogImage: "/opengraph-image",
   email: process.env.CONTACT_EMAIL ?? "contacto@ricardotapia.dev",
   whatsappNumber: process.env.WHATSAPP_NUMBER ?? "526143965716",
@@ -36,6 +38,7 @@ export const siteConfig: SiteConfig = {
   ],
   socials: {
     github: `https://github.com/${githubUsername}`,
+    linkedin: "https://www.linkedin.com/in/ricardo-tapia-46b5042b1",
     // Optional X/Twitter handle for twitter:creator (e.g. "@ricardotapia").
     x: process.env.TWITTER_HANDLE,
   },

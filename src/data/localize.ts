@@ -1,4 +1,4 @@
-import type { Project, Experience } from "@/types";
+import type { Project, Experience, Education } from "@/types";
 import { localized } from "@/lib/utils";
 
 /**
@@ -9,33 +9,33 @@ import { localized } from "@/lib/utils";
 const projectCopyEn: Record<string, { tagline: string; description: string }> = {
   "metri-info": {
     tagline:
-      "Open-source fitness web toolkit: 16 calculators, a bilingual knowledge base and installable PWA, with server-first SEO.",
+      "Free EN/ES fitness web suite: 17 shareable calculators, a bilingual knowledge base and a PWA with server-first SEO.",
     description:
-      "Web companion to the Metri mobile app, built with Next.js 16 (App Router, React Server Components). It bundles 16 health and training calculators, a bilingual MDX knowledge base (EN/ES) and an optional accounts layer. Server-first SEO with the Metadata API, JSON-LD, sitemap and dynamic OG; analytics via PostHog and GA4; installable as a PWA with offline calculators. Drizzle ORM + Neon and Better Auth power accounts, while the content renders with no database.",
+      "Free fitness web suite built with Next.js 16 (App Router, React Server Components). It bundles 17 health and training calculators — each with metric/imperial units, comparison mode and results shareable via URL/QR with dynamic OG images — plus a bilingual MDX knowledge base (~20 guides × 2 languages). Optional accounts with Better Auth (email/Google/GitHub, history, favorites, sync), installable offline-capable PWA, server-first SEO (JSON-LD, hreflang, dynamic OG), an admin dashboard with analytics, and a premium sync API for the mobile app (push/pull, LWW, tombstones, purge cron).",
   },
   metri: {
     tagline:
-      "Offline-first fitness mobile app for logging training and body metrics, with the UI driven directly by SQLite.",
+      "Offline-first workout tracker with a SQLite-driven UI, a headless Android widget and delta premium sync with the web.",
     description:
-      "Open-source mobile app built with Expo (SDK 56) and React Native. Offline-first architecture: SQLite with Drizzle ORM is the single source of truth and its `useLiveQuery` drives the UI with no global state library; MMKV handles synchronous setting reads. It ships encrypted local auth, profiles with BMR/TDEE calculation, reminders with notifications, a progress-photo gallery, EN/ES i18n and light/dark themes via design tokens. Drizzle Kit runs automatic migrations on every launch.",
+      "Open-source workout tracker built with Expo (SDK 56) and React Native 0.85. Offline-first architecture: SQLite with Drizzle ORM is the single source of truth and its `useLiveQuery` drives the UI with no global state library; MMKV handles synchronous reads. It ships a workout-session engine, a program/routine/day editor, 16 calculators, a knowledge base with a custom Markdown renderer, a headless Android home-screen widget that reads SQLite with no UI, local notifications with a rest-timer and 100% local progress photos. Automatic premium sync push→pull with delta sync, tombstones and exponential backoff; OTA via EAS and 4 GitHub Actions workflows. Beta APK (v1.7.0) distributed from metri.info/download.",
   },
   "cafe-combate": {
     tagline:
-      "Operations monorepo for Café Combate: warehouse, CFDI invoicing, sales and production in a single ecosystem.",
+      "Monorepo running an entire multi-branch coffee-shop business: 13 apps, offline-first and a full requisition flow.",
     description:
-      "A TypeScript monorepo unifying more than ten applications and shared modules to run warehouse, electronic invoicing (CFDI/SAT), sales, purchasing, production and administration. Built with React, Vite and React Router on top of Yarn Workspaces and Turborepo, with local-first sync via Dexie.",
+      "A TypeScript monorepo (36 workspaces: 13 deployable apps, 12 domain modules, 11 shared packages) that runs an entire multi-branch coffee-shop/retail business: warehouse, purchasing, sales, production and electronic invoicing (CFDI/SAT via Facturapi + pdf-lib). Offline-first with Dexie 4/IndexedDB and optional Dexie Cloud sync, multi-tenant via realmId, uploads with uploaderkit to GCS, and a complete requisition flow (requisition→quote→approval→purchase orders→receiving→payments). Express 5 + Drizzle + PostgreSQL backend, Redis, multi-dyno Heroku deploys with GitHub Actions CI.",
   },
   espau: {
     tagline:
-      "Institutional site and admin platform for Esperanza para el Autismo I.A.P. (ESPAU) in Chihuahua, Mexico.",
+      "Institutional site and clinical back office for Esperanza para el Autismo I.A.P., with minors' health data encrypted at rest.",
     description:
-      "Institutional website and admin panel for ESPAU, a nonprofit dedicated to the diagnosis and therapy of Autism Spectrum Disorder. Built with Next.js (App Router), PostgreSQL with type-safe queries, and Auth.js authentication.",
+      "Institutional website and clinical-administrative back office for ESPAU, a nonprofit dedicated to the diagnosis and therapy of Autism Spectrum Disorder. The public site covers the 6 programs (ADOS-2/ADI-R/ABAS-II, individual/group therapy, DENVER preschool, parent guidance, professional training), donations and transparency; the back office runs student records, therapists, schedules, cron-generated weekly plans, evaluations and an audit log under RBAC. Minors' health data is encrypted at rest and only released inside a step-up TOTP window. Auth.js v5 with mandatory TOTP, pgtyped + zql, node-pg-migrate, listkit and Vercel crons.",
   },
   "agates-from-mexico": {
     tagline:
-      "Custom e-commerce platform for Agates From Mexico, with storefront, admin panel and role-based access control.",
+      "One-of-a-kind-pieces e-commerce with a PWA storefront, in-person POS via Stripe Terminal and Spotlight search on Postgres.",
     description:
-      "A full online store built with Next.js: catalog, cart, Stripe and PayPal payments, ShipStation shipping, and a role-based admin panel. Backed by PostgreSQL with type-safe queries and integrated with Cloudinary, Redis, Resend and PostHog.",
+      "An online store for one-of-a-kind pieces (each SKU is a physical item with stock of exactly 1) built with the Next.js App Router: a storefront installable as a PWA (service worker that never caches HTML), online payments with Stripe and in-person card-present POS via Stripe Terminal, plus an admin panel with RBAC driven by a permission catalog. Each product exposes two public URLs (configurable Publishing Rules + a no-guessable private link), Spotlight search runs on a denormalized read-model in Postgres (accent-insensitive, advisory locks), and media uploads are server-validated straight to Backblaze B2. pgtyped + node-pg-migrate + zql, Cloudinary, PostHog, listkit for admin lists, Vercel.",
   },
   "danny-cuevas": {
     tagline: "Photography portfolio with an admin panel for managing albums and images.",
@@ -49,21 +49,21 @@ const projectCopyEn: Record<string, { tagline: string; description: string }> = 
   },
   "corporativo-fiscal": {
     tagline:
-      "Multi-app fiscal suite for an accounting firm: CFDI invoicing, reception, HR and collaborative tools.",
+      "Internal operating platform for an accounting firm: 13 apps, encrypted digital records, 2FA and a real-time collaborative whiteboard.",
     description:
-      "A TypeScript monorepo bundling several applications for a tax/accounting firm: web portal, authentication, administration, customer service, reception, HR and a collaborative whiteboard module. The Express + MongoDB backend integrates FACTURAPI for CFDI, Stripe, and WhatsApp notifications.",
+      "A TypeScript monorepo with 13 applications running a tax and accounting firm: corporate portal, customer self-service portal, HR digital records, reception, administration, a snack-bar PWA and a real-time collaborative whiteboard (Excalidraw + Yjs) for tax-planning sessions. Baseline security: mandatory 2FA/OTP (speakeasy), fine-grained RBAC (ADMIN, ACCOUNTANT, CUSTOMER, HR, BARISTA, SERVICE) and digital records with encrypted documents. Deep Mexican tax-compliance domain: CFDI multi-payment, the SAT cancellation cycle, payment CFDIs and SAT scraping with Puppeteer. Express 5 + MongoDB/Mongoose backend with JWT.",
   },
   facturalandia: {
     tagline:
-      "Electronic invoicing platform (CFDI 4.0) for Mexico, built as a monorepo with an API and client apps.",
+      "CFDI 4.0 electronic invoicing SaaS, genuinely multi-tenant per organization, with in-house auth and realtime sync.",
     description:
-      "An electronic invoicing platform (CFDI 4.0) built as a TypeScript monorepo with an Express + MongoDB API and React + Vite apps. It integrates FACTURAPI for stamping, Firebase for auth and realtime notifications, Redis for caching, and Google Cloud Storage for PDFs and evidence.",
+      "An electronic invoicing platform (CFDI 4.0) that is genuinely multi-tenant: each organization operates with its own Facturapi key encrypted with AES-256-GCM, an auto-registered signed webhook and its own buckets. TypeScript monorepo (Turborepo) with 5 apps (api, auth with 2FA, invoicing, read-only materialization, purchases), domains as vertical slices and 10 shared packages. 100% in-house auth with argon2id, realtime sync via signed webhooks + SSE, the full SAT cancellation cycle, Mongo transactions on a replica set, idempotent backfill, spotlight search and jobs with SSE-streamed logs. Node 22, React 19 + Vite 6, Express 5 + Mongoose, GCS, Stripe, Heroku.",
   },
   increscendo: {
     tagline:
-      "Corporate site and admin panel for Increscendo, with blog, events, quotes and customer management.",
+      "Corporate site for Increscendo with blog, services and a quoter with PDF generation and SAT catalogs, plus an admin panel.",
     description:
-      "A website and admin platform built with Next.js for Increscendo: public pages (services, blog, events, FAQs) and an admin panel with customer management, event types and quotes. Backed by PostgreSQL with type-safe queries, admin lists powered by listkit, and AWS S3 storage.",
+      "A website for Increscendo focused on its public presence: landing, services, blog, events and FAQs server-rendered for SEO, plus a quoter with PDF generation and SAT catalogs. The admin panel manages customers, event types and quotes with listkit lists wired to server actions over parameterized SQL (zql).",
   },
   "portillo-y-young": {
     tagline:
@@ -73,9 +73,15 @@ const projectCopyEn: Record<string, { tagline: string; description: string }> = 
   },
   listkit: {
     tagline:
-      "A React library for standardized list views: table/cards, search, filters, pagination and theming from a single config.",
+      "A React library for standardized list views: 10 tree-shakeable subpath exports, Zod-validated advanced filters and byte-identical CSV export.",
     description:
-      "@pibytelabs/listkit is a React library that produces a complete list view (toolbar, table, cards, pagination and filters) from a single declarative config. It works with any data source (REST, Next.js server actions, IndexedDB or in-memory arrays) and ships URL sync, a built-in cache, and SSR support.",
+      "@pibytelabs/listkit (v4.7.0) is a React library that produces a complete list view (toolbar, table, cards, pagination and filters) from a single declarative config, shipped as 10 tree-shakeable subpath exports. Advanced filters are validated with Zod, CSV export is verified byte-identical against real MongoDB and PostgreSQL, and it ships EN/ES i18n, SSR and adapters (memory/fetch/serverAction/Dexie). Releases are automated with release-please CI.",
+  },
+  uploaderkit: {
+    tagline:
+      "Full-stack file upload layer for React and Node with a shared client/server contract, headless hook and GCS/S3 providers.",
+    description:
+      "@pibytelabs/uploaderkit is a full-stack file upload layer for React and Node: a shared client/server contract with declarative scopes, a headless hook with magic-number validation, image compression and retry/abort, GCS/S3 providers, AES-256-GCM encryption, Express and Next.js adapters, and EN/ES i18n.",
   },
   "honeywell-internal": {
     tagline: "20+ internal automation solutions at Honeywell Intelligrated Chihuahua.",
@@ -86,13 +92,18 @@ const projectCopyEn: Record<string, { tagline: string; description: string }> = 
 
 const experienceCopyEn: Record<string, string> = {
   "exp-corpfiscal":
-    "Development of a corporate tax platform on an Express microservices architecture. 8 private apps: Legal, Clients, Materialization, Reception, HR, Admin, Landiabar and Visión Fiscal. Live presentation system with WebSockets, Excalidraw and YJS.",
+    "Building the internal operating platform of a tax and accounting firm on Express microservices: 13 apps in a monorepo (legal, clients, accounting, reception, HR, administration, corporate and more). Real-time collaborative whiteboard for tax-planning sessions with WebSockets, Excalidraw and Yjs.",
   "exp-pibytelabs":
-    "Full-stack architecture for clients in fintech, e-commerce, health and education. Built Facturalandia, CorpFiscal, Café Combate, Espau, Agates From Mexico, Danny Cuevas, Increscendo and Portillo y Young. Author of listkit.",
+    "One of the 2 lead developers keeping the company running. I designed and co-maintain the internal @pibytelabs package ecosystem (ui, utils, sat-utils, docs, notifier — private packages) that powers every product. Lead author of listkit and uploaderkit, published as open source on npm. Full-stack architecture for clients in fintech, e-commerce, health and education: Facturalandia, CorpFiscal, Café Combate, Espau, Agates From Mexico, Danny Cuevas, Increscendo and Portillo y Young.",
   "exp-sid":
     "Enterprise Java applications with a custom Struts-based framework. IoT integration via REST/HTTP APIs. Cross-platform communication modules for real-time inventory tracking. MySQL database management.",
   "exp-honeywell":
     "Professional internship. 20+ automation solutions with VBA macros and VB.NET scripts, reducing manual processes by 40%. Real-time metric dashboards via Oracle ERP integration. ASP.NET MVC web apps with SQL Server for enterprise resource tracking.",
+};
+
+const educationCopyEn: Record<string, string> = {
+  "edu-utch-ing": "B.Eng. in Software Development and Management",
+  "edu-utch-tsu": "Associate Degree (TSU) in IT — Multiplatform Software Development",
 };
 
 export const getTagline = (p: Project, locale: string): string =>
@@ -103,3 +114,6 @@ export const getDescription = (p: Project, locale: string): string =>
 
 export const getExperienceDescription = (e: Experience, locale: string): string =>
   localized(locale, e.description, experienceCopyEn[e.id]);
+
+export const getEducationDegree = (e: Education, locale: string): string =>
+  localized(locale, e.degree, educationCopyEn[e.id]);

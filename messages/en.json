@@ -3,7 +3,11 @@
     "work": "Work",
     "about": "About",
     "now": "Now",
-    "contact": "Contact"
+    "certifications": "Certifications",
+    "contact": "Contact",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "breadcrumb": "Breadcrumb"
   },
   "home": {
     "hero": {
@@ -12,6 +16,7 @@
       "description": "I design and build custom software for businesses: ERP, e-commerce, platforms, and web applications.",
       "ctaProjects": "View projects",
       "ctaContact": "Let's talk",
+      "ctaCv": "View CV",
       "available": "Available for new projects"
     },
     "featured": {
@@ -81,16 +86,17 @@
       "status": "Status",
       "category": "Category",
       "timeline": "Timeline",
-      "subApps": "System applications",
+      "subApps": "Apps in this monorepo",
       "prev": "Previous",
       "next": "Next"
     }
   },
   "about": {
     "title": "About",
-    "bio": "Full-stack developer based in Chihuahua, Mexico. I build software systems end to end, prioritizing maintainable architectures and product experiences that solve real business problems.",
+    "bio": "Full-stack developer based in Chihuahua, Mexico, with 2.5+ years building production systems: ERP, electronic invoicing SaaS, e-commerce and institutional platforms. I am one of the two lead engineers at PibyteLabs and the author of two open-source packages published on npm (listkit and uploaderkit). On mobile, I maintain a React Native/Expo app in open beta with offline-first sync designed end to end.",
     "experienceTitle": "Experience",
-    "stackTitle": "Experience with technologies",
+    "educationTitle": "Education",
+    "stackTitle": "Technologies",
     "githubTitle": "GitHub activity",
     "current": "Current",
     "type": {
@@ -105,6 +111,47 @@
     "title": "Now",
     "subtitle": "What I'm currently working on.",
     "empty": "No active projects right now."
+  },
+  "cv": {
+    "toggleHint": "Also in Spanish"
+  },
+  "certifications": {
+    "title": "Certifications",
+    "subtitle": "Verifiable degrees and certificates.",
+    "viewDocument": "View document",
+    "current": "Current",
+    "type": {
+      "degree": "Degree",
+      "certificate": "Diploma"
+    },
+    "items": {
+      "ingenieria": {
+        "title": "B.Eng. in Software Development and Management",
+        "issuer": "Universidad Tecnológica de Chihuahua"
+      },
+      "tsu": {
+        "title": "Associate Degree (TSU) in IT — Multiplatform Software Development",
+        "issuer": "Universidad Tecnológica de Chihuahua"
+      },
+      "fullstack": {
+        "title": "Full-Stack Programming Diploma (126 h)",
+        "issuer": "CENALTEC Chihuahua · Chihuahua IT Cluster"
+      }
+    }
+  },
+  "fileViewer": {
+    "filePreview": "File",
+    "downloadShort": "Download",
+    "openInTab": "Open in tab",
+    "close": "Close",
+    "previous": "Previous",
+    "next": "Next",
+    "viewerLoading": "Loading…",
+    "viewerError": "The preview could not be loaded",
+    "viewerErrorHint": "The file may have moved or the link expired. You can retry or download it.",
+    "viewerRetry": "Retry",
+    "noPreview": "This format has no preview",
+    "download": "Download {fileName}"
   },
   "contact": {
     "title": "Contact",
@@ -135,7 +182,7 @@
     "whatsapp": {
       "label": "Prefer WhatsApp?",
       "cta": "Send message",
-      "tooltip": "Let's talk?"
+      "tooltip": "Let's talk"
     },
     "directEmail": "Or email me directly at",
     "composer": {

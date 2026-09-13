@@ -1,0 +1,56 @@
+---
+title: "Facturalandia"
+slug: "facturalandia"
+tagline: "CFDI 4.0 electronic invoicing SaaS, genuinely multi-tenant per organization, with in-house auth and real-time sync."
+status: "production"
+visibility: "private"
+category: "saas"
+startDate: "2025-03"
+thumbnail: "/images/projects/facturalandia-thumb.jpg"
+tags: ["saas", "facturacion", "cfdi", "multi-tenant", "mongodb"]
+---
+
+## Context
+
+Facturalandia is an electronic invoicing platform for Mexico, compliant with
+CFDI 4.0. It is the only product in the ecosystem that is genuinely
+multi-tenant: each organization runs on its own Facturapi key encrypted with
+AES-256-GCM, its own self-registered signed webhook and its own storage buckets.
+
+## Architecture
+
+A TypeScript monorepo (Turborepo) with five applications over a shared layer:
+
+- `apps/` — `api` (Express 5 + Mongoose), `auth` (login + 2FA), `invoicing`
+  (the main app), `materialization` (read-only) and `purchases`.
+- `domains/` — business logic organized as vertical slices.
+- `shared/` — 10 packages: the API client, design system, SAT catalogs, Zod
+  types and utilities.
+
+Authentication is entirely in-house with argon2id — no third-party identity
+service. Real-time sync runs on signed Facturapi webhooks plus SSE to the
+clients; there is no Firebase anywhere.
+
+## Stack
+
+- Runtime: Node 22. Backend: Express 5 + Mongoose (MongoDB).
+- Frontend: React 19 + Vite 6 + TanStack Query + React Hook Form.
+- Invoicing: Facturapi (CFDI 4.0). Payments: Stripe.
+- Storage: Google Cloud Storage (PDFs and supporting documents).
+- Deployed on Heroku; the monorepo is orchestrated with Turborepo.
+
+## Technical challenges
+
+- The complete SAT cancellation cycle, with real-time notifications over signed
+  webhooks + SSE.
+- Mongo transactions on a replica set, and an idempotent backfill of historical
+  invoices.
+- Cross-cutting Spotlight search and background jobs whose logs stream over SSE.
+- Real isolation between organizations: per-tenant encrypted keys, webhooks and
+  buckets.
+
+## Outcome
+
+A multi-tenant invoicing SaaS in production, where one shared layer — HTTP
+client, design system, SAT catalogs and Zod types — feeds authentication,
+invoicing, purchasing and materialization alike.

@@ -2,8 +2,7 @@ import type { Experience } from "@/types";
 import { techList } from "./technologies";
 
 /**
- * Reconciled work timeline (spec §9). Ordered from most recent
- * to oldest for direct rendering in ExperienceTimeline.
+ * Ordered most recent first, so ExperienceTimeline renders it as-is.
  */
 export const experiences: Experience[] = [
   {
@@ -15,7 +14,7 @@ export const experiences: Experience[] = [
     startDate: "2025-05",
     isCurrent: true,
     description:
-      "Desarrollo de plataforma fiscal corporativa en arquitectura de microservicios Express. 8 aplicaciones privadas: Legal, Clientes, Materialización, Recepción, RH, Admin, Landiabar y Visión Fiscal. Sistema de presentaciones live con WebSockets, Excalidraw y YJS.",
+      "Desarrollo de la plataforma operativa interna de un despacho fiscal sobre microservicios Express: 13 aplicaciones en monorepo (legal, clientes, contabilidad, recepción, RH, administración, corporativo y más). Pizarra colaborativa en tiempo real para sesiones fiscales con WebSockets, Excalidraw y Yjs.",
     technologies: techList(
       "node",
       "express",
@@ -30,14 +29,14 @@ export const experiences: Experience[] = [
   },
   {
     id: "exp-pibytelabs",
-    role: "Full-Stack Developer / Founder",
+    role: "Lead Full-Stack Developer",
     company: "PibyteLabs",
     location: "Remoto, México",
     type: "freelance",
     startDate: "2025-05",
     isCurrent: true,
     description:
-      "Arquitectura full-stack para clientes en fintech, e-commerce, salud y educación. Desarrollo de Facturalandia, CorpFiscal, Café Combate, Espau, Agates From Mexico, Danny Cuevas, Increscendo y Portillo y Young. Autoría de listkit.",
+      "Uno de los 2 desarrolladores principales que mantienen la empresa. Diseñé y co-mantengo el ecosistema interno de paquetes @pibytelabs (ui, utils, sat-utils, docs, notifier — paquetes privados) que impulsa todos los productos. Autor principal de listkit y uploaderkit, publicados como open source en npm. Arquitectura full-stack para clientes en fintech, e-commerce, salud y educación: Facturalandia, CorpFiscal, Café Combate, Espau, Agates From Mexico, Danny Cuevas, Increscendo y Portillo y Young.",
     technologies: techList(
       "next",
       "react",
@@ -58,6 +57,7 @@ export const experiences: Experience[] = [
       "increscendo",
       "portillo-y-young",
       "listkit",
+      "uploaderkit",
     ],
   },
   {

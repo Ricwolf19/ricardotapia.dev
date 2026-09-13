@@ -1,0 +1,41 @@
+---
+title: "Chachitos"
+slug: "chachitos"
+tagline: "Official website for Chachitos, featuring a Google Maps store locator."
+status: "production"
+visibility: "public"
+category: "marketing"
+startDate: "2024-05"
+thumbnail: "/images/projects/chachitos-thumb.jpg"
+tags: ["marketing", "nextjs", "google-maps", "tailwind"]
+---
+
+## Context
+
+Chachitos is a Mexican company that has been making puffed-wheat cereal for over
+70 years. The project is its official website: a modern, fast, responsive
+presence.
+
+## Architecture
+
+A Next.js site on the App Router, organized into clear routes (Home, About,
+Flavors, Menu, Find Us):
+
+- `components/` — reusable components, including the Google Maps integration and
+  the store locator.
+- `const/` — company constants (values, addresses, social links).
+- `mocks/` — sample data (products and flavors).
+- `utils/` — helpers such as distance calculation with the Haversine formula.
+
+## Stack
+
+- Next.js 15 + React 19 + Tailwind CSS + TypeScript.
+- Google Maps API for the store locator, with marker clustering.
+- reCAPTCHA and Resend for the contact forms.
+- scrollreveal for entrance animations.
+
+## Outcome
+
+An institutional site with a working store locator that computes the distance
+from the visitor to each point of sale.
+[View site](https://webpage-indol-five.vercel.app/).

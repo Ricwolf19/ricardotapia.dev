@@ -7,8 +7,9 @@ import { ArrowLeft, ArrowRight, ExternalLink, Globe, Lock } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { getProjectBySlug, workProjects, splitLinks, splitApps, getLiveUrl } from "@/data/projects";
 import { getTagline, getDescription } from "@/data/localize";
-import { siteConfig } from "@/data/site";
-import { localeAlternates } from "@/lib/seo";
+import { localeAlternates, localeUrl } from "@/lib/seo";
+import { creativeWorkSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getProjectContent } from "@/lib/mdx";
 import { MdxContent } from "@/components/mdx/MdxContent";
 import { Section } from "@/components/layout/Section";
@@ -82,7 +83,7 @@ export const generateMetadata = async ({
     openGraph: {
       title: project.title,
       description: tagline,
-      url: `${siteConfig.url}/${locale}/work/${slug}`,
+      url: localeUrl(locale, `/work/${slug}`),
       type: "article",
     },
   };
@@ -98,7 +99,7 @@ const CaseStudyPage = async ({ params }: { params: Promise<{ locale: string; slu
   const t = await getTranslations({ locale, namespace: "work.caseStudy" });
   const tStatus = await getTranslations({ locale, namespace: "status" });
   const tWork = await getTranslations({ locale, namespace: "work" });
-  const fileContent = await getProjectContent(slug);
+  const fileContent = await getProjectContent(slug, locale);
 
   const mdxSource = fileContent
     ? await serialize(fileContent.body, {
@@ -119,29 +120,19 @@ const CaseStudyPage = async ({ params }: { params: Promise<{ locale: string; slu
 
   // Per-project structured data: a CreativeWork for the case study (the breadcrumb
   // trail is emitted by <Breadcrumbs/>), so search engines can surface a rich result.
-  const projectUrl = `${siteConfig.url}/${locale}/work/${slug}`;
-  const liveUrl = getLiveUrl(project);
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    name: project.title,
-    headline: project.title,
+  const jsonLd = creativeWorkSchema(locale, {
+    slug,
+    title: project.title,
     description: getTagline(project, locale),
-    url: projectUrl,
-    inLanguage: locale,
+    keywords: project.tags,
     datePublished: project.launchDate ?? project.startDate,
-    keywords: project.tags.join(", "),
-    author: { "@type": "Person", name: siteConfig.name, url: siteConfig.url },
-    ...(liveUrl ? { sameAs: liveUrl } : {}),
-    ...(project.repoUrl ? { codeRepository: project.repoUrl } : {}),
-  };
+    liveUrl: getLiveUrl(project),
+    repoUrl: project.repoUrl,
+  });
 
   return (
     <Section>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
       <Breadcrumbs
         locale={locale}
         trail={[
@@ -164,7 +155,12 @@ const CaseStudyPage = async ({ params }: { params: Promise<{ locale: string; slu
             {getTagline(project, locale)}
           </p>
 
-          <div className="prose prose-neutral dark:prose-invert mt-8 max-w-none">
+          {/* `lang` marks a body still served in the default locale, so neither a
+              screen reader nor a crawler is told Spanish prose is English. */}
+          <div
+            className="prose prose-neutral dark:prose-invert mt-8 max-w-none"
+            lang={fileContent && fileContent.locale !== locale ? fileContent.locale : undefined}
+          >
             {mdxSource ? (
               <MdxContent source={mdxSource} />
             ) : (

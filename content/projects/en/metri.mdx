@@ -1,0 +1,66 @@
+---
+title: "Metri"
+slug: "metri"
+tagline: "Offline-first workout tracker with a SQLite-driven UI, a headless Android widget and premium delta sync with the web."
+status: "development"
+visibility: "public"
+category: "oss"
+startDate: "2025-09"
+thumbnail: "/images/projects/metri-thumb.jpg"
+tags: ["oss", "react-native", "expo", "offline-first", "mobile"]
+---
+
+## Context
+
+Metri is a workout tracker for people who need their training data fast,
+private and always available — including in a gym with no signal. The app runs
+entirely on the device and is fully usable without signing in. The code is open
+source under the MIT license, and the beta APK (v1.7.0, Android open beta) is
+distributed from [metri.info/download](https://metri.info/download).
+
+## Architecture
+
+The central decision is that **the database drives the UI**: there is no
+Zustand, no Redux, no TanStack Query. SQLite (with Drizzle ORM) is the single
+source of truth, and its `useLiveQuery` reacts directly to writes, which removes
+a whole class of state-synchronization bugs. MMKV covers synchronous hot-path
+reads (theme, units, session) without replacing the relational store. Drizzle
+Kit generates and applies SQL migrations automatically on each launch.
+
+Automatic premium sync does push→pull with delta sync, tombstones and
+exponential backoff; the wire-format contract with the web app (metri.info) is
+maintained by hand across both repositories.
+
+## Stack
+
+- Expo SDK 56 + React Native 0.85 with strict TypeScript.
+- Expo Router (file-based routing with typed routes).
+- expo-sqlite + Drizzle ORM as the offline-first source of truth; MMKV for
+  key-value reads.
+- NativeWind v4 with design tokens; Reanimated v4 for animation.
+- Better Auth Expo for accounts; Sentry for error tracking.
+
+## Features
+
+- A workout-session engine and an editor for programmes, routines and days.
+- 16 calculators and a knowledge base with a custom Markdown renderer.
+- A headless Android home-screen widget that reads SQLite without opening the UI.
+- Local notifications with Android channels and a rest timer.
+- Progress photos kept fully on-device; EN/ES i18n and light/dark/system themes.
+- OTA updates through EAS and release engineering across 4 GitHub Actions
+  workflows.
+
+## Technical challenges
+
+- Designing a pure, synchronous formula engine safe to call on every keystroke
+  without UI flicker.
+- Delta sync with tombstones and exponential backoff against a backend whose
+  contract is maintained by hand.
+- An Android widget that queries the database directly, with no UI process.
+
+## Outcome
+
+An app in open beta ([public repository](https://github.com/Ricwolf19/metri))
+that demonstrates an uncommon offline-first architecture: a reactive UI driven
+by the database, delta sync designed end to end, and automated release
+engineering.

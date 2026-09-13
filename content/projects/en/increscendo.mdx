@@ -1,0 +1,51 @@
+---
+title: "Increscendo Eventos"
+slug: "increscendo"
+tagline: "Corporate site for Increscendo with a blog, services and a quote builder with PDF output and SAT catalogs, plus an admin panel."
+status: "production"
+visibility: "hybrid"
+category: "marketing"
+startDate: "2025-01"
+thumbnail: "/images/projects/increscendo-thumb.jpg"
+tags: ["marketing", "eventos", "nextjs", "postgresql"]
+---
+
+## Context
+
+Increscendo needed a public presence — services, blog, events, FAQs — with a
+quote builder its clients could actually use, plus a lightweight admin panel for
+running customers, event types and quotes.
+
+## Architecture
+
+A Next.js application on the App Router. The public pages (`quienes-somos`,
+`servicios`, `blog`, `eventos`, `faqs`, `contacto`) are server-rendered for SEO.
+The quote builder produces a PDF of the quote and reads SAT catalogs. The admin
+lists — customers, event types, content, users — use `@pibytelabs/listkit` wired
+to server actions.
+
+Each list view lives in its own folder with a declarative config, a client
+component bound to the server-action adapter, and a server wrapper. The data
+comes from server actions that build parameterized SQL (zql).
+
+## Stack
+
+- Next.js + TypeScript + Tailwind CSS.
+- PostgreSQL with typed queries; migrations with `node-pg-migrate`.
+- Auth.js (NextAuth) + next-safe-action for typed server actions.
+- `@pibytelabs/listkit` for admin lists over server actions.
+- AWS S3 (uploads with presigned URLs), Google Maps with marker clustering.
+- TipTap (editor), pdf-lib/pdfjs (documents), Resend + React Email.
+
+## Technical challenges
+
+- Keeping the public pages server-rendered for SEO while the admin lists load on
+  the client through listkit.
+- A quote builder with PDF generation and SAT catalogs wired into the sales
+  workflow.
+
+## Outcome
+
+A search-optimized public site ([increscendoeventos.com](https://increscendoeventos.com/))
+with a working quote builder and a consistent admin panel built on declarative
+list configurations.

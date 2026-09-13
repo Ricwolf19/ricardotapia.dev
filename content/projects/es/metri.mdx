@@ -1,0 +1,48 @@
+---
+title: "Metri"
+slug: "metri"
+tagline: "Workout tracker offline-first con la UI dirigida por SQLite, widget Android headless y sync premium delta con la web."
+status: "development"
+visibility: "public"
+category: "oss"
+startDate: "2025-09"
+thumbnail: "/images/projects/metri-thumb.jpg"
+tags: ["oss", "react-native", "expo", "offline-first", "mobile"]
+---
+
+## Contexto
+
+Metri es un workout tracker para quienes entrenan con pesas y necesitan sus datos rápido, privados y siempre disponibles —incluso en el gimnasio sin conexión—. La app corre por completo en el dispositivo y es totalmente usable sin iniciar sesión. El código es open-source bajo licencia MIT y el APK beta (v1.7.0, open beta Android) se distribuye desde [metri.info/download](https://metri.info/download).
+
+## Arquitectura
+
+La decisión central es que **la base de datos dirige la UI**: no hay Zustand, Redux ni TanStack Query. SQLite (con Drizzle ORM) es la única fuente de verdad y su `useLiveQuery` reacciona directamente a las escrituras, eliminando bugs de sincronización de estado. MMKV cubre las lecturas síncronas del hot path (tema, unidades, sesión) sin reemplazar al store relacional. Drizzle Kit genera y aplica las migraciones SQL automáticamente en cada arranque.
+
+La sync premium automática hace push→pull con delta sync, tombstones y backoff exponencial; el contrato wire-format con la web (metri.info) se mantiene a mano entre ambos repos.
+
+## Stack
+
+- Expo SDK 56 + React Native 0.85 con TypeScript estricto.
+- Expo Router (enrutamiento por archivos con rutas tipadas).
+- expo-sqlite + Drizzle ORM como fuente de verdad offline-first; MMKV clave-valor.
+- NativeWind v4 con tokens de diseño; Reanimated v4 para animaciones.
+- Better Auth Expo para cuentas; Sentry para errores.
+
+## Características
+
+- Motor de sesión de entrenamiento y editor de programas/rutinas/días.
+- 16 calculadoras y base de conocimiento con renderer Markdown propio.
+- Widget de home screen Android headless que lee SQLite sin abrir la UI.
+- Notificaciones locales con canales Android y rest-timer.
+- Fotos de progreso 100% locales; i18n EN/ES y temas claro/oscuro/sistema.
+- OTA updates con EAS y release engineering con 4 workflows de GitHub Actions.
+
+## Retos técnicos
+
+- Diseñar un motor de fórmulas puro y síncrono, seguro de llamar en cada pulsación sin parpadeo de UI.
+- Delta sync con tombstones y backoff exponencial contra un backend con contrato mantenido a mano.
+- Un widget Android que consulta la base de datos directamente, sin proceso de UI.
+
+## Resultado
+
+Una app en open beta ([repositorio público](https://github.com/Ricwolf19/metri)) que demuestra una arquitectura offline-first poco común: UI reactiva dirigida por la base de datos, sync delta diseñada end-to-end y release engineering automatizado.

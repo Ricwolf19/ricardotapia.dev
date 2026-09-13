@@ -21,7 +21,7 @@ interface ProjectCardProps {
   activeNow?: boolean;
 }
 
-/** Project card (spec §10.3). Uniform height and image-ready thumbnail. */
+/** Uniform height across a row, so a grid of cards stays aligned. */
 export const ProjectCard = ({ project, priority = false, activeNow = false }: ProjectCardProps) => {
   const t = useTranslations();
   const locale = useLocale();

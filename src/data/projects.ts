@@ -2,10 +2,9 @@ import type { Project, ProjectLink, SubApp } from "@/types";
 import { techList } from "./technologies";
 
 /**
- * Preloaded data (spec §8). Static IDs prepared for a future migration to Neon
- * as PK. Spanish is the source of truth; English copy lives in localize.ts.
- * Thumbnails are local paths; until real screenshots exist, ProjectCard renders
- * a programmatic placeholder (spec §15.2).
+ * Static IDs are prepared for a future migration to Neon as PK. Spanish is the
+ * source of truth; English copy lives in localize.ts. Thumbnails are local
+ * paths; until real screenshots exist, ProjectCard renders a placeholder.
  *
  * Links and monorepo apps carry a `public` flag so the case study can surface
  * what visitors can actually open and keep private (account-required) targets
@@ -17,9 +16,9 @@ export const projects: Project[] = [
     slug: "metri-info",
     title: "Metri Web",
     tagline:
-      "Toolkit web open-source de fitness: 16 calculadoras, base de conocimiento bilingüe e instalación como PWA con SEO server-first.",
+      "Suite web gratuita de fitness EN/ES: 17 calculadoras compartibles, base de conocimiento bilingüe y PWA con SEO server-first.",
     description:
-      "Companion web de la app móvil Metri, construido con Next.js 16 (App Router, React Server Components). Reúne 16 calculadoras de salud y entrenamiento, una base de conocimiento MDX bilingüe (EN/ES) y una capa de cuentas opcional. SEO server-first con Metadata API, JSON-LD, sitemap y OG dinámico; analítica con PostHog y GA4; instalable como PWA con calculadoras offline. Drizzle ORM + Neon y Better Auth respaldan las cuentas; el contenido se renderiza sin base de datos.",
+      "Suite web gratuita de fitness, construida con Next.js 16 (App Router, React Server Components). Reúne 17 calculadoras de salud y entrenamiento —cada una con unidades métricas/imperiales, modo comparación y resultados compartibles por URL/QR con OG dinámica— y una base de conocimiento MDX bilingüe (~20 guías × 2 idiomas). Cuentas opcionales con Better Auth (email/Google/GitHub, historial, favoritos, sync), PWA instalable offline-capable, SEO server-first (JSON-LD, hreflang, OG dinámicas), admin dashboard con analytics y API de sync premium para la app móvil (push/pull, LWW, tombstones, cron de purge).",
     status: "production",
     visibility: "public",
     category: "platform",
@@ -45,9 +44,9 @@ export const projects: Project[] = [
     slug: "metri",
     title: "Metri",
     tagline:
-      "App móvil de fitness offline-first para registrar entrenamiento y métricas corporales, con la UI dirigida directamente por SQLite.",
+      "Workout tracker offline-first con la UI dirigida por SQLite, widget Android headless y sync premium delta con la web.",
     description:
-      "Aplicación móvil open-source construida con Expo (SDK 56) y React Native. Arquitectura offline-first: SQLite con Drizzle ORM es la única fuente de verdad y su `useLiveQuery` dirige la UI sin librería de estado global; MMKV cubre lecturas síncronas de ajustes. Incluye autenticación local cifrada, perfiles con cálculo de BMR/TDEE, recordatorios con notificaciones, galería de fotos de progreso, i18n EN/ES y temas claro/oscuro mediante tokens de diseño. Migraciones automáticas con Drizzle Kit en cada arranque.",
+      "Workout tracker open-source construido con Expo (SDK 56) y React Native 0.85. Arquitectura offline-first: SQLite con Drizzle ORM es la única fuente de verdad y su `useLiveQuery` dirige la UI sin librería de estado global; MMKV cubre lecturas síncronas. Motor de sesión de entrenamiento, editor de programas/rutinas/días, 16 calculadoras, base de conocimiento con renderer Markdown propio, widget de home screen Android headless que lee SQLite sin UI, notificaciones locales con rest-timer y fotos de progreso 100% locales. Sync premium automática push→pull con delta sync, tombstones y backoff exponencial; OTA con EAS y 4 workflows de GitHub Actions. APK beta (v1.7.0) distribuido desde metri.info/download.",
     status: "development",
     visibility: "public",
     category: "oss",
@@ -79,9 +78,9 @@ export const projects: Project[] = [
     slug: "cafe-combate",
     title: "Café Combate",
     tagline:
-      "Monorepo de gestión operativa para Café Combate: almacén, facturación CFDI, ventas y producción en un solo ecosistema.",
+      "Monorepo que opera todo el negocio de una cafetería multi-sucursal: 13 apps, offline-first y flujo completo de requisiciones.",
     description:
-      "Monorepo TypeScript que unifica más de diez aplicaciones y módulos compartidos para operar almacén, facturación electrónica (CFDI/SAT), ventas, compras, producción y administración. Construido con React, Vite y React Router sobre Yarn Workspaces y Turborepo, con sincronización local mediante Dexie.",
+      "Monorepo TypeScript (36 workspaces: 13 apps desplegables, 12 módulos de dominio, 11 paquetes compartidos) que opera todo el negocio de una cafetería/retail multi-sucursal: almacén, compras, ventas, producción y facturación electrónica (CFDI/SAT con Facturapi + pdf-lib). Offline-first con Dexie 4/IndexedDB y sync opcional Dexie Cloud, multi-tenant via realmId, subidas con uploaderkit a GCS y flujo completo de requisiciones (requisición→cotización→autorización→órdenes de compra→recepción→pagos). Backend Express 5 + Drizzle + PostgreSQL, Redis, deploy multi-dyno en Heroku con CI en GitHub Actions.",
     status: "production",
     visibility: "hybrid",
     category: "erp",
@@ -97,7 +96,7 @@ export const projects: Project[] = [
     ],
     startDate: "2024-01",
     launchDate: "2024-06",
-    tags: ["erp", "cfdi", "react", "vite", "tailwind", "offline-sync"],
+    tags: ["erp", "cfdi", "react", "offline-first", "multi-tenant"],
     technologies: techList(
       "react",
       "vite",
@@ -105,6 +104,11 @@ export const projects: Project[] = [
       "typescript",
       "tailwind",
       "dexie",
+      "node",
+      "express",
+      "drizzle",
+      "postgres",
+      "redis",
       "heroku",
     ),
     isMonorepo: true,
@@ -194,9 +198,9 @@ export const projects: Project[] = [
     slug: "espau",
     title: "Espau",
     tagline:
-      "Sitio institucional y plataforma administrativa para Esperanza para el Autismo I.A.P. (ESPAU) en Chihuahua.",
+      "Sitio institucional y back office clínico para Esperanza para el Autismo I.A.P., con datos de salud de menores cifrados en reposo.",
     description:
-      "Sitio web institucional y panel administrativo para ESPAU, organización civil dedicada al diagnóstico y terapia del Trastorno del Espectro Autista. Construido con Next.js (App Router), PostgreSQL con consultas tipadas y autenticación con Auth.js.",
+      "Sitio institucional y back office clínico-administrativo para ESPAU, organización dedicada al diagnóstico y terapia del Trastorno del Espectro Autista. El sitio público cubre los 6 programas (ADOS-2/ADI-R/ABAS-II, terapia individual/grupal, preescolar DENVER, orientación a padres, formación profesional), donaciones y transparencia; el back office opera expedientes de alumnos, terapeutas, horarios, planeaciones semanales auto-generadas por cron, evaluaciones y audit log bajo RBAC. Los datos de salud de menores se cifran en reposo y solo se liberan en una ventana step-up TOTP. Auth.js v5 con TOTP obligatorio, pgtyped + zql, node-pg-migrate, listkit y Vercel crons.",
     status: "production",
     visibility: "hybrid",
     category: "platform",
@@ -207,7 +211,7 @@ export const projects: Project[] = [
       { label: "Admin", url: "https://app-espau.vercel.app/", type: "admin", public: false },
     ],
     startDate: "2024-09",
-    tags: ["platform", "nextjs", "postgresql", "authjs", "tailwind"],
+    tags: ["platform", "nextjs", "postgresql", "authjs", "healthcare"],
     technologies: techList("next", "typescript", "tailwind", "postgres", "authjs", "node"),
   },
   {
@@ -215,9 +219,9 @@ export const projects: Project[] = [
     slug: "agates-from-mexico",
     title: "Agates From Mexico",
     tagline:
-      "Plataforma de e-commerce a medida para Agates From Mexico, con tienda, panel administrativo y control de acceso por roles.",
+      "E-commerce de piezas únicas con storefront PWA, POS presencial con Stripe Terminal y búsqueda Spotlight sobre Postgres.",
     description:
-      "Tienda en línea completa construida con Next.js: catálogo, carrito, pagos con Stripe y PayPal, envíos vía ShipStation y un panel administrativo con control de acceso por roles. Usa PostgreSQL con consultas tipadas e integra Cloudinary, Redis, Resend y PostHog.",
+      "Tienda en línea de piezas únicas (cada SKU es una pieza física con existencia 1) construida con Next.js App Router: storefront instalable como PWA (service worker que nunca cachea HTML), pagos online con Stripe y POS presencial card-present con Stripe Terminal, y panel administrativo con RBAC por catálogo de permisos. Cada producto expone dos URLs públicas (Publishing Rules configurables + link privado no-guessable), la búsqueda Spotlight corre sobre un read-model desnormalizado en Postgres (accent-insensitive, advisory locks) y la media sube validada en servidor directo a Backblaze B2. pgtyped + node-pg-migrate + zql, Cloudinary, PostHog, listkit en listas admin, Vercel.",
     status: "production",
     visibility: "public",
     category: "ecommerce",
@@ -232,10 +236,9 @@ export const projects: Project[] = [
       "tailwind",
       "postgres",
       "stripe",
-      "paypal",
-      "redis",
       "cloudinary",
-      "resend",
+      "posthog",
+      "vercel",
     ),
   },
   {
@@ -285,12 +288,12 @@ export const projects: Project[] = [
     slug: "corporativo-fiscal",
     title: "Corporativo Fiscal",
     tagline:
-      "Suite fiscal multi-app para un corporativo contable: facturación CFDI, recepción, RH y herramientas colaborativas.",
+      "Plataforma operativa interna de un despacho fiscal: 13 apps, expediente digital cifrado, 2FA y pizarra colaborativa en tiempo real.",
     description:
-      "Monorepo TypeScript que agrupa varias aplicaciones para un despacho fiscal: portal web, autenticación, administración, atención a clientes, recepción, recursos humanos y un módulo de pizarra colaborativa. El backend en Express + MongoDB integra FACTURAPI para CFDI, Stripe y notificaciones por WhatsApp.",
+      "Monorepo TypeScript con 13 aplicaciones que operan un despacho fiscal: portal corporativo, portal self-service de clientes, expediente digital de RH, recepción, administración, PWA del snack bar y una pizarra colaborativa en tiempo real (Excalidraw + Yjs) para sesiones fiscales. Seguridad de base: 2FA/OTP obligatorio (speakeasy), RBAC fino (ADMIN, ACCOUNTANT, CUSTOMER, RH, BARISTA, SERVICE) y expediente digital con documentos cifrados. Dominio fiscal profundo: multipago CFDI, ciclo de cancelación SAT, CFDI de pago y scraping del SAT con Puppeteer. Backend Express 5 + MongoDB/Mongoose con JWT.",
     status: "production",
     visibility: "private",
-    category: "saas",
+    category: "platform",
     priority: true,
     loginRequired: true,
     thumbnail: "/images/projects/corporativo-fiscal-thumb.jpg",
@@ -298,7 +301,7 @@ export const projects: Project[] = [
       { label: "Legal", url: "https://legal.corpfiscal.com.mx/", type: "admin", public: false },
     ],
     startDate: "2025-05",
-    tags: ["saas", "microservicios", "express", "websockets", "cfdi"],
+    tags: ["platform", "microservicios", "express", "websockets", "cfdi"],
     technologies: techList(
       "node",
       "express",
@@ -398,9 +401,9 @@ export const projects: Project[] = [
     slug: "facturalandia",
     title: "Facturalandia",
     tagline:
-      "Plataforma de facturación electrónica CFDI 4.0 para México, en monorepo con API y apps de cliente.",
+      "Plataforma SaaS de facturación electrónica CFDI 4.0, genuinamente multi-tenant por organizaciones, con auth in-house y sync en tiempo real.",
     description:
-      "Plataforma de facturación electrónica (CFDI 4.0) construida como monorepo TypeScript con una API en Express + MongoDB y apps en React + Vite. Integra FACTURAPI para timbrado, Firebase para autenticación y notificaciones en tiempo real, Redis para caché y Google Cloud Storage para PDFs y evidencias.",
+      "Plataforma de facturación electrónica (CFDI 4.0) genuinamente multi-tenant: cada organización opera con su propia llave de Facturapi cifrada AES-256-GCM, webhook firmado auto-registrado y buckets propios. Monorepo TypeScript (Turborepo) con 5 apps (api, auth con 2FA, invoicing, materialization read-only, purchases), dominios como vertical slices y 10 paquetes compartidos. Auth 100% in-house con argon2id, sync en tiempo real por webhooks firmados + SSE, ciclo de cancelación SAT completo, transacciones Mongo con replica set, backfill idempotente, spotlight search y jobs con logs por SSE. Node 22, React 19 + Vite 6, Express 5 + Mongoose, GCS, Stripe, Heroku.",
     status: "production",
     visibility: "private",
     category: "saas",
@@ -409,18 +412,18 @@ export const projects: Project[] = [
     thumbnail: "/images/projects/facturalandia-thumb.jpg",
     links: [],
     startDate: "2025-03",
-    tags: ["saas", "facturacion", "cfdi", "mongodb", "firebase"],
+    tags: ["saas", "facturacion", "cfdi", "multi-tenant", "mongodb"],
     technologies: techList(
       "react",
       "vite",
       "node",
       "express",
       "mongodb",
-      "firebase",
-      "redis",
       "facturapi",
       "gcs",
+      "stripe",
       "typescript",
+      "heroku",
     ),
   },
   {
@@ -428,16 +431,16 @@ export const projects: Project[] = [
     slug: "increscendo",
     title: "Increscendo Eventos",
     tagline:
-      "Sitio corporativo y panel administrativo para Increscendo, con blog, eventos, cotizaciones y gestión de clientes.",
+      "Sitio corporativo para Increscendo con blog, servicios y cotizador con PDF y catálogos SAT, más un panel administrativo.",
     description:
-      "Sitio web y plataforma administrativa construidos con Next.js para Increscendo: páginas públicas (servicios, blog, eventos, FAQs) y un panel con gestión de clientes, tipos de evento y cotizaciones. Usa PostgreSQL con consultas tipadas, listas administrativas con listkit y almacenamiento en AWS S3.",
+      "Sitio web para Increscendo centrado en la presencia pública: landing, servicios, blog, eventos y FAQs server-rendered para SEO, más un cotizador con generación de PDF y catálogos SAT. El panel administrativo gestiona clientes, tipos de evento y cotizaciones con listas listkit conectadas a server actions sobre SQL parametrizado (zql).",
     status: "production",
     visibility: "hybrid",
-    category: "platform",
+    category: "marketing",
     thumbnail: "/images/projects/increscendo-thumb.jpg",
     links: [{ label: "Sitio", url: "https://increscendoeventos.com/", type: "live", public: true }],
     startDate: "2025-01",
-    tags: ["platform", "eventos", "nextjs", "postgresql"],
+    tags: ["marketing", "eventos", "nextjs", "postgresql"],
     technologies: techList(
       "next",
       "typescript",
@@ -470,14 +473,20 @@ export const projects: Project[] = [
     slug: "listkit",
     title: "listkit",
     tagline:
-      "Librería React para vistas de lista estandarizadas: tabla/tarjetas, búsqueda, filtros, paginación y theming desde una sola config.",
+      "Librería React para vistas de lista estandarizadas: 10 subpath exports tree-shakeables, filtros avanzados validados con Zod y exportación CSV byte-idéntica.",
     description:
-      "@pibytelabs/listkit es una librería React que genera una vista de lista completa (toolbar, tabla, tarjetas, paginación y filtros) a partir de una única configuración declarativa. Funciona con cualquier fuente de datos (REST, server actions de Next.js, IndexedDB o arrays en memoria) e incluye sincronización con la URL, caché integrada y SSR.",
+      "@pibytelabs/listkit (v4.7.0) es una librería React que genera una vista de lista completa (toolbar, tabla, tarjetas, paginación y filtros) a partir de una única configuración declarativa, distribuida en 10 subpath exports tree-shakeables. Los filtros avanzados se validan con Zod, la exportación CSV tiene paridad byte-idéntica verificada contra MongoDB y PostgreSQL reales, e incluye i18n EN/ES, SSR y adapters (memory/fetch/serverAction/Dexie). CI con releases automatizados vía release-please.",
     status: "production",
     visibility: "public",
     category: "oss",
     thumbnail: "/images/projects/listkit-thumb.jpg",
     links: [
+      {
+        label: "npm",
+        url: "https://www.npmjs.com/package/listkit",
+        type: "npm",
+        public: true,
+      },
       {
         label: "Repositorio",
         url: "https://github.com/Ricwolf19/listkit",
@@ -488,10 +497,41 @@ export const projects: Project[] = [
     repoUrl: "https://github.com/Ricwolf19/listkit",
     startDate: "2025-02",
     launchDate: "2025-04",
-    tags: ["oss", "react", "library", "typescript"],
+    tags: ["oss", "react", "library", "typescript", "npm"],
     technologies: techList("react", "typescript", "tailwind", "vite"),
   },
-  // Internal / historical (spec §8). Shown in /about, not in /work or /now.
+  {
+    id: "11111111-0000-0000-0000-000000000015",
+    slug: "uploaderkit",
+    title: "uploaderkit",
+    tagline:
+      "Capa de subida de archivos full-stack para React y Node con contrato compartido cliente/servidor, hook headless y providers GCS/S3.",
+    description:
+      "@pibytelabs/uploaderkit es una capa de subida de archivos full-stack para React y Node: contrato compartido cliente/servidor con scopes declarativos, hook headless con validación por magic numbers, compresión de imágenes y retry/abort, providers GCS/S3, cifrado AES-256-GCM, adaptadores para Express y Next.js, e i18n EN/ES.",
+    status: "production",
+    visibility: "public",
+    category: "oss",
+    thumbnail: "/images/projects/uploaderkit-thumb.jpg",
+    links: [
+      {
+        label: "npm",
+        url: "https://www.npmjs.com/package/uploaderkit",
+        type: "npm",
+        public: true,
+      },
+      {
+        label: "Repositorio",
+        url: "https://github.com/Ricwolf19/uploaderkit",
+        type: "repo",
+        public: true,
+      },
+    ],
+    repoUrl: "https://github.com/Ricwolf19/uploaderkit",
+    startDate: "2026-08",
+    tags: ["oss", "react", "library", "typescript", "npm"],
+    technologies: techList("react", "typescript", "node", "express", "next", "awsS3", "gcs"),
+  },
+  // Internal / historical: shown in /about, never in /work or /now.
   {
     id: "11111111-0000-0000-0000-000000000012",
     slug: "honeywell-internal",

@@ -22,7 +22,6 @@ const CATEGORY_LABEL: Record<TechnologyCategory, string> = {
   design: "Design",
 };
 
-/** Visualization of the stack grouped by category (spec §10 tech-stack). */
 export const TechStack = () => {
   const all = Object.values(tech) as Technology[];
 

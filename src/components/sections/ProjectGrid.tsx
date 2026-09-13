@@ -11,8 +11,7 @@ interface ProjectGridProps {
   projects: Project[];
 }
 
-/** Project grid with client-side pill filters (spec §10.4). The only JS here is
- * the filtering state; the grid fades in on filter change via a CSS animation
+/** The only JS here is the filtering state; the grid fades in on filter change via a CSS animation
  * (`.fade-in`, keyed on the active filter) — no animation library. */
 export const ProjectGrid = ({ projects }: ProjectGridProps) => {
   const t = useTranslations("work");

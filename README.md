@@ -15,9 +15,9 @@
 - Tailwind CSS v4
 - next-intl (i18n: `es` default, `en`)
 - MDX case studies (`next-mdx-remote` + `gray-matter`)
-- Motion for animations
 - next-themes (dark default)
-- Vercel Analytics + Speed Insights
+- Vitest for the unit suite
+- Vercel Analytics + Speed Insights, GA4 optional
 
 ## Requirements
 
@@ -42,38 +42,68 @@ The site runs at http://localhost:3000.
 - `npm start` — start production server
 - `npm run lint` — ESLint
 - `npm run typecheck` — TypeScript check
+- `npm run test` / `npm run test:watch` — Vitest
 - `npm run format` / `npm run format:fix` — Prettier
-- `npm run ci` — format + lint + typecheck + build
+- `npm run ci` — format + lint + typecheck + test + build
 
 ## Environment variables
 
-Create a `.env.local` file:
+Every variable is optional — the site builds and serves with none of them set,
+and each integration switches itself off instead of failing. See
+`.env.example` for the full list and
+[AGENTS.md](AGENTS.md#environment--feature-flags) for the degradation rules.
 
 ```env
 NEXT_PUBLIC_SITE_URL=https://ricardotapia.dev
 GITHUB_USERNAME=your-username
 CONTACT_EMAIL=you@email.com
 WHATSAPP_NUMBER=521XXXXXXXXXX
+
+# SEO / analytics
+GOOGLE_SITE_VERIFICATION=...      # Search Console HTML-tag verification
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX    # omit and no gtag script is loaded
 ```
 
 ## Project structure
 
 ```
-content/projects/   MDX case studies
+content/projects/   MDX case studies, one folder per locale (es/, en/)
 messages/           i18n message files (en.json, es.json)
 src/app/            App Router routes ([locale]/...)
-src/components/     UI, layout, sections, motion, mdx
+src/components/     ui, layout, sections, seo, file-viewer, mdx
 src/data/           Projects, experience, technologies, site config
 src/i18n/           next-intl routing and request config
-src/lib/            MDX parsing and utilities
+src/lib/            SEO, structured data, OG images, MDX, integrations
 src/styles/         Global styles (Tailwind v4)
+```
+
+## Testing
+
+Unit tests live next to their source as `*.test.ts` and run on Vitest. They
+cover pure, high-risk logic — SEO helpers, the sitemap, project-visibility
+selectors, the OG text clamps and the contact-form gate order — rather than
+components or framework behaviour.
+
+```bash
+npm run test
 ```
 
 ## Content
 
-Projects are written in Spanish as the source of truth in `src/data/projects.ts`
-and `content/projects/*.mdx`. English copy lives in `src/data/localize.ts` and is
-applied at runtime via the `localized()` helper.
+Projects are written in Spanish as the source of truth in `src/data/projects.ts`;
+English copy lives in `src/data/localize.ts` and is applied at runtime via the
+`localized()` helper.
+
+Case-study bodies are MDX under `content/projects/<locale>/<slug>.mdx`, fully
+translated in both locales. Adding a language means adding a folder: the loader
+falls back to the default locale for any file that is missing, and the page
+marks a fallback body with `lang` so it is not indexed as the wrong language.
+
+## Contributing
+
+Conventions, invariants and architectural decisions live in
+[AGENTS.md](AGENTS.md). Read it before changing SEO metadata, i18n routing or
+the MDX pipeline.
 
 ## License
 

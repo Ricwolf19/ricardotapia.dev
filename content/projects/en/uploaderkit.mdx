@@ -1,0 +1,68 @@
+---
+title: "uploaderkit"
+slug: "uploaderkit"
+tagline: "Full-stack file upload layer for React and Node with a shared client/server contract, a headless hook and GCS/S3 providers."
+status: "production"
+visibility: "public"
+category: "oss"
+startDate: "2026-08"
+thumbnail: "/images/projects/uploaderkit-thumb.jpg"
+tags: ["oss", "react", "library", "typescript", "npm"]
+---
+
+## Context
+
+uploaderkit (`@pibytelabs/uploaderkit`) came out of writing the same upload
+logic in every project: type and size validation, image compression, retries,
+progress reporting and signing URLs against the backend. The library packages
+that whole flow behind a contract shared by client and server.
+
+## Architecture
+
+A pnpm monorepo with the publishable package and a playground for development.
+At its core is a declarative contract of scopes — what can be uploaded, where,
+and under what constraints — defined once and shared between the React hook and
+the server adapters. The code is organized into `client/` (the headless hook),
+`server/` (Express and Next.js adapters), `providers/` (GCS, S3) and `crypto/`
+(AES-256-GCM encryption). It builds to ESM + CJS + `.d.ts` with tree-shakeable
+subpath exports.
+
+## Stack and API
+
+`defineUploadScopes()` describes the upload scopes; `useUploader()` consumes
+that contract from React, and the server adapter validates it on the other side:
+
+```tsx
+import { useUploader } from "@pibytelabs/uploaderkit";
+
+const { upload, progress, abort } = useUploader({ scope: "avatars" });
+
+await upload(file); // validates, compresses, uploads with retry, reports progress
+```
+
+Key features:
+
+- A shared client/server contract with declarative scopes.
+- A headless hook with magic-number validation, rather than trusting the
+  extension or the declared MIME type.
+- Client-side image compression before upload.
+- Retry with backoff, and abort at any point.
+- Providers for Google Cloud Storage and AWS S3.
+- AES-256-GCM encryption for sensitive files.
+- Adapters for Express and Next.js, plus EN/ES i18n.
+
+## Technical challenges
+
+- Validating a file's real contents in the browser by reading its magic
+  numbers, without relying on the MIME type the operating system reports.
+- Keeping the hook fully headless so any UI — first-party or third-party — can
+  sit on top without fighting styles.
+- Encrypting files client-side with AES-256-GCM without blocking the main
+  thread on large files.
+
+## Outcome
+
+A typed, reusable library (MIT) that standardizes file uploads across the
+@pibytelabs ecosystem. Published on
+[npm](https://www.npmjs.com/package/uploaderkit). Source on
+[GitHub](https://github.com/Ricwolf19/uploaderkit).

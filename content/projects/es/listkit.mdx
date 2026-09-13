@@ -1,7 +1,7 @@
 ---
 title: "listkit"
 slug: "listkit"
-tagline: "Librería React para vistas de lista estandarizadas: tabla/tarjetas, búsqueda, filtros, paginación y theming desde una sola config."
+tagline: "Librería React para vistas de lista estandarizadas: 10 subpath exports tree-shakeables, filtros avanzados validados con Zod y exportación CSV byte-idéntica."
 status: "production"
 visibility: "public"
 category: "oss"
@@ -16,7 +16,7 @@ listkit (`@pibytelabs/listkit`) nació para eliminar la repetición de construir
 
 ## Arquitectura
 
-Monorepo pnpm con el paquete publicable en `packages/listkit` y un playground Vite para desarrollo. El código se organiza en `adapters/` (memory, fetch, serverAction, dexie), `components/`, `hooks/` (incluidos los router adapters), `theme/` y `types/`. Se compila con tsup a ESM + CJS + `.d.ts` con subpath exports (`/next`, `/react-router`, `/adapters`, `/server`).
+Monorepo pnpm con el paquete publicable en `packages/listkit` y un playground Vite para desarrollo. El código se organiza en `adapters/` (memory, fetch, serverAction, dexie), `components/`, `hooks/` (incluidos los router adapters), `theme/` y `types/`. Se compila con tsup a ESM + CJS + `.d.ts` y se distribuye en 10 subpath exports tree-shakeables (`/next`, `/react-router`, `/adapters`, `/server`, entre otros), de modo que cada consumidor importa solo lo que usa.
 
 ## Stack y API
 
@@ -37,6 +37,8 @@ Características clave:
 
 - Responsive por defecto (alterna tabla/tarjetas según viewport).
 - Filtros avanzados (`text`, `select`, `multi-select`, `date-range`, `number-range`, `boolean`) validados con Zod y sincronizados a la URL.
+- Exportación CSV con paridad byte-idéntica verificada en CI contra MongoDB y PostgreSQL reales.
+- i18n EN/ES integrado.
 - Ordenamiento de columnas, caché integrada (stale-while-revalidate) o inyección de TanStack Query.
 - SSR con `initialData` + `buildListQuery` (entry `@pibytelabs/listkit/server`).
 - Router adapters para Next.js, React Router o el navegador.
@@ -49,4 +51,4 @@ Características clave:
 
 ## Resultado
 
-Una librería tipada y reutilizable (MIT) que ya alimenta listas administrativas en proyectos reales como Agates From Mexico e Increscendo. El release está automatizado con Changesets. Código en [GitHub](https://github.com/Ricwolf19/listkit).
+Una librería tipada y reutilizable (MIT), actualmente en v4.7.0, que ya alimenta listas administrativas en proyectos reales como Agates From Mexico e Increscendo. Publicada en [npm](https://www.npmjs.com/package/listkit) con releases automatizados vía release-please en CI. Código en [GitHub](https://github.com/Ricwolf19/listkit).

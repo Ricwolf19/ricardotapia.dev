@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Mail } from "lucide-react";
-import { FaGithub, FaWhatsapp } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
 import { Container } from "./Container";
 import { siteConfig } from "@/data/site";
 
@@ -31,6 +31,17 @@ export const Footer = () => {
             >
               <FaGithub className="h-5 w-5" />
             </a>
+            {siteConfig.socials.linkedin && (
+              <a
+                href={siteConfig.socials.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="text-foreground-muted hover:text-foreground transition-colors"
+              >
+                <FaLinkedin className="h-5 w-5" />
+              </a>
+            )}
             <a
               href={`mailto:${siteConfig.email}`}
               aria-label="Email"

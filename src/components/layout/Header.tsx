@@ -8,7 +8,7 @@ import { navLinks } from "@/data/constants";
 import { Container } from "./Container";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
-import { cn } from "@/lib/utils";
+import { NavLink } from "@/components/layout/NavLink";
 
 export const Header = () => {
   const t = useTranslations("nav");
@@ -31,18 +31,13 @@ export const Header = () => {
 
           <nav className="hidden items-center gap-6 md:flex">
             {navLinks.map((link) => (
-              <Link
+              <NavLink
                 key={link.href}
                 href={link.href}
-                className={cn(
-                  "font-mono text-sm transition-colors",
-                  isActive(link.href)
-                    ? "text-foreground"
-                    : "text-foreground-muted hover:text-foreground",
-                )}
-              >
-                {t(link.key)}
-              </Link>
+                label={t(link.key)}
+                active={isActive(link.href)}
+                variant="bar"
+              />
             ))}
           </nav>
 
@@ -52,7 +47,7 @@ export const Header = () => {
             <button
               type="button"
               className="md:hidden"
-              aria-label="Menu"
+              aria-label={open ? t("closeMenu") : t("openMenu")}
               aria-expanded={open}
               onClick={() => setOpen((v) => !v)}
             >
@@ -64,19 +59,14 @@ export const Header = () => {
         {open && (
           <nav className="border-border flex flex-col gap-1 border-t py-4 md:hidden">
             {navLinks.map((link) => (
-              <Link
+              <NavLink
                 key={link.href}
                 href={link.href}
+                label={t(link.key)}
+                active={isActive(link.href)}
+                variant="drawer"
                 onClick={() => setOpen(false)}
-                className={cn(
-                  "rounded-lg px-3 py-2 font-mono text-sm transition-colors",
-                  isActive(link.href)
-                    ? "bg-surface-elevated text-foreground"
-                    : "text-foreground-muted hover:bg-surface-elevated hover:text-foreground",
-                )}
-              >
-                {t(link.key)}
-              </Link>
+              />
             ))}
           </nav>
         )}

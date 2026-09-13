@@ -1,16 +1,12 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
-import { siteConfig } from "@/data/site";
+import { hreflangMap, localeUrl } from "@/lib/seo";
 import { getProjectBySlug, projectSlugs } from "@/data/projects";
 
-const STATIC_PATHS = ["", "/work", "/about", "/now", "/contact"] as const;
+const STATIC_PATHS = ["", "/work", "/about", "/now", "/certificaciones", "/contact"] as const;
 
-/** hreflang alternates for a locale-agnostic path, mirroring the per-page
- * `<link rel="alternate">` tags so search engines see the language map twice. */
-const languages = (path: string) => ({
-  es: `${siteConfig.url}/es${path}`,
-  en: `${siteConfig.url}/en${path}`,
-});
+/** Home outranks the section indexes, which outrank individual case studies. */
+const priorityFor = (path: string): number => (path === "" ? 1 : 0.7);
 
 /** Last-modified date for a case study, derived from its launch/start date. */
 const projectLastModified = (slug: string): Date | undefined => {
@@ -19,28 +15,37 @@ const projectLastModified = (slug: string): Date | undefined => {
   return date ? new Date(date) : undefined;
 };
 
-/** Sitemap covering every locale-prefixed page plus each case study (spec §13.3),
- * with hreflang alternates and per-project last-modified dates. */
+/**
+ * Sitemap covering every locale-prefixed page plus each case study.
+ *
+ * Each locale gets its own `<url>` entry carrying the *full* reciprocal
+ * alternate set (including `x-default`) — Google expects every language version
+ * to be submitted on its own, not merely referenced as an alternate of the
+ * other. The alternates come from the same `hreflangMap` the pages emit, so the
+ * two can't drift apart.
+ */
 const sitemap = (): MetadataRoute.Sitemap => {
-  const base = siteConfig.url;
   const entries: MetadataRoute.Sitemap = [];
+  // Static pages change together on deploy, so build time is an honest lastmod.
+  const buildTime = new Date();
 
   for (const locale of routing.locales) {
     for (const path of STATIC_PATHS) {
       entries.push({
-        url: `${base}/${locale}${path}`,
+        url: localeUrl(locale, path),
+        lastModified: buildTime,
         changeFrequency: "monthly",
-        priority: path === "" ? 1 : 0.7,
-        alternates: { languages: languages(path) },
+        priority: priorityFor(path),
+        alternates: { languages: hreflangMap(path) },
       });
     }
     for (const slug of projectSlugs) {
       entries.push({
-        url: `${base}/${locale}/work/${slug}`,
+        url: localeUrl(locale, `/work/${slug}`),
+        lastModified: projectLastModified(slug),
         changeFrequency: "monthly",
         priority: 0.6,
-        lastModified: projectLastModified(slug),
-        alternates: { languages: languages(`/work/${slug}`) },
+        alternates: { languages: hreflangMap(`/work/${slug}`) },
       });
     }
   }

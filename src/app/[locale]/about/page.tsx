@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Section } from "@/components/layout/Section";
 import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline";
+import { EducationTimeline } from "@/components/sections/EducationTimeline";
 import { TechStack } from "@/components/sections/TechStack";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { pageMetadata } from "@/lib/seo";
+import { profilePageSchema } from "@/lib/schema";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 export const generateMetadata = async ({
   params,
@@ -23,6 +26,7 @@ const AboutPage = async ({ params }: { params: Promise<{ locale: string }> }) =>
 
   return (
     <Section>
+      <JsonLd data={profilePageSchema(locale, t("title"), t("bio"))} />
       <Breadcrumbs locale={locale} trail={[{ name: t("title"), path: "/about" }]} />
       <header className="max-w-2xl">
         <h1 className="text-4xl tracking-tight">{t("title")}</h1>
@@ -33,6 +37,11 @@ const AboutPage = async ({ params }: { params: Promise<{ locale: string }> }) =>
         <div>
           <h2 className="mb-8 text-2xl tracking-tight">{t("experienceTitle")}</h2>
           <ExperienceTimeline />
+        </div>
+
+        <div>
+          <h2 className="mb-8 text-2xl tracking-tight">{t("educationTitle")}</h2>
+          <EducationTimeline />
         </div>
 
         <div>

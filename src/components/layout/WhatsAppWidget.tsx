@@ -2,10 +2,8 @@ import { FaWhatsapp } from "react-icons/fa";
 import { useTranslations } from "next-intl";
 import { siteConfig } from "@/data/site";
 
-/**
- * Floating WhatsApp button (spec §10.9). Bottom-LEFT corner, a perfect
- * circle with the brand icon. Never shows the number in the UI.
- */
+/** Bottom-LEFT corner, out of the dev indicator's way. Never renders the
+ * number in the UI. */
 export const WhatsAppWidget = () => {
   const t = useTranslations("contact.whatsapp");
   const number = siteConfig.whatsappNumber;
@@ -27,8 +25,9 @@ export const WhatsAppWidget = () => {
         <FaWhatsapp className="h-7 w-7" />
       </span>
 
-      {/* Tooltip (does not affect the button shape) */}
-      <span className="bg-foreground text-background pointer-events-none absolute top-1/2 left-[4.25rem] -translate-y-1/2 rounded-md px-2.5 py-1 font-mono text-xs whitespace-nowrap opacity-0 shadow-md transition-opacity duration-200 group-hover:opacity-100">
+      {/* Tooltip (does not affect the button shape). Opens to the LEFT of
+          the button — the widget sits on the right screen edge. */}
+      <span className="bg-foreground text-background pointer-events-none absolute top-1/2 right-[4.25rem] -translate-y-1/2 rounded-md px-2.5 py-1 font-mono text-xs whitespace-nowrap opacity-0 shadow-md transition-opacity duration-200 group-hover:opacity-100">
         {t("tooltip")}
       </span>
     </a>

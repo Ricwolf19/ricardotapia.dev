@@ -13,9 +13,9 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react", "react-icons"],
   },
-  // El widget de WhatsApp vive abajo-izquierda; mover el indicador de dev a la derecha.
+  // The WhatsApp widget sits bottom-left; move the dev indicator out of its way.
   devIndicators: {
-    buildActivityPosition: "bottom-right",
+    position: "bottom-right",
   },
 };
 

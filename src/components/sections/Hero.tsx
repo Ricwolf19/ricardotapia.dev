@@ -2,11 +2,12 @@ import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { Container } from "@/components/layout/Container";
+import { CvViewerButton } from "@/components/sections/CvViewerButton";
 import { buttonVariants } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
-/** Home hero (spec §10.2). Server-rendered and static — the LCP heading paints
- * immediately, with no entrance animation to delay it. */
+/** Server-rendered and static: the LCP heading paints immediately, with no
+ * entrance animation to delay it. */
 export const Hero = () => {
   const t = useTranslations("home.hero");
 
@@ -53,6 +54,7 @@ export const Hero = () => {
               {t("ctaProjects")}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
+            <CvViewerButton label={t("ctaCv")} />
             <Link
               href="/contact"
               className={cn(buttonVariants({ variant: "secondary", size: "lg" }))}

@@ -1,0 +1,44 @@
+---
+title: "Agates From Mexico"
+slug: "agates-from-mexico"
+tagline: "E-commerce de piezas únicas con storefront PWA, POS presencial con Stripe Terminal y búsqueda Spotlight sobre Postgres."
+status: "production"
+visibility: "public"
+category: "ecommerce"
+startDate: "2024-08"
+thumbnail: "/images/projects/agates-from-mexico-thumb.jpg"
+tags: ["ecommerce", "nextjs", "stripe", "rbac", "postgresql"]
+---
+
+## Contexto
+
+Agates From Mexico vende piezas únicas: cada SKU es una pieza física irrepetible con existencia de exactamente 1. El proyecto cubre toda la experiencia —storefront público instalable como PWA, flujo de compra, POS presencial y un panel administrativo completo con control de acceso por roles.
+
+## Arquitectura
+
+Next.js App Router (Node 24) con una separación estricta por capas:
+
+- `services/` — única capa de consultas a base de datos, por dominio, con consultas tipadas vía pgtyped y zql.
+- `integrations/` — wrappers por proveedor (Stripe, Cloudinary, Backblaze B2, PostHog).
+- `lib/` — autenticación, pool de base de datos, server actions y validadores.
+- `migrations/` — migraciones SQL con node-pg-migrate.
+
+Cada producto expone dos URLs públicas: Publishing Rules configurables y un enlace privado imposible de adivinar. La búsqueda Spotlight corre sobre un read-model desnormalizado en Postgres, insensible a acentos y coordinado con advisory locks. La autorización es un RBAC con catálogo de permisos y enforcement vía `requirePermission()` en páginas y server actions.
+
+## Stack
+
+- Next.js App Router + TypeScript + Tailwind CSS.
+- PostgreSQL con pgtyped + node-pg-migrate + zql.
+- Pagos: Stripe online y Stripe Terminal (card-present) en el POS presencial.
+- Media: subida validada en servidor, directa a Backblaze B2; Cloudinary para entrega.
+- Analítica: PostHog. Listas administrativas con `@pibytelabs/listkit`. Deploy en Vercel.
+
+## Retos técnicos
+
+- Storefront PWA instalable con un service worker que nunca cachea HTML, para no servir catálogo obsoleto de piezas únicas.
+- Búsqueda insensible a acentos sobre un read-model desnormalizado, mantenida consistente con advisory locks.
+- POS presencial card-present integrado al mismo inventario de existencia 1.
+
+## Resultado
+
+Un e-commerce completo —catálogo de piezas únicas, pagos online y presenciales, y administración tipada— en producción en [agatesfrommexico.com](https://agatesfrommexico.com/).

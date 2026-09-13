@@ -1,0 +1,45 @@
+---
+title: "Corporativo Fiscal"
+slug: "corporativo-fiscal"
+tagline: "Plataforma operativa interna de un despacho fiscal: 13 apps, expediente digital cifrado, 2FA y pizarra colaborativa en tiempo real."
+status: "production"
+visibility: "private"
+category: "platform"
+startDate: "2025-05"
+thumbnail: "/images/projects/corporativo-fiscal-thumb.jpg"
+tags: ["platform", "microservicios", "express", "websockets", "cfdi"]
+---
+
+## Contexto
+
+CorpFiscal es la plataforma operativa interna de un despacho contable y fiscal. No es un producto a la venta: es el sistema con el que el corporativo trabaja todos los días —portal de clientes, recepción, recursos humanos, expedientes y facturación— reunido en un monorepo con su API central.
+
+## Arquitectura
+
+Monorepo con Yarn 4 Workspaces dividido en `apps/*` y `shared/*`, con 13 aplicaciones:
+
+- `web` — portal corporativo; `customers` — portal self-service para clientes.
+- `rh` — expediente digital de personal; `reception`, `materialization`, `accounting`, `corporate`, `legal` y `admin` — operación interna por área.
+- `landiabar` — PWA del snack bar interno.
+- `visionfiscal` — pizarra colaborativa en tiempo real para sesiones fiscales, construida con Excalidraw + Yjs + Socket.io.
+- `auth` — autenticación centralizada; `api` — backend Express 5 con MongoDB/Mongoose.
+
+Seguridad de base: 2FA/OTP obligatorio (speakeasy), RBAC fino con roles ADMIN, ACCOUNTANT, CUSTOMER, RH, BARISTA y SERVICE, y expediente digital con cifrado de documentos.
+
+## Stack
+
+- Frontends: React 18 + Vite + React Router 7 + Tailwind 4 + TanStack Query.
+- Backend: Express 5 + MongoDB/Mongoose, JWT, Socket.io.
+- Facturación: FACTURAPI (CFDI/SAT) con dominio fiscal profundo: multipago CFDI, ciclo de cancelación SAT y CFDI de pago. Pagos: Stripe.
+- Scraping del SAT con Puppeteer; generación de documentos con pdf-lib; imágenes con Sharp.
+- Mensajería por WhatsApp. Almacenamiento: Google Cloud Storage. Tareas programadas: node-cron.
+
+## Retos técnicos
+
+- Coordinar 13 frontends y un backend compartido manteniendo tipos y catálogos SAT consistentes.
+- Colaboración en tiempo real con CRDTs (Yjs) sincronizada por sockets en la pizarra fiscal.
+- Automatizar la consulta de estados ante el SAT con scraping en Puppeteer sin romper la sesión del contribuyente.
+
+## Resultado
+
+Una plataforma modular donde cada área del despacho tiene su propia app, todas alimentadas por una API central con facturación electrónica, expediente digital cifrado y automatizaciones fiscales.

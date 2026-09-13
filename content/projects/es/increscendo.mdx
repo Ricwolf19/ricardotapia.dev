@@ -1,0 +1,39 @@
+---
+title: "Increscendo Eventos"
+slug: "increscendo"
+tagline: "Sitio corporativo para Increscendo con blog, servicios y cotizador con PDF y catálogos SAT, más un panel administrativo."
+status: "production"
+visibility: "hybrid"
+category: "marketing"
+startDate: "2025-01"
+thumbnail: "/images/projects/increscendo-thumb.jpg"
+tags: ["marketing", "eventos", "nextjs", "postgresql"]
+---
+
+## Contexto
+
+Increscendo necesitaba presencia pública —servicios, blog, eventos, FAQs— con un cotizador usable por sus clientes, y un panel administrativo ligero para operar clientes, tipos de evento y cotizaciones.
+
+## Arquitectura
+
+Aplicación Next.js con App Router. Las páginas públicas (`quienes-somos`, `servicios`, `blog`, `eventos`, `faqs`, `contacto`) se renderizan en servidor para SEO. El cotizador genera PDF de la cotización y consulta catálogos SAT. Las listas del panel administrativo (clientes, tipos de evento, contenido, usuarios) usan `@pibytelabs/listkit` conectado a server actions.
+
+Cada vista de lista vive en su propia carpeta con una configuración declarativa, un componente cliente conectado al adaptador de server actions y un wrapper de servidor. Los datos provienen de server actions que construyen SQL parametrizado (zql).
+
+## Stack
+
+- Next.js + TypeScript + Tailwind CSS.
+- PostgreSQL con consultas tipadas; migraciones con `node-pg-migrate`.
+- Auth.js (NextAuth) + next-safe-action para server actions tipadas.
+- `@pibytelabs/listkit` para listas administrativas vía server actions.
+- AWS S3 (subidas con URLs prefirmadas), Google Maps con marker clustering.
+- TipTap (editor), pdf-lib/pdfjs (documentos), Resend + React Email.
+
+## Retos técnicos
+
+- Mantener las páginas públicas server-rendered para SEO mientras las listas administrativas cargan en cliente vía listkit.
+- Cotizador con generación de PDF y catálogos SAT integrados al flujo comercial.
+
+## Resultado
+
+Un sitio público optimizado para buscadores ([increscendoeventos.com](https://increscendoeventos.com/)) con cotizador funcional y un panel administrativo consistente basado en configuraciones declarativas de listas.

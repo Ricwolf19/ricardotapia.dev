@@ -1,0 +1,51 @@
+---
+title: "Espau"
+slug: "espau"
+tagline: "Institutional site and clinical back office for Esperanza para el Autismo I.A.P., with minors' health data encrypted at rest."
+status: "production"
+visibility: "hybrid"
+category: "platform"
+startDate: "2024-09"
+thumbnail: "/images/projects/espau-thumb.jpg"
+tags: ["platform", "nextjs", "postgresql", "authjs", "healthcare"]
+---
+
+## Context
+
+ESPAU (Esperanza para el Autismo, I.A.P.) is a nonprofit in Chihuahua dedicated
+to the diagnosis and therapy of Autism Spectrum Disorder. The project pairs the
+public institutional site with a clinical and administrative back office that
+runs the organization's daily work.
+
+## Architecture
+
+The public site presents the organization's six programmes — assessment and
+diagnosis with ADOS-2, ADI-R and ABAS-II; individual and group therapy; a DENVER
+model preschool; parent guidance; and professional training — alongside
+donations, transparency reporting and contact.
+
+The back office covers clinical operations: student records, therapists,
+schedules, weekly plans generated automatically by cron, assessments and an
+audit log, all under role-based access control. Minors' health data is encrypted
+at rest and only released inside a step-up window verified with TOTP.
+
+## Stack
+
+- Next.js with the App Router and TypeScript; Tailwind CSS.
+- PostgreSQL with typed queries (pgtyped + zql) and node-pg-migrate migrations.
+- Auth.js v5 with TOTP mandatory for staff.
+- Admin lists with `@pibytelabs/listkit`; scheduled jobs on Vercel crons.
+
+## Technical challenges
+
+- Protecting minors' health data: encryption at rest with release limited to a
+  step-up TOTP window, without getting in the way of daily operations.
+- Generating weekly plans automatically by cron from schedules and therapist
+  availability.
+- A complete audit log of clinical access and changes.
+
+## Outcome
+
+A production platform ([www.espau.com](https://www.espau.com/)) that combines an
+institutional presence with a secure, typed clinical back office and
+reproducible migrations.

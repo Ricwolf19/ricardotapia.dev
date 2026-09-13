@@ -1,0 +1,74 @@
+---
+title: "listkit"
+slug: "listkit"
+tagline: "A React library for standardized list views: 10 tree-shakeable subpath exports, Zod-validated advanced filters and byte-identical CSV export."
+status: "production"
+visibility: "public"
+category: "oss"
+startDate: "2025-02"
+thumbnail: "/images/projects/listkit-thumb.jpg"
+tags: ["oss", "react", "library", "typescript"]
+---
+
+## Context
+
+listkit (`@pibytelabs/listkit`) came out of building the same CRUD list view
+over and over — toolbar, table, cards, search, filters and pagination. A single
+configuration now describes the whole view.
+
+## Architecture
+
+A pnpm monorepo with the publishable package in `packages/listkit` and a Vite
+playground for development. The code is organized into `adapters/` (memory,
+fetch, serverAction, dexie), `components/`, `hooks/` (including the router
+adapters), `theme/` and `types/`. It builds with tsup to ESM + CJS + `.d.ts` and
+ships as 10 tree-shakeable subpath exports (`/next`, `/react-router`,
+`/adapters`, `/server`, among others), so every consumer imports only what it
+uses.
+
+## Stack and API
+
+`defineListConfig()` describes columns, cards, filters, actions and theme.
+`ListView` takes that config plus either `data` (in memory) or an `adapter`
+(async):
+
+```tsx
+import { ListView, serverActionAdapter } from "@pibytelabs/listkit";
+
+const adapter = serverActionAdapter<Product>(async (query) => {
+  const { rows, total } = await listProductsAction(query);
+  return { data: rows, total };
+});
+
+<ListView config={productsConfig} adapter={adapter} />;
+```
+
+Key features:
+
+- Responsive by default, switching between table and cards by viewport.
+- Advanced filters (`text`, `select`, `multi-select`, `date-range`,
+  `number-range`, `boolean`) validated with Zod and synced to the URL.
+- CSV export whose byte-identical parity is verified in CI against real MongoDB
+  and PostgreSQL.
+- Built-in EN/ES i18n.
+- Column sorting, built-in caching (stale-while-revalidate) or TanStack Query
+  injection.
+- SSR through `initialData` + `buildListQuery` (the
+  `@pibytelabs/listkit/server` entry).
+- Router adapters for Next.js, React Router or the plain browser.
+
+## Technical challenges
+
+- Staying compatible with React Server Components: a `/server` entry with no
+  client context, so rendering a Server Component never breaks.
+- Avoiding hydration mismatches by recomputing the exact query on the server
+  with `buildListQuery`.
+- Dual ESM/CJS packaging with size budgets (size-limit) and publish validation
+  (publint).
+
+## Outcome
+
+A typed, reusable library (MIT), currently at v4.7.0, already powering admin
+lists in real projects such as Agates From Mexico and Increscendo. Published on
+[npm](https://www.npmjs.com/package/listkit) with releases automated through
+release-please in CI. Source on [GitHub](https://github.com/Ricwolf19/listkit).

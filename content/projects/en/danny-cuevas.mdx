@@ -1,0 +1,45 @@
+---
+title: "Danny Cuevas"
+slug: "danny-cuevas"
+tagline: "Photography portfolio with an admin panel for managing albums and images."
+status: "production"
+visibility: "public"
+category: "marketing"
+startDate: "2024-07"
+thumbnail: "/images/projects/danny-cuevas-thumb.jpg"
+tags: ["portfolio", "nextjs", "postgresql", "aws-s3"]
+---
+
+## Context
+
+A portfolio site for photographer Daniel Cuevas. Beyond the public presence, it
+includes an admin panel so the photographer manages his own albums and images.
+
+## Architecture
+
+A Next.js application on the App Router, organized into three zones:
+
+- `(main)` — the public pages: portfolio and contact.
+- `admin` — album and image management (the migrations cover albums, priority
+  dates and slideshows).
+- `login` — authentication with Auth.js.
+
+The data layer follows an `actions/` pattern (with a `schema.ts` per domain) and
+`services/` for queries. Database types are generated automatically with Kanel
+and PgTyped.
+
+## Stack
+
+- Next.js + TypeScript + Tailwind CSS.
+- PostgreSQL; types and Zod validators generated with Kanel, queries with
+  PgTyped.
+- `node-pg-migrate` for SQL migrations.
+- Auth.js (NextAuth) + next-safe-action; nuqs for URL state.
+- AWS S3 with presigned URLs for image uploads.
+- Resend for transactional email.
+
+## Outcome
+
+A self-managed portfolio at [dannycuevas.com](https://www.dannycuevas.com/): the
+photographer administers his albums from a private panel while the public site
+presents the work, typed end to end.

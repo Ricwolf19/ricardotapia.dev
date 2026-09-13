@@ -1,0 +1,44 @@
+---
+title: "Café Combate"
+slug: "cafe-combate"
+tagline: "Monorepo que opera todo el negocio de una cafetería multi-sucursal: 13 apps, offline-first y flujo completo de requisiciones."
+status: "production"
+visibility: "hybrid"
+category: "erp"
+startDate: "2024-01"
+launchDate: "2024-06"
+thumbnail: "/images/projects/cafe-combate-thumb.jpg"
+tags: ["erp", "cfdi", "react", "offline-first", "multi-tenant"]
+---
+
+## Contexto
+
+Café Combate es una cafetería/retail multi-sucursal cuyo negocio completo —almacén, compras, ventas, producción, facturación y administración— vivía en sistemas separados. El monorepo centraliza todas las aplicaciones, los módulos de dominio y las librerías compartidas en un único ecosistema TypeScript que hoy opera el negocio en producción real.
+
+## Arquitectura
+
+36 workspaces en Yarn 4 + Turborepo, divididos en tres grupos:
+
+- `apps/*` — 13 aplicaciones desplegables: `auth` (login OTP → JWT), `management`, `invoicing`, `production`, `public`, `purchasing`, `sales`, `warehouse`, `executive`, `stores`, `payments` y una `api` en Express 5.
+- `domain_modules/*` — 12 módulos de negocio por dominio (requisiciones, clientes, facturas, dashboards por área).
+- `shared/*` — 11 paquetes compartidos: librería de UI, utilidades, catálogos SAT, tipos y mocks.
+
+Offline-first con Dexie 4 sobre IndexedDB y sincronización opcional vía Dexie Cloud; multi-tenant mediante `realmId`. Las subidas de archivos usan `@pibytelabs/uploaderkit` contra Google Cloud Storage. Cada app se despliega de forma independiente en Heroku multi-dyno, con CI en GitHub Actions.
+
+## Stack
+
+- React 18 + React Router 7 + Vite 5 + Tailwind, TypeScript estricto.
+- Zustand para estado cliente; React Hook Form + Zod para formularios.
+- Backend: Express 5 + Drizzle ORM + PostgreSQL, con Redis para caché.
+- Timbrado CFDI con Facturapi y generación de PDF con pdf-lib.
+
+## Retos técnicos
+
+- Flujo completo de requisiciones: requisición → cotización → autorización → órdenes de compra → recepción → pagos, cruzando varias apps con el mismo contrato.
+- Facturación electrónica CFDI conforme al SAT, con manejo de IVA, IEPS e ISR y pre-facturación.
+- Sincronización offline-first multi-tenant sin conflictos entre sucursales.
+- Compartir tipos y un único design system a lo largo de 36 workspaces sin duplicar lógica.
+
+## Resultado
+
+Un ecosistema unificado en producción que opera el negocio de extremo a extremo, con deploys independientes por app y tipado, estilos y reglas de calidad centralizados.

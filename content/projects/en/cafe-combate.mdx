@@ -1,0 +1,60 @@
+---
+title: "Café Combate"
+slug: "cafe-combate"
+tagline: "A monorepo running an entire multi-branch coffee business: 13 apps, offline-first, with a complete requisition flow."
+status: "production"
+visibility: "hybrid"
+category: "erp"
+startDate: "2024-01"
+launchDate: "2024-06"
+thumbnail: "/images/projects/cafe-combate-thumb.jpg"
+tags: ["erp", "cfdi", "react", "offline-first", "multi-tenant"]
+---
+
+## Context
+
+Café Combate is a multi-branch coffee and retail business whose entire
+operation — warehouse, purchasing, sales, production, invoicing and
+administration — lived in separate systems. The monorepo brings every
+application, domain module and shared library into a single TypeScript ecosystem
+that now runs the business in real production.
+
+## Architecture
+
+36 workspaces on Yarn 4 + Turborepo, in three groups:
+
+- `apps/*` — 13 deployable applications: `auth` (OTP login → JWT),
+  `management`, `invoicing`, `production`, `public`, `purchasing`, `sales`,
+  `warehouse`, `executive`, `stores`, `payments` and an Express 5 `api`.
+- `domain_modules/*` — 12 business modules by domain (requisitions, customers,
+  invoices, per-area dashboards).
+- `shared/*` — 11 shared packages: the UI library, utilities, SAT catalogs,
+  types and mocks.
+
+Offline-first with Dexie 4 over IndexedDB and optional sync through Dexie Cloud;
+multi-tenant via `realmId`. File uploads go through `@pibytelabs/uploaderkit` to
+Google Cloud Storage. Each app deploys independently to a multi-dyno Heroku
+setup, with CI on GitHub Actions.
+
+## Stack
+
+- React 18 + React Router 7 + Vite 5 + Tailwind, strict TypeScript.
+- Zustand for client state; React Hook Form + Zod for forms.
+- Backend: Express 5 + Drizzle ORM + PostgreSQL, with Redis for caching.
+- CFDI tax stamping through Facturapi and PDF generation with pdf-lib.
+
+## Technical challenges
+
+- The full requisition flow — requisition → quote → approval → purchase orders →
+  goods receipt → payments — crossing several apps under one shared contract.
+- SAT-compliant electronic invoicing (CFDI), handling VAT, excise tax and income
+  tax withholding, plus pre-invoicing.
+- Multi-tenant offline-first sync that does not produce conflicts between
+  branches.
+- Sharing types and a single design system across 36 workspaces without
+  duplicating logic.
+
+## Outcome
+
+A unified ecosystem in production that runs the business end to end, with
+independent per-app deploys and centralized typing, styling and quality rules.

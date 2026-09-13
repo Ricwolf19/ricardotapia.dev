@@ -1,0 +1,36 @@
+---
+title: "Portillo y Young"
+slug: "portillo-y-young"
+tagline: "Multilingual corporate site for Portillo y Young, with a portfolio and contact forms."
+status: "production"
+visibility: "public"
+category: "marketing"
+startDate: "2024-11"
+thumbnail: "/images/projects/portillo-y-young-thumb.jpg"
+tags: ["marketing", "multilingual", "nextjs"]
+---
+
+## Context
+
+A corporate website for Portillo y Young. The goal was a professional,
+multilingual presence with a project portfolio and lead capture.
+
+## Architecture
+
+A Next.js application on the App Router with internationalization by route
+segment: every page lives under `app/[lang]/` — home, about, services, contact,
+and a portfolio with a `[slug]` detail page. Form handling is implemented as a
+server action in `actions/forms.ts`.
+
+## Stack
+
+- Next.js 15 + React 19 + Tailwind CSS + TypeScript.
+- next-safe-action for typed server actions.
+- React Hook Form + Zod for form validation.
+- Resend + React Email for transactional email. reCAPTCHA for spam protection.
+
+## Outcome
+
+A multilingual site with a per-project portfolio and validated, protected
+contact forms, ready to grow into new languages thanks to the `[lang]` routing.
+[View site](https://portilloyyoung.com/en).

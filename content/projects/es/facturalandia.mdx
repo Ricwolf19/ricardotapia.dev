@@ -1,0 +1,44 @@
+---
+title: "Facturalandia"
+slug: "facturalandia"
+tagline: "Plataforma SaaS de facturación electrónica CFDI 4.0, genuinamente multi-tenant por organizaciones, con auth in-house y sync en tiempo real."
+status: "production"
+visibility: "private"
+category: "saas"
+startDate: "2025-03"
+thumbnail: "/images/projects/facturalandia-thumb.jpg"
+tags: ["saas", "facturacion", "cfdi", "multi-tenant", "mongodb"]
+---
+
+## Contexto
+
+Facturalandia es una plataforma de facturación electrónica para México conforme a CFDI 4.0. Es el único producto del ecosistema genuinamente multi-tenant: cada organización opera con su propia llave de Facturapi cifrada con AES-256-GCM, su webhook firmado auto-registrado y sus propios buckets de almacenamiento.
+
+## Arquitectura
+
+Monorepo TypeScript (Turborepo) con 5 aplicaciones y una capa compartida:
+
+- `apps/` — `api` (Express 5 + Mongoose), `auth` (login + 2FA), `invoicing` (app principal), `materialization` (read-only) y `purchases`.
+- `domains/` — lógica de negocio organizada como vertical slices.
+- `shared/` — 10 paquetes: cliente API, design system, catálogos SAT, tipos Zod y utilidades.
+
+La autenticación es 100% in-house con argon2id (sin servicios de terceros). La sincronización en tiempo real ocurre por webhooks firmados de Facturapi más SSE hacia los clientes — no hay Firebase.
+
+## Stack
+
+- Runtime: Node 22. Backend: Express 5 + Mongoose (MongoDB).
+- Frontend: React 19 + Vite 6 + TanStack Query + React Hook Form.
+- Facturación: FACTURAPI (CFDI 4.0). Pagos: Stripe.
+- Almacenamiento: Google Cloud Storage (PDFs y evidencias).
+- Deploy en Heroku; monorepo orquestado con Turborepo.
+
+## Retos técnicos
+
+- Ciclo de cancelación SAT completo, con notificaciones en tiempo real por webhooks firmados + SSE.
+- Transacciones Mongo sobre replica set y backfill idempotente de facturas históricas.
+- Spotlight search transversal y jobs en segundo plano con logs streameados por SSE.
+- Aislamiento real entre organizaciones: llaves cifradas, webhooks y buckets por tenant.
+
+## Resultado
+
+Un SaaS de facturación multi-tenant en producción, donde la misma capa compartida (cliente HTTP, design system, catálogos SAT y tipos Zod) alimenta autenticación, facturación, compras y materialización.

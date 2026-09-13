@@ -1,0 +1,61 @@
+---
+title: "Corporativo Fiscal"
+slug: "corporativo-fiscal"
+tagline: "Internal operating platform for a tax firm: 13 apps, encrypted digital records, 2FA and a real-time collaborative whiteboard."
+status: "production"
+visibility: "private"
+category: "platform"
+startDate: "2025-05"
+thumbnail: "/images/projects/corporativo-fiscal-thumb.jpg"
+tags: ["platform", "microservicios", "express", "websockets", "cfdi"]
+---
+
+## Context
+
+CorpFiscal is the internal operating platform of an accounting and tax firm. It
+is not a product for sale: it is the system the firm works in every day —
+customer portal, reception, HR, case records and invoicing — gathered into one
+monorepo around a central API.
+
+## Architecture
+
+A Yarn 4 Workspaces monorepo split into `apps/*` and `shared/*`, with 13
+applications:
+
+- `web` — the corporate portal; `customers` — a self-service portal for clients.
+- `rh` — digital HR records; `reception`, `materialization`, `accounting`,
+  `corporate`, `legal` and `admin` — internal operations, one app per area.
+- `landiabar` — a PWA for the in-house snack bar.
+- `visionfiscal` — a real-time collaborative whiteboard for tax-planning
+  sessions, built with Excalidraw + Yjs + Socket.io.
+- `auth` — centralized authentication; `api` — an Express 5 backend on
+  MongoDB/Mongoose.
+
+Baseline security: mandatory 2FA/OTP (speakeasy), fine-grained RBAC across the
+ADMIN, ACCOUNTANT, CUSTOMER, HR, BARISTA and SERVICE roles, and digital records
+with document-level encryption.
+
+## Stack
+
+- Frontends: React 18 + Vite + React Router 7 + Tailwind 4 + TanStack Query.
+- Backend: Express 5 + MongoDB/Mongoose, JWT, Socket.io.
+- Invoicing: Facturapi (CFDI/SAT) with deep domain coverage — CFDI
+  multi-payment, the SAT cancellation cycle and payment CFDIs. Payments: Stripe.
+- SAT scraping with Puppeteer; document generation with pdf-lib; image
+  processing with Sharp.
+- WhatsApp messaging. Storage: Google Cloud Storage. Scheduled jobs: node-cron.
+
+## Technical challenges
+
+- Coordinating 13 frontends against one shared backend while keeping types and
+  SAT catalogs consistent.
+- Real-time collaboration with CRDTs (Yjs) synchronized over sockets in the
+  tax-planning whiteboard.
+- Automating tax-status lookups against the SAT with Puppeteer scraping without
+  breaking the taxpayer's session.
+
+## Outcome
+
+A modular platform where each area of the firm has its own app, all fed by a
+central API with electronic invoicing, encrypted digital records and automated
+tax workflows.

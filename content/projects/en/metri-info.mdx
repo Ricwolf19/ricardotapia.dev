@@ -1,0 +1,64 @@
+---
+title: "Metri Web"
+slug: "metri-info"
+tagline: "Free EN/ES fitness web suite: 17 shareable calculators, a bilingual knowledge base and a PWA with server-first SEO."
+status: "production"
+visibility: "public"
+category: "platform"
+startDate: "2026-01"
+thumbnail: "/images/projects/metri-info-thumb.jpg"
+tags: ["platform", "nextjs", "pwa", "seo", "i18n", "open-source"]
+---
+
+## Context
+
+Metri Web ([metri.info](https://metri.info)) is a free fitness web suite and the
+web counterpart to the Metri mobile app. It gathers 17 health and training
+calculators — 1RM, TDEE/BMR, macros, body fat, BMI, FFMI, hydration, plate
+loading, ideal weight, calorie deficit, protein, lean mass, heart-rate zones,
+waist-to-height, Wilks/DOTS, calories burned and lb↔kg conversion — all usable
+without installing anything or creating an account.
+
+## Architecture
+
+Built with Next.js 16 (App Router) and React Server Components. The content —
+calculators and knowledge base — renders on the server without touching the
+database, while an optional accounts layer (email/Google/GitHub through Better
+Auth, history, favorites and sync) sits on Drizzle ORM + Neon (Postgres). Every
+calculator offers metric and imperial units, a comparison mode, and results
+shareable by URL or QR with a dynamic OG image.
+
+The bilingual knowledge base (~20 MDX guides × 2 languages across 8 categories)
+uses flat i18n keys. A premium sync API for the mobile app implements push/pull
+with last-write-wins resolution, tombstones and a purge cron.
+
+## Stack
+
+- Next.js 16 with the App Router and React Server Components; React 19.
+- Strict TypeScript and Tailwind CSS v4 (design tokens, no raw hex).
+- Drizzle ORM + Neon (Postgres) and Better Auth for the accounts layer.
+- PostHog and GA4 behind an `/ingest` proxy; Sentry for error tracking.
+- Tests with Vitest + PGlite. Deployed on Vercel.
+
+## SEO and performance
+
+- Server-first SEO: the Metadata API, JSON-LD (`SoftwareApplication`,
+  `FAQPage`, `BreadcrumbList`), file-based sitemap and robots, and a dynamic OG
+  image per calculator.
+- i18n with hreflang (English at the root, Spanish under `/es`).
+- E-E-A-T / YMYL signals: named authorship, scientific sources, a last-reviewed
+  date and a medical disclaimer.
+- An installable PWA with offline calculators via a service worker, plus an
+  admin dashboard with analytics.
+
+## Technical challenges
+
+- Getting caching and revalidation right per endpoint against Next 16's new
+  cache API (`updateTag`, cache tags).
+- Keeping `en` and `es` at full parity, and keeping the sync contract (push/pull,
+  LWW, tombstones) aligned by hand with the mobile app.
+
+## Outcome
+
+A production platform — installable and search-optimized — that doubles as a
+technical showcase of server-first SEO, i18n and RSC architecture on Next.js 16.

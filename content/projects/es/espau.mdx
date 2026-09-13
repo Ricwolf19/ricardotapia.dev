@@ -1,0 +1,38 @@
+---
+title: "Espau"
+slug: "espau"
+tagline: "Sitio institucional y back office clínico para Esperanza para el Autismo I.A.P., con datos de salud de menores cifrados en reposo."
+status: "production"
+visibility: "hybrid"
+category: "platform"
+startDate: "2024-09"
+thumbnail: "/images/projects/espau-thumb.jpg"
+tags: ["platform", "nextjs", "postgresql", "authjs", "healthcare"]
+---
+
+## Contexto
+
+ESPAU (Esperanza para el Autismo, I.A.P.) es una organización civil de Chihuahua dedicada al diagnóstico y terapia del Trastorno del Espectro Autista. El proyecto combina el sitio institucional público con un back office clínico-administrativo que opera el día a día de la organización.
+
+## Arquitectura
+
+El sitio público presenta los 6 programas de la organización (evaluación y diagnóstico con ADOS-2, ADI-R y ABAS-II; terapia individual y grupal; preescolar modelo DENVER; orientación a padres; formación profesional), además de donaciones, transparencia y contacto.
+
+El back office cubre la operación clínica: expedientes de alumnos, terapeutas, horarios, planeaciones semanales auto-generadas por cron, evaluaciones y audit log, todo bajo un RBAC por roles. Los datos de salud de menores se cifran en reposo y solo se liberan dentro de una ventana step-up con TOTP.
+
+## Stack
+
+- Next.js con App Router y TypeScript; Tailwind CSS.
+- PostgreSQL con consultas tipadas (pgtyped + zql) y migraciones con node-pg-migrate.
+- Auth.js v5 con TOTP obligatorio para el personal.
+- Listas administrativas con `@pibytelabs/listkit`; tareas programadas con Vercel crons.
+
+## Retos técnicos
+
+- Proteger datos de salud de menores: cifrado en reposo con liberación limitada a una ventana step-up TOTP, sin sacrificar la operación diaria.
+- Generar planeaciones semanales automáticamente por cron a partir de horarios y terapeutas.
+- Audit log completo de accesos y cambios clínicos.
+
+## Resultado
+
+Una plataforma en producción ([www.espau.com](https://www.espau.com/)) que combina presencia institucional con un back office clínico seguro, tipado y con migraciones reproducibles.

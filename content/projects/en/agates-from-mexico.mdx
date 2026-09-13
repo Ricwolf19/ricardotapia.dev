@@ -1,0 +1,58 @@
+---
+title: "Agates From Mexico"
+slug: "agates-from-mexico"
+tagline: "One-of-a-kind-pieces e-commerce with a PWA storefront, in-person POS via Stripe Terminal and Spotlight search on Postgres."
+status: "production"
+visibility: "public"
+category: "ecommerce"
+startDate: "2024-08"
+thumbnail: "/images/projects/agates-from-mexico-thumb.jpg"
+tags: ["ecommerce", "nextjs", "stripe", "rbac", "postgresql"]
+---
+
+## Context
+
+Agates From Mexico sells one-of-a-kind pieces: every SKU is a single physical
+object with a stock of exactly one. The project covers the whole experience — a
+public storefront installable as a PWA, the checkout flow, an in-person POS and a
+full admin panel with role-based access control.
+
+## Architecture
+
+Next.js App Router (Node 24) with a strict separation of layers:
+
+- `services/` — the only database-query layer, split by domain, with typed
+  queries via pgtyped and zql.
+- `integrations/` — one wrapper per provider (Stripe, Cloudinary, Backblaze B2,
+  PostHog).
+- `lib/` — authentication, the database pool, server actions and validators.
+- `migrations/` — SQL migrations with node-pg-migrate.
+
+Every product is reachable through two public URLs: configurable Publishing
+Rules and a private link that cannot be guessed. Spotlight search runs against a
+denormalized read model in Postgres, accent-insensitive and kept consistent with
+advisory locks. Authorization is a RBAC built on a permission catalog, enforced
+through `requirePermission()` in both pages and server actions.
+
+## Stack
+
+- Next.js App Router + TypeScript + Tailwind CSS.
+- PostgreSQL with pgtyped + node-pg-migrate + zql.
+- Payments: Stripe online, and Stripe Terminal (card-present) at the POS.
+- Media: server-validated uploads sent straight to Backblaze B2; Cloudinary for
+  delivery.
+- Analytics: PostHog. Admin lists with `@pibytelabs/listkit`. Deployed on Vercel.
+
+## Technical challenges
+
+- An installable PWA storefront whose service worker never caches HTML, so a
+  stale catalog of one-off pieces is never served.
+- Accent-insensitive search over a denormalized read model, kept consistent with
+  advisory locks.
+- A card-present in-person POS wired into the same stock-of-one inventory.
+
+## Outcome
+
+A complete e-commerce system — a catalog of unique pieces, online and in-person
+payments, and a typed admin panel — running in production at
+[agatesfrommexico.com](https://agatesfrommexico.com/).

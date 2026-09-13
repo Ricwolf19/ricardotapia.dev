@@ -15,7 +15,7 @@ interface ProjectThumbnailProps {
 /**
  * Project thumbnail, ready for real images.
  * - If `project.thumbnailReady` is true: renders next/image (local or R2).
- * - Otherwise: a programmatic placeholder with a per-category gradient (spec §15.2).
+ * - Otherwise: a programmatic placeholder with a per-category gradient.
  *
  * To attach a real image later: place the file at
  * `public/images/projects/<slug>-thumb.jpg` (or an R2 URL in `thumbnail`)

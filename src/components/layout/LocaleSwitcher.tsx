@@ -5,7 +5,7 @@ import { useTransition } from "react";
 import { usePathname, useRouter, routing } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
-/** Switches the locale while preserving the current route (spec §14.3). */
+/** Switches the locale while preserving the current route. */
 export const LocaleSwitcher = () => {
   const router = useRouter();
   const pathname = usePathname();

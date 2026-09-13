@@ -1,10 +1,7 @@
 /**
- * Server-side environment access and feature flags.
- *
- * Every integration degrades gracefully: when its variables are missing the
- * corresponding `features` flag is `false`, the site keeps working, and the
- * contact form falls back to WhatsApp / email. This lets production run before
- * any third-party credentials are configured.
+ * Server-side environment access and feature flags. Every integration degrades
+ * gracefully: no variables means the flag is `false` and the site still works.
+ * @see AGENTS.md#environment--feature-flags
  */
 export const env = {
   resendApiKey: process.env.RESEND_API_KEY,

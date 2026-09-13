@@ -21,13 +21,9 @@ const runtime = (process.env.NODE_ENV === "production" ? prodRuntime : devRuntim
 /**
  * Renders MDX that was serialized on the server.
  *
- * The MDX is compiled to a function body by `next-mdx-remote/serialize` (with
- * rehype-pretty-code already applied), then evaluated here on the client. We
- * evaluate the source directly instead of using the package's `<MDXRemote>` or
- * the RSC `compileMDX` because both break under React 19 / Next 15: the RSC path
- * produces elements the dev error serializer can't stringify, and the client
- * component ships without a "use client" directive, so it resolves the
- * server build of React during static generation (`useState` is null).
+ * The compiled source is evaluated directly rather than through the package's
+ * `<MDXRemote>` or the RSC `compileMDX`, both of which break under React 19 /
+ * Next 15. @see AGENTS.md#mdx-case-studies
  */
 export const MdxContent = ({ source }: { source: SerializedMdx }) => {
   const Content = useMemo(() => {

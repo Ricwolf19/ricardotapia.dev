@@ -24,8 +24,6 @@ const subjectLabel: Record<ContactSubject, string> = {
 };
 
 /**
- * Contact form Server Action (spec §11.1).
- *
  * Pipeline: validate -> rate limit -> reCAPTCHA -> send email. Each integration
  * degrades gracefully (see src/lib/env.ts). When email delivery is not
  * configured the action reports `unavailable`, and the form falls back to a

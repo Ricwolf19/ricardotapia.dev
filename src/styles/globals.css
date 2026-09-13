@@ -4,7 +4,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ============================================
-   DESIGN TOKENS (spec §3 — zed.dev inspired)
+   DESIGN TOKENS (zed.dev inspired)
    Light = default on load. Dark via .dark
    ============================================ */
 :root {

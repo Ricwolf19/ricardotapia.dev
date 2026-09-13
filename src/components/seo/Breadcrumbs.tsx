@@ -1,12 +1,11 @@
+import { getTranslations } from "next-intl/server";
 import { ChevronRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { siteConfig } from "@/data/site";
+import { breadcrumbSchema, type BreadcrumbItem } from "@/lib/schema";
+import { JsonLd } from "@/components/seo/JsonLd";
 
-/** A crumb. `path` is the locale-agnostic route ("", "/work", "/work/metri-info"). */
-export interface Crumb {
-  name: string;
-  path: string;
-}
+export type Crumb = BreadcrumbItem;
 
 interface BreadcrumbsProps {
   locale: string;
@@ -19,27 +18,14 @@ interface BreadcrumbsProps {
  * prepended automatically; pages pass only the trail below it. Rendered as a
  * server component so the structured data ships in the initial HTML.
  */
-export const Breadcrumbs = ({ locale, trail }: BreadcrumbsProps) => {
+export const Breadcrumbs = async ({ locale, trail }: BreadcrumbsProps) => {
+  const t = await getTranslations({ locale, namespace: "nav" });
   const items: Crumb[] = [{ name: siteConfig.name, path: "" }, ...trail];
   const last = items.length - 1;
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: items.map((c, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: c.name,
-      item: `${siteConfig.url}/${locale}${c.path}`,
-    })),
-  };
-
   return (
-    <nav aria-label="Breadcrumb" className="mb-6">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+    <nav aria-label={t("breadcrumb")} className="mb-6">
+      <JsonLd data={breadcrumbSchema(locale, items)} />
       <ol className="text-foreground-dim flex flex-wrap items-center gap-1.5 font-mono text-sm">
         {items.map((c, i) => (
           <li key={c.path} className="flex items-center gap-1.5">

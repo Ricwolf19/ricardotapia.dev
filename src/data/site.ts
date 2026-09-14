@@ -12,7 +12,7 @@ export const siteConfig: SiteConfig = {
   // Override per-environment with NEXT_PUBLIC_SITE_URL.
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://ricardotapia.dev",
   ogImage: "/opengraph-image",
-  email: process.env.CONTACT_EMAIL ?? "contacto@ricardotapia.dev",
+  email: process.env.CONTACT_EMAIL ?? "rhtc19@gmail.com",
   whatsappNumber: process.env.WHATSAPP_NUMBER ?? "526143965716",
   locale: "es",
   keywords: [
@@ -38,7 +38,7 @@ export const siteConfig: SiteConfig = {
   ],
   socials: {
     github: `https://github.com/${githubUsername}`,
-    linkedin: "https://www.linkedin.com/in/ricardo-tapia-46b5042b1",
+    linkedin: "https://www.linkedin.com/in/ricardo-tapia-dev/",
     // Optional X/Twitter handle for twitter:creator (e.g. "@ricardotapia").
     x: process.env.TWITTER_HANDLE,
   },

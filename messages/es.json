@@ -93,7 +93,7 @@
   },
   "about": {
     "title": "Sobre mí",
-    "bio": "Desarrollador full-stack en Chihuahua, México, con más de 2.5 años construyendo sistemas en producción: ERP, SaaS de facturación electrónica, e-commerce y plataformas institucionales. Soy uno de los dos ingenieros principales en PibyteLabs y autor de dos paquetes open source publicados en npm (listkit y uploaderkit). En móvil mantengo una app React Native/Expo en beta abierta, con sincronización offline-first diseñada de extremo a extremo.",
+    "bio": "Desarrollador full-stack en Chihuahua, México, con más de 3 años construyendo sistemas en producción: ERP, SaaS de facturación electrónica, e-commerce y plataformas institucionales. En PibyteLabs mantengo el ecosistema interno de paquetes TypeScript y soy autor de dos paquetes open source publicados en npm (listkit y uploaderkit). En móvil mantengo una app React Native/Expo en beta abierta, con sincronización offline-first diseñada de extremo a extremo.",
     "experienceTitle": "Experiencia",
     "educationTitle": "Educación",
     "stackTitle": "Tecnologías",

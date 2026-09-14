@@ -93,7 +93,7 @@
   },
   "about": {
     "title": "About",
-    "bio": "Full-stack developer based in Chihuahua, Mexico, with 2.5+ years building production systems: ERP, electronic invoicing SaaS, e-commerce and institutional platforms. I am one of the two lead engineers at PibyteLabs and the author of two open-source packages published on npm (listkit and uploaderkit). On mobile, I maintain a React Native/Expo app in open beta with offline-first sync designed end to end.",
+    "bio": "Full-stack developer based in Chihuahua, Mexico, with 3+ years building production systems: ERP, electronic invoicing SaaS, e-commerce and institutional platforms. At PibyteLabs I maintain the internal TypeScript package ecosystem and am the author of two open-source packages published on npm (listkit and uploaderkit). On mobile, I maintain a React Native/Expo app in open beta with offline-first sync designed end to end.",
     "experienceTitle": "Experience",
     "educationTitle": "Education",
     "stackTitle": "Technologies",

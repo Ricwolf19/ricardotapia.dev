@@ -94,7 +94,7 @@ const experienceCopyEn: Record<string, string> = {
   "exp-corpfiscal":
     "Building the internal operating platform of a tax and accounting firm on Express microservices: 13 apps in a monorepo (legal, clients, accounting, reception, HR, administration, corporate and more). Real-time collaborative whiteboard for tax-planning sessions with WebSockets, Excalidraw and Yjs.",
   "exp-pibytelabs":
-    "One of the 2 lead developers keeping the company running. I designed and co-maintain the internal @pibytelabs package ecosystem (ui, utils, sat-utils, docs, notifier — private packages) that powers every product. Lead author of listkit and uploaderkit, published as open source on npm. Full-stack architecture for clients in fintech, e-commerce, health and education: Facturalandia, CorpFiscal, Café Combate, Espau, Agates From Mexico, Danny Cuevas, Increscendo and Portillo y Young.",
+    "I designed and maintain the internal @pibytelabs package ecosystem (ui, utils — private packages) that powers every company product. Author of listkit and uploaderkit, published as open source on npm. Full-stack architecture for clients in electronic invoicing, e-commerce, health and education: Facturalandia, CorpFiscal, Café Combate, Espau, Agates From Mexico, Danny Cuevas, Increscendo and Portillo y Young.",
   "exp-sid":
     "Enterprise Java applications with a custom Struts-based framework. IoT integration via REST/HTTP APIs. Cross-platform communication modules for real-time inventory tracking. MySQL database management.",
   "exp-honeywell":

@@ -29,14 +29,14 @@ export const experiences: Experience[] = [
   },
   {
     id: "exp-pibytelabs",
-    role: "Lead Full-Stack Developer",
+    role: "Full-Stack Developer",
     company: "PibyteLabs",
     location: "Remoto, México",
     type: "freelance",
     startDate: "2025-05",
     isCurrent: true,
     description:
-      "Uno de los 2 desarrolladores principales que mantienen la empresa. Diseñé y co-mantengo el ecosistema interno de paquetes @pibytelabs (ui, utils, sat-utils, docs, notifier — paquetes privados) que impulsa todos los productos. Autor principal de listkit y uploaderkit, publicados como open source en npm. Arquitectura full-stack para clientes en fintech, e-commerce, salud y educación: Facturalandia, CorpFiscal, Café Combate, Espau, Agates From Mexico, Danny Cuevas, Increscendo y Portillo y Young.",
+      "Diseñé y mantengo el ecosistema interno de paquetes @pibytelabs (ui, utils — paquetes privados) que impulsa todos los productos de la empresa. Autor de listkit y uploaderkit, publicados como open source en npm. Arquitectura full-stack para clientes en facturación electrónica, e-commerce, salud y educación: Facturalandia, CorpFiscal, Café Combate, Espau, Agates From Mexico, Danny Cuevas, Increscendo y Portillo y Young.",
     technologies: techList(
       "next",
       "react",

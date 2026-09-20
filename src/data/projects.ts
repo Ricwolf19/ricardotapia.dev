@@ -482,6 +482,12 @@ export const projects: Project[] = [
     thumbnail: "/images/projects/listkit-thumb.jpg",
     links: [
       {
+        label: "Documentación",
+        url: "https://thekits.dev/es/listkit",
+        type: "docs",
+        public: true,
+      },
+      {
         label: "npm",
         url: "https://www.npmjs.com/package/listkit",
         type: "npm",
@@ -513,6 +519,12 @@ export const projects: Project[] = [
     category: "oss",
     thumbnail: "/images/projects/uploaderkit-thumb.jpg",
     links: [
+      {
+        label: "Documentación",
+        url: "https://thekits.dev/es/uploaderkit",
+        type: "docs",
+        public: true,
+      },
       {
         label: "npm",
         url: "https://www.npmjs.com/package/uploaderkit",
@@ -584,7 +596,10 @@ export const getLiveUrl = (p: Project): string | undefined => {
   if (p.loginRequired) return undefined;
   return (
     p.links.find((l) => l.type === "landing" && isPublicLink(l))?.url ??
-    p.links.find((l) => l.type === "live" && isPublicLink(l))?.url
+    p.links.find((l) => l.type === "live" && isPublicLink(l))?.url ??
+    // A library has no app to open; its documentation site is the thing a
+    // visitor can actually look at, and a better destination than the repo.
+    p.links.find((l) => l.type === "docs" && isPublicLink(l))?.url
   );
 };
 

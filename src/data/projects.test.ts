@@ -141,3 +141,69 @@ describe("workProjects", () => {
     expect(new Set(slugs).size).toBe(slugs.length);
   });
 });
+
+describe("project link hygiene", () => {
+  const allLinks = projects.flatMap((project) => project.links);
+
+  it("uses absolute https URLs everywhere", () => {
+    // A relative or http link in a public portfolio is either broken or a
+    // mixed-content warning.
+    for (const link of allLinks) {
+      expect(link.url).toMatch(/^https:\/\//);
+    }
+  });
+
+  it("leaks no private registry scope", () => {
+    // The public packages are unscoped. `@pibytelabs/*` names shipped in this
+    // repo once, both in link URLs and in case-study code blocks readers copy.
+    for (const link of allLinks) {
+      expect(link.url).not.toContain("pibytelabs");
+    }
+  });
+
+  it("pins no version number in a link label", () => {
+    // A hardcoded version rots silently; one sat at v4.7.0 while npm was on 5.
+    for (const link of allLinks) {
+      expect(link.label).not.toMatch(/\bv?\d+\.\d+\.\d+\b/);
+    }
+  });
+
+  it("gives every link a unique URL within its project", () => {
+    for (const project of projects) {
+      const urls = project.links.map((link) => link.url);
+      expect(new Set(urls).size).toBe(urls.length);
+    }
+  });
+});
+
+describe("getLiveUrl with documentation sites", () => {
+  it("prefers a docs site over the repository for a library", () => {
+    // Libraries have no app to open. Before this, listkit and uploaderkit fell
+    // through to GitHub even though they had a docs site.
+    const p = makeProject({
+      links: [
+        makeLink({ type: "repo", url: "https://github.test/x" }),
+        makeLink({ type: "docs", url: "https://thekits.test/x" }),
+      ],
+    });
+    expect(getLiveUrl(p)).toBe("https://thekits.test/x");
+    expect(getPublicUrl(p)).toEqual({ url: "https://thekits.test/x", kind: "live" });
+  });
+
+  it("still ranks a landing page above a docs site", () => {
+    const p = makeProject({
+      links: [
+        makeLink({ type: "docs", url: "https://docs.test" }),
+        makeLink({ type: "landing", url: "https://landing.test" }),
+      ],
+    });
+    expect(getLiveUrl(p)).toBe("https://landing.test");
+  });
+
+  it("does not surface a private docs link", () => {
+    const p = makeProject({
+      links: [makeLink({ type: "docs", url: "https://docs.test", public: false })],
+    });
+    expect(getLiveUrl(p)).toBeUndefined();
+  });
+});

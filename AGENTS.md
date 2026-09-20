@@ -132,6 +132,14 @@ elements Next 15's dev error serializer cannot stringify, and the client
 server build of React during static generation and `useState` is null. Do not
 "simplify" this back to either one.
 
+### Project links
+
+`getLiveUrl` prefers `landing`, then `live`, then `docs`. The `docs` fallback
+exists so a library — which has no app to open — surfaces its documentation site
+rather than falling through to its GitHub repo. `src/data/projects.test.ts`
+pins the ordering and asserts no link carries a private registry scope or a
+pinned version number.
+
 ## 6. Conventions
 
 - Component files are **PascalCase**, one component per file. Next route files

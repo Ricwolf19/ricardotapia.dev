@@ -12,7 +12,7 @@ tags: ["oss", "react", "library", "typescript"]
 
 ## Contexto
 
-listkit (`@pibytelabs/listkit`) nació para eliminar la repetición de construir, una y otra vez, las mismas vistas de lista CRUD: toolbar, tabla, tarjetas, búsqueda, filtros y paginación. Una sola configuración describe toda la vista.
+listkit nació para eliminar la repetición de construir, una y otra vez, las mismas vistas de lista CRUD: toolbar, tabla, tarjetas, búsqueda, filtros y paginación. Una sola configuración describe toda la vista.
 
 ## Arquitectura
 
@@ -23,7 +23,7 @@ Monorepo pnpm con el paquete publicable en `packages/listkit` y un playground Vi
 `defineListConfig()` describe columnas, tarjetas, filtros, acciones y theme. `ListView` recibe la config más `data` (en memoria) o un `adapter` (asíncrono):
 
 ```tsx
-import { ListView, serverActionAdapter } from "@pibytelabs/listkit";
+import { ListView, serverActionAdapter } from "listkit";
 
 const adapter = serverActionAdapter<Product>(async (query) => {
   const { rows, total } = await listProductsAction(query);
@@ -40,7 +40,7 @@ Características clave:
 - Exportación CSV con paridad byte-idéntica verificada en CI contra MongoDB y PostgreSQL reales.
 - i18n EN/ES integrado.
 - Ordenamiento de columnas, caché integrada (stale-while-revalidate) o inyección de TanStack Query.
-- SSR con `initialData` + `buildListQuery` (entry `@pibytelabs/listkit/server`).
+- SSR con `initialData` + `buildListQuery` (entry `listkit/server`).
 - Router adapters para Next.js, React Router o el navegador.
 
 ## Retos técnicos
@@ -51,4 +51,4 @@ Características clave:
 
 ## Resultado
 
-Una librería tipada y reutilizable (MIT), actualmente en v4.7.0, que ya alimenta listas administrativas en proyectos reales como Agates From Mexico e Increscendo. Publicada en [npm](https://www.npmjs.com/package/listkit) con releases automatizados vía release-please en CI. Código en [GitHub](https://github.com/Ricwolf19/listkit).
+Una librería tipada y reutilizable (MIT) que ya alimenta listas administrativas en proyectos reales como Agates From Mexico e Increscendo. Documentación y playground en [thekits.dev](https://thekits.dev/es/listkit). Publicada en [npm](https://www.npmjs.com/package/listkit) con releases automatizados vía release-please en CI. Código en [GitHub](https://github.com/Ricwolf19/listkit).

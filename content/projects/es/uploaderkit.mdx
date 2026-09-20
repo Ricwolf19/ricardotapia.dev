@@ -12,7 +12,7 @@ tags: ["oss", "react", "library", "typescript", "npm"]
 
 ## Contexto
 
-uploaderkit (`@pibytelabs/uploaderkit`) nació de repetir la misma lógica de subida de archivos en cada proyecto: validación de tipo y tamaño, compresión de imágenes, reintentos, progreso y la firma de URLs contra el backend. La librería empaqueta todo ese flujo detrás de un contrato compartido entre cliente y servidor.
+uploaderkit nació de repetir la misma lógica de subida de archivos en cada proyecto: validación de tipo y tamaño, compresión de imágenes, reintentos, progreso y la firma de URLs contra el backend. La librería empaqueta todo ese flujo detrás de un contrato compartido entre cliente y servidor.
 
 ## Arquitectura
 
@@ -23,7 +23,7 @@ Monorepo pnpm con el paquete publicable y un playground para desarrollo. El núc
 `defineUploadScopes()` describe los scopes de subida; `useUploader()` consume ese contrato desde React y el adaptador de servidor lo valida del otro lado:
 
 ```tsx
-import { useUploader } from "@pibytelabs/uploaderkit";
+import { useUploader } from "uploaderkit";
 
 const { upload, progress, abort } = useUploader({ scope: "avatars" });
 
@@ -48,4 +48,4 @@ Características clave:
 
 ## Resultado
 
-Una librería tipada y reutilizable (MIT) que estandariza la subida de archivos en los proyectos del ecosistema @pibytelabs. Publicada en [npm](https://www.npmjs.com/package/uploaderkit). Código en [GitHub](https://github.com/Ricwolf19/uploaderkit).
+Una librería tipada y reutilizable (MIT) que estandariza la subida de archivos en varios proyectos en producción. Documentación y playground en [thekits.dev](https://thekits.dev/es/uploaderkit). Publicada en [npm](https://www.npmjs.com/package/uploaderkit). Código en [GitHub](https://github.com/Ricwolf19/uploaderkit).

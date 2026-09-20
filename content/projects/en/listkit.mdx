@@ -12,7 +12,7 @@ tags: ["oss", "react", "library", "typescript"]
 
 ## Context
 
-listkit (`@pibytelabs/listkit`) came out of building the same CRUD list view
+listkit came out of building the same CRUD list view
 over and over — toolbar, table, cards, search, filters and pagination. A single
 configuration now describes the whole view.
 
@@ -33,7 +33,7 @@ uses.
 (async):
 
 ```tsx
-import { ListView, serverActionAdapter } from "@pibytelabs/listkit";
+import { ListView, serverActionAdapter } from "listkit";
 
 const adapter = serverActionAdapter<Product>(async (query) => {
   const { rows, total } = await listProductsAction(query);
@@ -54,7 +54,7 @@ Key features:
 - Column sorting, built-in caching (stale-while-revalidate) or TanStack Query
   injection.
 - SSR through `initialData` + `buildListQuery` (the
-  `@pibytelabs/listkit/server` entry).
+  `listkit/server` entry).
 - Router adapters for Next.js, React Router or the plain browser.
 
 ## Technical challenges
@@ -71,4 +71,6 @@ Key features:
 A typed, reusable library (MIT), currently at v4.7.0, already powering admin
 lists in real projects such as Agates From Mexico and Increscendo. Published on
 [npm](https://www.npmjs.com/package/listkit) with releases automated through
-release-please in CI. Source on [GitHub](https://github.com/Ricwolf19/listkit).
+release-please in CI. Documentation and playground at
+[thekits.dev](https://thekits.dev/listkit). Source on
+[GitHub](https://github.com/Ricwolf19/listkit).

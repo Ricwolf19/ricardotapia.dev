@@ -12,7 +12,7 @@ tags: ["oss", "react", "library", "typescript", "npm"]
 
 ## Context
 
-uploaderkit (`@pibytelabs/uploaderkit`) came out of writing the same upload
+uploaderkit came out of writing the same upload
 logic in every project: type and size validation, image compression, retries,
 progress reporting and signing URLs against the backend. The library packages
 that whole flow behind a contract shared by client and server.
@@ -33,7 +33,7 @@ subpath exports.
 that contract from React, and the server adapter validates it on the other side:
 
 ```tsx
-import { useUploader } from "@pibytelabs/uploaderkit";
+import { useUploader } from "uploaderkit";
 
 const { upload, progress, abort } = useUploader({ scope: "avatars" });
 
@@ -63,6 +63,7 @@ Key features:
 ## Outcome
 
 A typed, reusable library (MIT) that standardizes file uploads across the
-@pibytelabs ecosystem. Published on
-[npm](https://www.npmjs.com/package/uploaderkit). Source on
+open-source ecosystem. Published on
+[npm](https://www.npmjs.com/package/uploaderkit). Documentation and playground
+at [thekits.dev](https://thekits.dev/uploaderkit). Source on
 [GitHub](https://github.com/Ricwolf19/uploaderkit).

@@ -22,7 +22,7 @@
         "rehype-pretty-code": "^0.14.0",
         "shiki": "^1.29.2",
         "tailwind-merge": "^2.6.0",
-        "zod": "^3.24.1",
+        "zod": "^3.24.1"
       },
       "devDependencies": {
         "@eslint/eslintrc": "^3.2.0",
@@ -46,9 +46,9 @@
         "tailwindcss": "^4.0.0",
         "typescript": "^5.7.3",
         "vite-tsconfig-paths": "^6.1.1",
-        "vitest": "^3.2.7",
-      },
-    },
+        "vitest": "^3.2.7"
+      }
+    }
   },
   "packages": {
     "@adobe/css-tools": ["@adobe/css-tools@4.5.0", "", {}, "sha512-6OzddxPio9UiWTCemp4N8cYLV2ZN1ncRnV1cVGtve7dhPOtRkleRyx32GQCYSwDYgaHU3USMm84tNsvKzRCa1Q=="],

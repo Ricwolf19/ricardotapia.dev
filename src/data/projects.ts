@@ -89,7 +89,7 @@ export const projects: Project[] = [
     links: [
       {
         label: "Landing",
-        url: "https://landing-ecommerce-henna.vercel.app/",
+        url: "https://www.cafecombate.com/",
         type: "landing",
         public: true,
       },

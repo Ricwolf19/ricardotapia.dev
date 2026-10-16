@@ -8,11 +8,11 @@ import { type FileViewerLabels, resolveFileViewerLabels } from "./labels";
 import { DownloadIcon, ExternalLinkIcon, FileWarningIcon } from "./icons";
 import { Kbd } from "./Kbd";
 import { FileViewerAction } from "./FileViewerAction";
-import { useOverlayLayer } from "./overlayStack";
-import { lockBodyScroll, unlockBodyScroll } from "./scrollLock";
+import { useOverlayLayer } from "@/components/overlay/overlayStack";
+import { lockBodyScroll, unlockBodyScroll } from "@/components/overlay/scrollLock";
 import { useCoarsePointer } from "./useCoarsePointer";
-import { useFocusTrap } from "./useFocusTrap";
-import { useOverlayTransition } from "./useOverlayTransition";
+import { useFocusTrap } from "@/components/overlay/useFocusTrap";
+import { useOverlayTransition } from "@/components/overlay/useOverlayTransition";
 
 /**
  * The viewer's empty states — failure and "no preview" — speak the overlay's

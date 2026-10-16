@@ -2,17 +2,17 @@
 
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { credentials } from "@/data/credentials";
 import type { Credential } from "@/types";
+import { getCredentialIssuer, getCredentialTitle } from "@/data/localize";
 import { FileViewer } from "@/components/file-viewer/FileViewer";
 import { useFileViewerLabels } from "@/components/file-viewer/useFileViewerLabels";
 import { CredentialCard } from "@/components/sections/CredentialCard";
 
 /**
- * Credential cards with the custom FileViewer: a PDF opens embedded, the
- * diploma opens as a 2-image gallery (arrows + counter).
+ * Credential cards sharing one FileViewer: a PDF opens embedded, the diploma
+ * opens as a 2-image gallery. Upcoming credentials have no files and no button.
  */
-export const CredentialsGrid = () => {
+export const CredentialsGrid = ({ credentials }: { credentials: Credential[] }) => {
   const t = useTranslations("certifications");
   const locale = useLocale();
   const labels = useFileViewerLabels();
@@ -20,24 +20,32 @@ export const CredentialsGrid = () => {
 
   return (
     <>
-      <ul className="grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="stagger grid items-stretch gap-5 sm:grid-cols-2">
         {credentials.map((credential) => (
           <CredentialCard
             key={credential.id}
             credential={credential}
-            title={t(`items.${credential.id}.title`)}
-            issuer={t(`items.${credential.id}.issuer`)}
+            title={getCredentialTitle(credential, locale)}
+            issuer={getCredentialIssuer(credential, locale)}
             typeLabel={t(`type.${credential.docType}`)}
             currentLabel={t("current")}
             actionLabel={t("viewDocument")}
+            verifyLabel={t("verify")}
+            targetLabel={
+              credential.status === "earned"
+                ? undefined
+                : credential.targetDate
+                  ? t("target", { date: credential.targetDate })
+                  : t("targetTbd")
+            }
             locale={locale}
-            onOpen={() => setActive(credential)}
+            onOpen={credential.files?.length ? () => setActive(credential) : undefined}
           />
         ))}
       </ul>
 
       <FileViewer
-        file={active?.files[0] ?? null}
+        file={active?.files?.[0] ?? null}
         files={active?.files}
         onClose={() => setActive(null)}
         labels={labels}

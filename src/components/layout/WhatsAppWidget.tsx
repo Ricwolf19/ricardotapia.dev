@@ -1,15 +1,16 @@
 import { FaWhatsapp } from "react-icons/fa";
 import { useTranslations } from "next-intl";
 import { siteConfig } from "@/data/site";
+import { WHATSAPP_WIDGET_ID } from "./shell-ids";
 
-/** Bottom-LEFT corner, out of the dev indicator's way. Never renders the
- * number in the UI. */
+/** Bottom-right corner; the dev indicator sits bottom-left. Never renders the
+ * number in the UI. The `id` lets the mobile overlay make it inert. */
 export const WhatsAppWidget = () => {
   const t = useTranslations("contact.whatsapp");
   const number = siteConfig.whatsappNumber;
   if (!number) return null;
 
-  const message = encodeURIComponent("Hola Ricardo, <Inserte mensaje aquí>");
+  const message = encodeURIComponent(t("prefill"));
   const href = `https://wa.me/${number}?text=${message}`;
 
   return (
@@ -18,10 +19,11 @@ export const WhatsAppWidget = () => {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={t("tooltip")}
+      id={WHATSAPP_WIDGET_ID}
       className="group fixed right-4 bottom-4 z-40 sm:right-6 sm:bottom-6"
     >
       {/* Fixed circle (aspect 1:1) -> perfectly round */}
-      <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/40 transition-transform duration-200 group-hover:scale-110">
+      <span className="bg-foreground text-background border-border flex h-14 w-14 items-center justify-center rounded-full border shadow-lg transition-transform duration-200 group-hover:scale-110">
         <FaWhatsapp className="h-7 w-7" />
       </span>
 

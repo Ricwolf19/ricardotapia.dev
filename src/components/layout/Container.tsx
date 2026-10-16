@@ -1,6 +1,14 @@
 import type { HTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 
-export const Container = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8", className)} {...props} />
+interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
+  /** Reading-width column by default; `wide` for grids and two-column layouts. */
+  wide?: boolean;
+}
+
+export const Container = ({ className, wide = false, ...props }: ContainerProps) => (
+  <div
+    className={cn("mx-auto w-full px-6", wide ? "max-w-5xl" : "max-w-3xl", className)}
+    {...props}
+  />
 );

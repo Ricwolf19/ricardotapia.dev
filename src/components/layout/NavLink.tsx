@@ -1,42 +1,41 @@
 "use client";
 
-import { Link } from "@/i18n/routing";
+import { Link, usePathname } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
 /**
- * One header navigation entry. The desktop bar and the mobile drawer render the
- * same links with different chrome, so the active/inactive rule lives here once
- * and `variant` picks the skin.
+ * One navigation entry. The sidebar and the mobile overlay render the same
+ * links with different chrome, so the active rule lives here once and
+ * `variant` picks the skin. Active state is derived from the pathname so the
+ * parents can stay server components.
  */
 export const NavLink = ({
   href,
   label,
-  active,
   variant,
   onClick,
 }: {
   href: string;
   label: string;
-  active: boolean;
-  variant: "bar" | "drawer";
+  variant: "sidebar" | "overlay";
   onClick?: () => void;
-}) => (
-  <Link
-    href={href}
-    onClick={onClick}
-    aria-current={active ? "page" : undefined}
-    className={cn(
-      "font-mono text-sm transition-colors",
-      variant === "drawer" && "rounded-lg px-3 py-2",
-      active
-        ? variant === "drawer"
-          ? "bg-surface-elevated text-foreground"
-          : "text-foreground"
-        : variant === "drawer"
-          ? "text-foreground-muted hover:bg-surface-elevated hover:text-foreground"
-          : "text-foreground-muted hover:text-foreground",
-    )}
-  >
-    {label}
-  </Link>
-);
+}) => {
+  const pathname = usePathname();
+  const active =
+    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      aria-current={active ? "page" : undefined}
+      className={cn(
+        "inline-flex w-fit items-center font-mono transition-colors duration-150",
+        variant === "sidebar" ? "link-underline text-[13px] leading-6" : "py-1 text-base",
+        active ? "text-foreground" : "text-foreground-muted hover:text-foreground",
+      )}
+    >
+      {label}
+    </Link>
+  );
+};

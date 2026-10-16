@@ -23,15 +23,19 @@ content/projects/<locale>/  MDX case-study bodies, one folder per locale
 messages/             next-intl messages: es.json (source of truth), en.json
 src/app/[locale]/     All pages. Locale-prefixed; there is no unprefixed route.
 src/app/*.ts          File-convention SEO assets: sitemap, robots, manifest, OG
+src/app/icon.tsx      Favicon/PWA icons rendered at build time from public/me.jpg
 src/components/
-  ui/                 Primitives (Button, Input, Badge…) — keep domain-free
-  layout/             Global chrome (Header, Footer, ThemeProvider, NavLink…)
-  sections/           Page blocks (Hero, ProjectGrid, CredentialsGrid…)
+  ui/                 Primitives (Button, Input, Badge, Avatar…) — keep domain-free
+  layout/             Global chrome: AppShell → Sidebar (lg+) / MobileNav (<lg), Footer
+  overlay/            Shared modal plumbing: scroll lock, focus trap, layer stack
+  sections/           Page blocks (ProjectGrid, ExperienceTimeline, LearningPath…)
+  sections/home/      The numbered home previews (Intro, ProjectsPreview…)
   seo/                JsonLd, Breadcrumbs, GoogleAnalytics
   file-viewer/        Self-contained overlay file/PDF/image viewer
   mdx/                MDX rendering
-src/data/             Static content: projects, experience, education, site
-src/lib/              seo, schema, og, mdx, env, ratelimit, recaptcha, resend
+src/data/             Static content: projects, experience, education, credentials,
+                      stack (curated groups), nav, site
+src/lib/              seo, schema, og, avatar, redirects, mdx, env, ratelimit…
 src/types/index.ts    All domain types live here — not beside the data
 ```
 
@@ -51,14 +55,17 @@ src/types/index.ts    All domain types live here — not beside the data
 
 ## 5. Patterns & architecture
 
-| Pattern            | Where                                                    | Guardrail                                                      |
-| ------------------ | -------------------------------------------------------- | -------------------------------------------------------------- |
-| Page metadata      | `pageMetadata(locale, path, meta?)` in `lib/seo.ts`      | Never hand-write `alternates`/`openGraph` on a page; call this |
-| Structured data    | builders in `lib/schema.ts` → `<JsonLd data={…}/>`       | Reference the Person/WebSite by `@id`, never re-describe them  |
-| OG cards           | `ogImageResponse()` in `lib/og.tsx`                      | All `opengraph-image.tsx` route through it                     |
-| Localized copy     | `es` in `data/*.ts`, `en` override in `data/localize.ts` | Add English via `localize.ts`, not a second data array         |
-| Feature flags      | `features` in `lib/env.ts`                               | Gate every integration; never assume an env var exists         |
-| Project visibility | `isPublicLink` / `getLiveUrl` in `data/projects.ts`      | Never render `link.url` directly — a link may be private       |
+| Pattern            | Where                                                          | Guardrail                                                                                                                 |
+| ------------------ | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Page metadata      | `pageMetadata(locale, path, meta?)` in `lib/seo.ts`            | Never hand-write `alternates`/`openGraph` on a page; call this                                                            |
+| Structured data    | builders in `lib/schema.ts` → `<JsonLd data={…}/>`             | Reference the Person/WebSite by `@id`, never re-describe them                                                             |
+| OG cards           | `ogImageResponse()` in `lib/og.tsx`                            | All `opengraph-image.tsx` route through it                                                                                |
+| Localized copy     | `es` in `data/*.ts`, `en` override in `data/localize.ts`       | Add English via `localize.ts`, not a second data array                                                                    |
+| Feature flags      | `features` in `lib/env.ts`                                     | Gate every integration; never assume an env var exists                                                                    |
+| Project visibility | `isPublicLink` / `getLiveUrl` in `data/projects.ts`            | Never render `link.url` directly — a link may be private                                                                  |
+| Routes             | `siteNav` in `data/nav.ts`, `STATIC_PATHS` in `app/sitemap.ts` | Adding a route touches both; renaming one adds a `legacyRedirects` entry (`lib/redirects.ts`), all cross-checked by tests |
+| Credentials        | one entry in `data/credentials.ts` (`status`, `files?`)        | Start as `planned`/`in-progress`, flip to `earned` + `files` later; roadmap items live in `data/learning.ts`              |
+| Thumbnails         | `public/images/projects/<slug>/cover.{jpg,png}`                | Set `thumbnailReady` only once the file exists; a test checks                                                             |
 
 Data flow: `data/*.ts` (static, Spanish) → server component → `localize.ts`
 applies English → HTML. No database, no runtime fetching on any page.
@@ -90,6 +97,13 @@ Referenced from `lib/seo.ts`.
    the real domain instead of `localhost:3000`.
 6. Language codes are **language-only** (`es`, `en`), never `es-MX` — regional
    codes exclude Spanish speakers outside Mexico. `x-default` points at `es`.
+7. **`pageMetadata` restates `openGraph` and `twitter` in full.** A page-level
+   object replaces the layout's whole object, so `siteName`, `og:locale`,
+   `og:type`, `twitter:card` and the Twitter title would otherwise vanish.
+   Routes with their own card pass `ownImage: true` so Next injects theirs.
+8. **No `getTranslations` inside `generateImageMetadata`.** It runs while Next
+   resolves a page's metadata, outside next-intl's request scope; a throw there
+   silently drops every `<meta>` on every page. Read `messages/*.json` directly.
 
 ### Environment & feature flags
 
@@ -159,19 +173,24 @@ pinned version number.
 
 ## 7. Invariants (do not break without flagging)
 
-| Rule                               | Why                                                                                  | Instead                                                                          |
-| ---------------------------------- | ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
-| Spanish is the source of truth     | `data/*.ts` holds `es`; `localize.ts` holds the `en` override                        | Add English in `localize.ts`                                                     |
-| Case studies exist in every locale | `content/projects/<locale>/<slug>.mdx`; `src/lib/mdx.test.ts` asserts parity         | Add the file in every locale folder, or the page falls back and is marked `lang` |
-| Every route is locale-prefixed     | `localePrefix: "always"`; `/` 307s to `/es`                                          | Never add a route outside `[locale]` except file-convention assets               |
-| Internal projects never get a page | `status: "internal"` is excluded from `workProjects`, and so from routes and sitemap | Filter through `workProjects` / `projectSlugs`                                   |
-| Server-first                       | Crawlers index server HTML                                                           | `"use client"` only for genuine interactivity                                    |
-| No secrets in `NEXT_PUBLIC_*`      | Those are inlined into the browser bundle                                            | Server-only env via `lib/env.ts`                                                 |
+| Rule                               | Why                                                                                               | Instead                                                                          |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Spanish is the source of truth     | `data/*.ts` holds `es`; `localize.ts` holds the `en` override (projects, experience, credentials) | Add English in `localize.ts`                                                     |
+| Case studies exist in every locale | `content/projects/<locale>/<slug>.mdx`; `src/lib/mdx.test.ts` asserts parity                      | Add the file in every locale folder, or the page falls back and is marked `lang` |
+| Every route is locale-prefixed     | `localePrefix: "always"`; `/` 307s to `/es`                                                       | Never add a route outside `[locale]` except file-convention assets               |
+| Internal projects never get a page | `status: "internal"` is excluded from `workProjects`, and so from routes and sitemap              | Filter through `workProjects` / `projectSlugs`                                   |
+| Server-first                       | Crawlers index server HTML                                                                        | `"use client"` only for genuine interactivity                                    |
+| No secrets in `NEXT_PUBLIC_*`      | Those are inlined into the browser bundle                                                         | Server-only env via `lib/env.ts`                                                 |
 
 ## 8. Anti-patterns
 
 - Hand-writing `alternates` or `openGraph` on a page instead of `pageMetadata`.
-- Adding a page without adding its path to `STATIC_PATHS` in `src/app/sitemap.ts`.
+- Adding a page without adding its path to `STATIC_PATHS` in `src/app/sitemap.ts`
+  and to `siteNav` in `src/data/nav.ts`.
+- Renaming a route without a `legacyRedirects` entry (308) in `src/lib/redirects.ts`.
+- Serving the icons from static files in `public/`: `src/app/icon.tsx` generates
+  them from the photo, and `src/middleware.ts` must keep `icon|apple-icon` excluded
+  or next-intl locale-prefixes them into a 404.
 - Growing a `ui/` primitive with domain-specific props — compose a specialized
   component in `sections/` instead.
 - Hardcoding user-facing copy in JSX when `messages/*.json` exists.

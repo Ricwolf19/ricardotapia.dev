@@ -1,29 +1,65 @@
 {
   "nav": {
-    "work": "Work",
-    "about": "About",
-    "now": "Now",
+    "home": "Home",
+    "projects": "Projects",
+    "experience": "Experience",
+    "stack": "Stack",
     "certifications": "Certifications",
+    "now": "Now",
     "contact": "Contact",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
-    "breadcrumb": "Breadcrumb"
+    "breadcrumb": "Breadcrumb",
+    "primaryNav": "Primary navigation",
+    "skipToContent": "Skip to content",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "localTime": "Chihuahua, MX",
+    "commandPalette": "Search",
+    "copied": "Copied",
+    "open": "Open",
+    "email": "Email",
+    "phone": "WhatsApp",
+    "site": "Site",
+    "groups": {
+      "documents": "Documents",
+      "contact": "Contact",
+      "social": "Social"
+    }
   },
   "home": {
-    "hero": {
-      "title": "Ricardo Tapia",
-      "subtitle": "Cross-Platform Software Developer",
+    "intro": {
+      "role": "Cross-Platform Software Developer",
       "description": "I design and build custom software for businesses: ERP, e-commerce, platforms, and web applications.",
-      "ctaProjects": "View projects",
-      "ctaContact": "Let's talk",
-      "ctaCv": "View CV",
-      "available": "Available for new projects"
+      "bio": "Full-stack developer based in Chihuahua, Mexico, with 3+ years building production systems: ERP, electronic invoicing SaaS, e-commerce and institutional platforms. At PibyteLabs I maintain the internal TypeScript package ecosystem and am the author of two open-source packages published on npm (listkit and uploaderkit). On mobile, I maintain a React Native/Expo app in open beta with offline-first sync designed end to end.",
+      "available": "Available for new projects",
+      "ctaContact": "Let's talk"
+    },
+    "sections": {
+      "projects": "projects",
+      "experience": "experience",
+      "stack": "stack",
+      "certifications": "certifications",
+      "contact": "contact",
+      "viewAll": "view all"
+    },
+    "previews": {
+      "experience": {
+        "title": "Recent experience"
+      },
+      "stack": {
+        "title": "Tools I use"
+      },
+      "certifications": {
+        "title": "Credentials"
+      }
+    },
+    "contactCta": {
+      "title": "Have a project?",
+      "text": "Tell me what you need built and we will talk it through.",
+      "cta": "go to contact"
     },
     "featured": {
-      "label": "// featured projects",
-      "title": "Featured projects",
-      "subtitle": "Public-access work — live sites and repos — you can open right now.",
-      "viewAll": "View all projects",
       "viewLive": "View app",
       "viewRepo": "View repo",
       "comingSoon": "Coming soon"
@@ -49,21 +85,11 @@
           "title": "Mobile apps",
           "desc": "Offline-first mobile apps with React Native and Expo, with data always available."
         }
-      },
-      "sectorsTitle": "Sectors",
-      "sectors": {
-        "fintech": "Fintech & invoicing",
-        "ecommerce": "E-commerce & retail",
-        "health": "Health",
-        "education": "Education",
-        "institutional": "Institutional & nonprofit",
-        "professional": "Tax & accounting firms"
-      },
-      "stackTitle": "Core stack"
+      }
     }
   },
   "work": {
-    "title": "Work",
+    "title": "Projects",
     "subtitle": "Complete systems in production: ERP, SaaS, e-commerce, and platforms.",
     "filterAll": "All",
     "filterSaas": "SaaS",
@@ -72,10 +98,12 @@
     "filterPlatform": "Platform",
     "filterMarketing": "Marketing",
     "filterOss": "Open Source",
+    "filterGame": "Game",
     "priority": "Priority",
     "privateAccess": "Account required",
     "public": "Public",
     "private": "Private",
+    "internalOnly": "Internal use",
     "empty": "No projects in this category.",
     "caseStudy": {
       "backToWork": "Back to projects",
@@ -88,16 +116,17 @@
       "timeline": "Timeline",
       "subApps": "Apps in this monorepo",
       "prev": "Previous",
-      "next": "Next"
+      "next": "Next",
+      "noLinks": {
+        "internal": "Intranet applications; no public access."
+      },
+      "gallery": "Gallery"
     }
   },
-  "about": {
-    "title": "About",
-    "bio": "Full-stack developer based in Chihuahua, Mexico, with 3+ years building production systems: ERP, electronic invoicing SaaS, e-commerce and institutional platforms. At PibyteLabs I maintain the internal TypeScript package ecosystem and am the author of two open-source packages published on npm (listkit and uploaderkit). On mobile, I maintain a React Native/Expo app in open beta with offline-first sync designed end to end.",
-    "experienceTitle": "Experience",
+  "experience": {
+    "title": "Experience",
+    "subtitle": "Roles, responsibilities and outcomes, most recent first.",
     "educationTitle": "Education",
-    "stackTitle": "Technologies",
-    "githubTitle": "GitHub activity",
     "current": "Current",
     "type": {
       "full-time": "Full-time",
@@ -107,37 +136,55 @@
       "internship": "Internship"
     }
   },
+  "stack": {
+    "title": "Stack",
+    "subtitle": "The tools, frameworks and platforms I work with, from the front end to the cloud.",
+    "groups": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "database": "Databases",
+      "devops": "DevOps & cloud",
+      "mobileGames": "Mobile & games",
+      "tooling": "Tooling"
+    }
+  },
   "now": {
     "title": "Now",
     "subtitle": "What I'm currently working on.",
     "empty": "No active projects right now."
   },
   "cv": {
+    "viewCv": "View CV",
     "toggleHint": "Also in Spanish"
   },
   "certifications": {
     "title": "Certifications",
-    "subtitle": "Verifiable degrees and certificates.",
+    "subtitle": "Earned degrees and certifications in progress.",
     "viewDocument": "View document",
     "current": "Current",
     "type": {
       "degree": "Degree",
-      "certificate": "Diploma"
+      "certificate": "Diploma",
+      "certification": "Certification"
     },
-    "items": {
-      "ingenieria": {
-        "title": "B.Eng. in Software Development and Management",
-        "issuer": "Universidad Tecnológica de Chihuahua"
+    "sections": {
+      "earned": {
+        "title": "Earned",
+        "description": "Verifiable degrees and diplomas."
       },
-      "tsu": {
-        "title": "Associate Degree (TSU) in IT — Multiplatform Software Development",
-        "issuer": "Universidad Tecnológica de Chihuahua"
-      },
-      "fullstack": {
-        "title": "Full-Stack Programming Diploma (126 h)",
-        "issuer": "CENALTEC Chihuahua · Chihuahua IT Cluster"
+      "upcoming": {
+        "title": "In progress and upcoming",
+        "description": "Certifications I am working toward or have planned."
       }
-    }
+    },
+    "status": {
+      "earned": "Earned",
+      "inProgress": "In progress",
+      "planned": "Planned"
+    },
+    "verify": "Verify",
+    "target": "Target: {date}",
+    "targetTbd": "Target TBD"
   },
   "fileViewer": {
     "filePreview": "File",
@@ -177,12 +224,18 @@
         "recaptcha": "We couldn't verify you're human.",
         "email": "The message couldn't be sent. Please try again.",
         "unavailable": "The form is unavailable right now. Use WhatsApp or email."
+      },
+      "placeholders": {
+        "name": "Your name",
+        "email": "you@email.com",
+        "message": "Tell me about your project…"
       }
     },
     "whatsapp": {
       "label": "Prefer WhatsApp?",
       "cta": "Send message",
-      "tooltip": "Let's talk"
+      "tooltip": "Let's talk",
+      "prefill": "Hi Ricardo, I saw your portfolio and would like to talk about…"
     },
     "directEmail": "Or email me directly at",
     "composer": {
@@ -206,5 +259,27 @@
     "light": "Light",
     "dark": "Dark",
     "system": "System"
+  },
+  "palette": {
+    "title": "Command palette",
+    "placeholder": "Type to search pages, projects or actions…",
+    "empty": "No results.",
+    "groups": {
+      "pages": "Pages",
+      "projects": "Projects",
+      "actions": "Actions"
+    },
+    "copyEmail": "Copy email",
+    "switchLocale": "Switch language"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "This page does not exist or has moved. You can go back home or browse the projects.",
+    "home": "Back home",
+    "projects": "View projects"
+  },
+  "og": {
+    "portfolio": "Portfolio",
+    "caseStudy": "Case study"
   }
 }

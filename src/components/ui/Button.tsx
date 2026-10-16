@@ -2,21 +2,26 @@ import { cva, type VariantProps } from "class-variance-authority";
 import type { ButtonHTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 
+/**
+ * One button scale for the whole site: every size shares the pill shape, the
+ * mono face and the same press/hover motion, so CTAs line up side by side.
+ */
 export const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-mono text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full border font-mono text-sm font-medium transition-[background-color,color,border-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        primary: "bg-primary text-white hover:bg-primary-hover",
+        primary:
+          "border-foreground bg-foreground text-background hover:bg-primary-hover hover:border-primary-hover hover:shadow-lg hover:shadow-foreground/15",
         secondary:
-          "border border-border-strong bg-surface text-foreground hover:bg-surface-elevated",
-        ghost: "text-foreground-muted hover:bg-surface-elevated hover:text-foreground",
-        accent: "bg-accent text-white hover:bg-accent-hover",
+          "border-border-strong bg-transparent text-foreground hover:border-foreground hover:bg-surface-elevated",
+        ghost:
+          "border-transparent text-foreground-muted hover:bg-surface-elevated hover:text-foreground hover:translate-y-0",
       },
       size: {
-        sm: "h-8 px-3",
+        sm: "h-8 px-3.5 text-xs",
         md: "h-10 px-5",
-        lg: "h-12 px-7 text-base",
+        lg: "h-11 px-6",
         icon: "h-9 w-9",
       },
     },

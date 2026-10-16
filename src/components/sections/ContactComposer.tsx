@@ -77,7 +77,7 @@ export const ContactComposer = ({ email, whatsappNumber }: ContactComposerProps)
           autoComplete="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Tu nombre"
+          placeholder={t("form.placeholders.name")}
         />
       </div>
 
@@ -112,28 +112,18 @@ export const ContactComposer = ({ email, whatsappNumber }: ContactComposerProps)
           required
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="Cuéntame sobre tu proyecto..."
+          placeholder={t("form.placeholders.message")}
         />
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
         {whatsappNumber && (
-          <Button
-            type="button"
-            onClick={openWhatsApp}
-            disabled={!ready}
-            className="group bg-[#25D366] text-white shadow-lg shadow-[#25D366]/20 hover:bg-[#1ebe5b]"
-          >
+          <Button type="button" onClick={openWhatsApp} disabled={!ready}>
             <FaWhatsapp className="h-4 w-4" />
             {t("composer.whatsappBtn")}
           </Button>
         )}
-        <Button
-          type="submit"
-          disabled={!ready}
-          variant={whatsappNumber ? "secondary" : "primary"}
-          className="group"
-        >
+        <Button type="submit" disabled={!ready} variant={whatsappNumber ? "secondary" : "primary"}>
           <Mail className="h-4 w-4" />
           {t("composer.emailBtn")}
         </Button>

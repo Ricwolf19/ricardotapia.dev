@@ -10,7 +10,8 @@ export type ProjectCategory =
   | "platform"
   | "marketing"
   | "oss"
-  | "portfolio";
+  | "portfolio"
+  | "game";
 
 export type TechnologyCategory =
   | "frontend"
@@ -18,6 +19,7 @@ export type TechnologyCategory =
   | "database"
   | "devops"
   | "mobile"
+  | "game"
   | "design"
   | "tooling";
 
@@ -26,6 +28,24 @@ export interface Technology {
   slug: string;
   category: TechnologyCategory;
   url?: string;
+}
+
+// ============================================
+// STACK (curated groups for /stack)
+// ============================================
+/** Group labels live in messages under `stack.groups.<id>`. */
+export type StackGroupId =
+  | "frontend"
+  | "backend"
+  | "database"
+  | "devops"
+  | "mobileGames"
+  | "tooling";
+
+export interface StackGroup {
+  id: StackGroupId;
+  /** Built with `techList()`, so every entry is a catalog technology. */
+  technologies: Technology[];
 }
 
 export type ProjectLinkType = "live" | "repo" | "npm" | "docs" | "admin" | "landing";
@@ -68,6 +88,9 @@ export interface ProjectInfrastructure {
   environments: string[];
 }
 
+/** Why a project has no public URL — lets cards say "internal" instead of a generic lock. */
+export type ProjectNoLinkReason = "internal";
+
 export interface Project {
   id: string; // UUID string. Future: Neon PK.
   slug: string; // URL-friendly: "cafe-combate"
@@ -95,6 +118,9 @@ export interface Project {
 
   // Content
   content?: string; // MDX file path or raw MDX
+
+  /** Set when `links` is empty on purpose; drives the card badge and case-study aside. */
+  noLinkReason?: ProjectNoLinkReason;
 
   // Flags
   featured?: boolean; // Show on Home
@@ -131,8 +157,20 @@ export interface Experience {
   endDate?: string;
   isCurrent: boolean;
   description: string; // MDX supported (es). Translation in src/data/localize.ts
+  /** Bullet achievements (es). Translation in src/data/localize.ts */
+  highlights?: string[];
+  /** Evidence photo under public/ (alt is es; translation in src/data/localize.ts). */
+  image?: ExperienceImage;
   technologies: Technology[];
   projects?: Project["slug"][]; // Slug references
+}
+
+export interface ExperienceImage {
+  src: string;
+  alt: string;
+  /** Intrinsic pixel size, so next/image reserves the box without a layout shift. */
+  width: number;
+  height: number;
 }
 
 // ============================================
@@ -161,18 +199,27 @@ export interface CredentialFile {
   mimeType: string;
 }
 
-export type CredentialId = "ingenieria" | "tsu" | "fullstack";
+export type CredentialStatus = "earned" | "in-progress" | "planned";
+/** `certification` = industry credential (AWS…); `certificate` = course diploma. */
+export type CredentialDocType = "degree" | "certificate" | "certification";
 
 export interface Credential {
-  id: CredentialId;
-  docType: "degree" | "certificate";
+  id: string;
+  title: string; // es. Translation in src/data/localize.ts
+  issuer: string; // es. Translation in src/data/localize.ts
+  docType: CredentialDocType;
+  status: CredentialStatus;
   /** Study period (ISO 8601) — degrees, which span years. */
   startDate?: string;
   endDate?: string;
   /** Single issue date (ISO 8601) — one-off certificates, which do not. */
   issuedDate?: string;
-  /** One file = single preview; several = gallery with arrows in the viewer. */
-  files: CredentialFile[];
+  /** Planned exam/issue date for an upcoming credential; omit = "target TBD". */
+  targetDate?: string;
+  /** Issuer's public verification page, rendered as an outbound link. */
+  verifyUrl?: string;
+  /** One file = single preview; several = gallery. Omit for upcoming credentials. */
+  files?: CredentialFile[];
 }
 
 // ============================================
@@ -184,6 +231,10 @@ export interface SiteConfig {
   description: string;
   url: string;
   ogImage: string;
+  /** Site-root path of the author photo (public/). */
+  avatar: string;
+  /** Where the author is based: drives the sidebar clock, the OG cards and the Person schema. */
+  location: { city: string; countryCode: string; countryName: string; timeZone: string };
   email: string; // ENV: CONTACT_EMAIL
   whatsappNumber?: string; // ENV: WHATSAPP_NUMBER (international format without +)
   calendlyUrl?: string;

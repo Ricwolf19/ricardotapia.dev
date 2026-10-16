@@ -5,45 +5,46 @@
 
 /* ============================================
    DESIGN TOKENS (zed.dev inspired)
-   Light = default on load. Dark via .dark
+   :root = light. `.dark` = dark. next-themes follows the OS by default and
+   persists an explicit choice (see ThemeToggle).
    ============================================ */
 :root {
-  /* Light Mode */
-  --background: #fafafa;
+  /* Light: paper white and ink. Semantic colors stay saturated (dots, not fills). */
+  --background: #ffffff;
   --surface: #ffffff;
-  --surface-elevated: #f1f5f9;
-  --border: #e2e8f0;
-  --border-strong: #cbd5e1;
-  --foreground: #0f172a;
-  --foreground-muted: #475569;
-  --foreground-dim: #64748b;
-  --primary: #4f46e5;
-  --primary-hover: #4338ca;
-  --accent: #0e7490;
-  --accent-hover: #155e75;
-  /* Darker green so "public/production" badges read clearly on light surfaces. */
-  --success: #15803d;
-  --warning: #b45309;
+  --surface-elevated: #f4f4f5;
+  --border: #e4e4e7;
+  --border-strong: #d4d4d8;
+  --foreground: #0a0a0a;
+  --foreground-muted: #52525b;
+  --foreground-dim: #71717a;
+  /* Primary = ink. Buttons invert (ink on paper / paper on ink). */
+  --primary: #0a0a0a;
+  --primary-hover: #27272a;
+  --accent: #0a0a0a;
+  --accent-hover: #3f3f46;
+  --success: #16a34a;
+  --warning: #d97706;
   --error: #dc2626;
 
   /* Fonts (injected by next/font as vars on <html>) */
-  --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
 .dark {
-  --background: #0a0a0f;
-  --surface: #13131f;
-  --surface-elevated: #1a1a2e;
-  --border: #1e1e2e;
-  --border-strong: #2e2e3e;
-  --foreground: #f8fafc;
-  --foreground-muted: #94a3b8;
-  --foreground-dim: #64748b;
-  --primary: #6366f1;
-  --primary-hover: #818cf8;
-  --accent: #06b6d4;
-  --accent-hover: #22d3ee;
+  --background: #0c0c0f;
+  --surface: #0c0c0f;
+  --surface-elevated: #18181b;
+  --border: #27272a;
+  --border-strong: #3f3f46;
+  --foreground: #f4f4f5;
+  --foreground-muted: #a1a1aa;
+  --foreground-dim: #71717a;
+  --primary: #f4f4f5;
+  --primary-hover: #ffffff;
+  --accent: #f4f4f5;
+  --accent-hover: #d4d4d8;
   --success: #22c55e;
   --warning: #f59e0b;
   --error: #ef4444;
@@ -104,8 +105,10 @@
     letter-spacing: -0.02em;
   }
 
+  /* Inverted selection, like the reference: ink on paper flips to paper on ink. */
   ::selection {
-    background-color: color-mix(in srgb, var(--color-primary) 25%, transparent);
+    background-color: var(--color-foreground);
+    color: var(--color-background);
   }
 }
 
@@ -154,4 +157,52 @@
   .fade-in {
     animation: fade-in 0.25s ease both;
   }
+
+  /* Staggered entrance for lists: set `--i` on each child. */
+  .stagger > * {
+    animation: reveal-rise 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--i, 0) * 50ms);
+  }
+}
+
+/* Hover lift shared by cards and rows. */
+@utility lift {
+  transition:
+    transform 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+  &:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--color-foreground) 35%, transparent);
+  }
+}
+
+/* Underline that grows from the left on hover (nav links, inline links). */
+@utility link-underline {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms ease;
+  }
+  &:hover::after,
+  &[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
+}
+
+/* Halftone dots — the reference's texture, used on thumbnail placeholders. */
+@utility halftone {
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--color-foreground) 18%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 10px 10px;
 }

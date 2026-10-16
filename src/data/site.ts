@@ -12,6 +12,14 @@ export const siteConfig: SiteConfig = {
   // Override per-environment with NEXT_PUBLIC_SITE_URL.
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://ricardotapia.dev",
   ogImage: "/opengraph-image",
+  // One file feeds the favicon routes, the avatars and the Person JSON-LD image.
+  avatar: "/me.jpg",
+  location: {
+    city: "Chihuahua",
+    countryCode: "MX",
+    countryName: "México",
+    timeZone: "America/Chihuahua",
+  },
   email: process.env.CONTACT_EMAIL ?? "rhtc19@gmail.com",
   whatsappNumber: process.env.WHATSAPP_NUMBER ?? "526143965716",
   locale: "es",

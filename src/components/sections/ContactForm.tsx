@@ -80,7 +80,13 @@ export const ContactForm = ({ email, live, recaptchaSiteKey }: ContactFormProps)
           <User className="mr-1.5 inline h-3.5 w-3.5" />
           {t("name")}
         </Label>
-        <Input id="name" name="name" autoComplete="name" required placeholder="Tu nombre" />
+        <Input
+          id="name"
+          name="name"
+          autoComplete="name"
+          required
+          placeholder={t("placeholders.name")}
+        />
       </div>
 
       <div>
@@ -94,7 +100,7 @@ export const ContactForm = ({ email, live, recaptchaSiteKey }: ContactFormProps)
           type="email"
           autoComplete="email"
           required
-          placeholder="tu@correo.com"
+          placeholder={t("placeholders.email")}
         />
       </div>
 
@@ -122,12 +128,12 @@ export const ContactForm = ({ email, live, recaptchaSiteKey }: ContactFormProps)
           name="message"
           rows={5}
           required
-          placeholder="Cuéntame sobre tu proyecto..."
+          placeholder={t("placeholders.message")}
         />
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
-        <Button type="submit" disabled={isPending} className="group shadow-primary/20 shadow-lg">
+        <Button type="submit" disabled={isPending}>
           {isPending ? t("sending") : t("submit")}
           <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </Button>

@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Mail } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { Section } from "@/components/layout/Section";
+import { PageHeader } from "@/components/layout/PageHeader";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { ContactComposer } from "@/components/sections/ContactComposer";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
@@ -26,16 +27,13 @@ const ContactPage = async ({ params }: { params: Promise<{ locale: string }> }) 
   const t = await getTranslations({ locale, namespace: "contact" });
 
   const whatsappHref = siteConfig.whatsappNumber
-    ? `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent("Hola Ricardo, <Inserte mensaje aquí>")}`
+    ? `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(t("whatsapp.prefill"))}`
     : undefined;
 
   return (
     <Section>
       <Breadcrumbs locale={locale} trail={[{ name: t("title"), path: "/contact" }]} />
-      <header className="mb-10 max-w-2xl">
-        <h1 className="text-4xl tracking-tight">{t("title")}</h1>
-        <p className="text-foreground-muted mt-3 text-lg">{t("subtitle")}</p>
-      </header>
+      <PageHeader title={t("title")} subtitle={t("subtitle")} />
 
       <div className="grid gap-12 lg:grid-cols-[1fr_20rem]">
         {features.resend ? (
@@ -55,9 +53,9 @@ const ContactPage = async ({ params }: { params: Promise<{ locale: string }> }) 
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="group border-border bg-surface flex items-center gap-4 rounded-lg border p-5 transition-all hover:-translate-y-0.5 hover:border-[#25D366]/50 hover:shadow-lg hover:shadow-[#25D366]/5"
+              className="group border-border bg-surface lift flex items-center gap-4 rounded-lg border p-5"
             >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#25D366]/10 text-[#25D366] transition-colors group-hover:bg-[#25D366] group-hover:text-white">
+              <span className="border-border text-foreground group-hover:bg-foreground group-hover:text-background flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-colors">
                 <FaWhatsapp className="h-5 w-5" />
               </span>
               <span>
@@ -69,14 +67,16 @@ const ContactPage = async ({ params }: { params: Promise<{ locale: string }> }) 
 
           <a
             href={`mailto:${siteConfig.email}`}
-            className="group border-border bg-surface hover:border-accent/50 hover:shadow-accent/5 flex items-center gap-4 rounded-lg border p-5 transition-all hover:-translate-y-0.5 hover:shadow-lg"
+            className="group border-border bg-surface lift flex items-center gap-4 rounded-lg border p-5"
           >
-            <span className="bg-accent/10 text-accent group-hover:bg-accent flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-colors group-hover:text-white">
+            <span className="border-border text-foreground group-hover:bg-foreground group-hover:text-background flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-colors">
               <Mail className="h-5 w-5" />
             </span>
             <span className="min-w-0">
               <span className="block font-mono text-sm font-medium">{t("directEmail")}</span>
-              <span className="text-accent block truncate text-xs">{siteConfig.email}</span>
+              <span className="text-foreground-muted block truncate text-xs">
+                {siteConfig.email}
+              </span>
             </span>
           </a>
         </aside>

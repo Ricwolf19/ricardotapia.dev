@@ -14,7 +14,7 @@ describe("case-study content", () => {
     expect(en).toEqual(es);
   });
 
-  it("has a case study for every project listed in /work", async () => {
+  it("has a case study for every project listed in /projects", async () => {
     const es = await getContentSlugs("es");
     for (const slug of projectSlugs) expect(es).toContain(slug);
   });

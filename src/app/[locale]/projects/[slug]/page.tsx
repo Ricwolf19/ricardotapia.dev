@@ -7,11 +7,12 @@ import { ArrowLeft, ArrowRight, ExternalLink, Globe, Lock } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { getProjectBySlug, workProjects, splitLinks, splitApps, getLiveUrl } from "@/data/projects";
 import { getTagline, getDescription } from "@/data/localize";
-import { localeAlternates, localeUrl } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo";
 import { creativeWorkSchema } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getProjectContent } from "@/lib/mdx";
 import { MdxContent } from "@/components/mdx/MdxContent";
+import { ProjectGallery } from "@/components/sections/ProjectGallery";
 import { Section } from "@/components/layout/Section";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Badge } from "@/components/ui/Badge";
@@ -75,18 +76,13 @@ export const generateMetadata = async ({
   const { locale, slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project) return {};
-  const tagline = getTagline(project, locale);
-  return {
-    title: project.title,
-    description: tagline,
-    alternates: localeAlternates(locale, `/work/${slug}`),
-    openGraph: {
-      title: project.title,
-      description: tagline,
-      url: localeUrl(locale, `/work/${slug}`),
-      type: "article",
-    },
-  };
+  // The route owns opengraph-image.tsx / twitter-image.tsx: no images here.
+  return pageMetadata(
+    locale,
+    `/projects/${slug}`,
+    { title: project.title, description: getTagline(project, locale) },
+    { ownImage: true, type: "article" },
+  );
 };
 
 const CaseStudyPage = async ({ params }: { params: Promise<{ locale: string; slug: string }> }) => {
@@ -131,17 +127,17 @@ const CaseStudyPage = async ({ params }: { params: Promise<{ locale: string; slu
   });
 
   return (
-    <Section>
+    <Section wide>
       <JsonLd data={jsonLd} />
       <Breadcrumbs
         locale={locale}
         trail={[
-          { name: tWork("title"), path: "/work" },
-          { name: project.title, path: `/work/${slug}` },
+          { name: tWork("title"), path: "/projects" },
+          { name: project.title, path: `/projects/${slug}` },
         ]}
       />
 
-      <div className="mt-8 grid gap-12 lg:grid-cols-[1fr_18rem]">
+      <div className="mt-8 grid gap-12 lg:grid-cols-[1fr_16rem]">
         {/* Main content */}
         <article>
           <div className="flex flex-wrap items-center gap-2">
@@ -150,7 +146,7 @@ const CaseStudyPage = async ({ params }: { params: Promise<{ locale: string; slu
               {tStatus(project.status)}
             </Badge>
           </div>
-          <h1 className="mt-4 text-4xl tracking-tight">{project.title}</h1>
+          <h1 className="mt-4 text-3xl tracking-tight sm:text-4xl">{project.title}</h1>
           <p className="text-foreground-muted mt-3 max-w-2xl text-lg">
             {getTagline(project, locale)}
           </p>
@@ -167,6 +163,13 @@ const CaseStudyPage = async ({ params }: { params: Promise<{ locale: string; slu
               <p className="text-foreground-muted">{getDescription(project, locale)}</p>
             )}
           </div>
+
+          {project.gallery && project.gallery.length > 0 && (
+            <section className="mt-12">
+              <h2 className="mb-4 font-mono text-2xl tracking-tight">{t("gallery")}</h2>
+              <ProjectGallery title={project.title} images={project.gallery} />
+            </section>
+          )}
 
           {project.isMonorepo && (publicApps.length > 0 || privateApps.length > 0) && (
             <section className="mt-12">
@@ -205,6 +208,17 @@ const CaseStudyPage = async ({ params }: { params: Promise<{ locale: string; slu
 
         {/* Meta sidebar */}
         <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
+          {project.noLinkReason && publicLinks.length === 0 && privateLinks.length === 0 && (
+            <div>
+              <h2 className="text-foreground-dim mb-3 font-mono text-xs tracking-widest uppercase">
+                {t("links")}
+              </h2>
+              <p className="text-foreground-muted inline-flex items-start gap-1.5 text-sm">
+                <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden />
+                {t(`noLinks.${project.noLinkReason}`)}
+              </p>
+            </div>
+          )}
           {(publicLinks.length > 0 || privateLinks.length > 0) && (
             <div>
               <h2 className="text-foreground-dim mb-3 font-mono text-xs tracking-widest uppercase">
@@ -250,7 +264,7 @@ const CaseStudyPage = async ({ params }: { params: Promise<{ locale: string; slu
       <nav className="border-border mt-16 flex items-center justify-between gap-4 border-t pt-8">
         {prev ? (
           <Link
-            href={`/work/${prev.slug}`}
+            href={`/projects/${prev.slug}`}
             className="text-foreground-muted hover:text-foreground inline-flex items-center gap-1.5 font-mono text-sm"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -261,7 +275,7 @@ const CaseStudyPage = async ({ params }: { params: Promise<{ locale: string; slu
         )}
         {next ? (
           <Link
-            href={`/work/${next.slug}`}
+            href={`/projects/${next.slug}`}
             className="text-foreground-muted hover:text-foreground inline-flex items-center gap-1.5 font-mono text-sm"
           >
             {next.title}

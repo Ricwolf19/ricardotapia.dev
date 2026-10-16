@@ -1,15 +1,6 @@
 import type { ProjectCategory } from "@/types";
 
-/** `href` is relative to the locale segment; the Link component prefixes it. */
-export const navLinks = [
-  { href: "/work", key: "work" },
-  { href: "/about", key: "about" },
-  { href: "/now", key: "now" },
-  { href: "/certificaciones", key: "certifications" },
-  { href: "/contact", key: "contact" },
-] as const;
-
-/** Category filters for /work; "all" means no filter. */
+/** Category filters for /projects; "all" means no filter. */
 export type WorkFilter = "all" | ProjectCategory;
 
 export const workFilters: { value: WorkFilter; messageKey: string }[] = [
@@ -20,15 +11,5 @@ export const workFilters: { value: WorkFilter; messageKey: string }[] = [
   { value: "platform", messageKey: "filterPlatform" },
   { value: "marketing", messageKey: "filterMarketing" },
   { value: "oss", messageKey: "filterOss" },
+  { value: "game", messageKey: "filterGame" },
 ];
-
-/** Per-category gradients for the thumbnail placeholders. */
-export const categoryGradients: Record<ProjectCategory, string> = {
-  erp: "from-indigo-500/80 to-purple-600/80",
-  saas: "from-cyan-500/80 to-blue-600/80",
-  ecommerce: "from-emerald-500/80 to-teal-600/80",
-  platform: "from-violet-500/80 to-indigo-600/80",
-  marketing: "from-orange-500/80 to-pink-600/80",
-  oss: "from-sky-500/80 to-cyan-600/80",
-  portfolio: "from-slate-500/80 to-slate-700/80",
-};

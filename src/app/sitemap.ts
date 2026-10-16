@@ -3,7 +3,16 @@ import { routing } from "@/i18n/routing";
 import { hreflangMap, localeUrl } from "@/lib/seo";
 import { getProjectBySlug, projectSlugs } from "@/data/projects";
 
-const STATIC_PATHS = ["", "/work", "/about", "/now", "/certificaciones", "/contact"] as const;
+/** Every locale-agnostic static route. Exported so the nav and redirect tests cross-check it. */
+export const STATIC_PATHS = [
+  "",
+  "/projects",
+  "/experience",
+  "/stack",
+  "/now",
+  "/certifications",
+  "/contact",
+] as const;
 
 /** Home outranks the section indexes, which outrank individual case studies. */
 const priorityFor = (path: string): number => (path === "" ? 1 : 0.7);
@@ -41,11 +50,11 @@ const sitemap = (): MetadataRoute.Sitemap => {
     }
     for (const slug of projectSlugs) {
       entries.push({
-        url: localeUrl(locale, `/work/${slug}`),
+        url: localeUrl(locale, `/projects/${slug}`),
         lastModified: projectLastModified(slug),
         changeFrequency: "monthly",
         priority: 0.6,
-        alternates: { languages: hreflangMap(`/work/${slug}`) },
+        alternates: { languages: hreflangMap(`/projects/${slug}`) },
       });
     }
   }

@@ -1,5 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { truncate, headingSize, charsPerLine, SUBTITLE_SIZE, SUBTITLE_MAX_LINES } from "@/lib/og";
+import {
+  truncate,
+  headingSize,
+  charsPerLine,
+  MONO_GLYPH,
+  SUBTITLE_SIZE,
+  SUBTITLE_MAX_LINES,
+} from "@/lib/og";
 
 /**
  * Satori silently draws past the canvas edge instead of wrapping or shrinking,
@@ -45,7 +52,7 @@ describe("headingSize", () => {
     const titles = ["Metri", "Corporativo Fiscal", "Agates From Mexico", "Facturalandia"];
     for (const title of titles) {
       const size = headingSize(title);
-      expect(title.length).toBeLessThanOrEqual(charsPerLine(size) * 2);
+      expect(title.length).toBeLessThanOrEqual(charsPerLine(size, MONO_GLYPH) * 2);
     }
   });
 });

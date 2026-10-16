@@ -10,6 +10,7 @@ import {
   breadcrumbSchema,
 } from "@/lib/schema";
 import { siteConfig } from "@/data/site";
+import { credentials, earnedCredentials } from "@/data/credentials";
 
 /** `JSON.stringify` drops undefined values silently, so a bad optional shows up
  * as a missing property rather than an error. Round-trip to assert on what a
@@ -27,7 +28,7 @@ describe("entity graph", () => {
   it("references the Person by @id from every page schema, never by a copy", () => {
     expect(profilePageSchema("es", "n", "d").mainEntity).toEqual({ "@id": PERSON_ID });
     expect(
-      collectionPageSchema("es", { name: "n", description: "d", path: "/work" }, []).about,
+      collectionPageSchema("es", { name: "n", description: "d", path: "/projects" }, []).about,
     ).toEqual({
       "@id": PERSON_ID,
     });
@@ -44,6 +45,16 @@ describe("entity graph", () => {
 describe("personSchema", () => {
   it("localizes the job title", () => {
     expect(personSchema("en", "d").jobTitle).not.toBe(personSchema("es", "d").jobTitle);
+  });
+
+  it("claims only earned credentials, never ones still in progress", () => {
+    const creds = personSchema("en", "d").hasCredential;
+    expect(creds).toHaveLength(earnedCredentials.length);
+    for (const c of creds) expect(c["@type"]).toBe("EducationalOccupationalCredential");
+    const names = creds.map((c) => c.name);
+    for (const c of credentials.filter((x) => x.status !== "earned")) {
+      expect(names).not.toContain(c.title);
+    }
   });
 
   it("dedupes schools — two degrees at one university is one alumniOf", () => {
@@ -92,23 +103,23 @@ describe("breadcrumbSchema", () => {
   it("numbers positions from 1 and resolves each crumb to an absolute URL", () => {
     const items = breadcrumbSchema("es", [
       { name: "Ricardo Tapia", path: "" },
-      { name: "Work", path: "/work" },
+      { name: "Work", path: "/projects" },
     ]).itemListElement;
 
     expect(items.map((i) => i.position)).toEqual([1, 2]);
     expect(items[0]?.item).toBe(`${siteConfig.url}/es`);
-    expect(items[1]?.item).toBe(`${siteConfig.url}/es/work`);
+    expect(items[1]?.item).toBe(`${siteConfig.url}/es/projects`);
   });
 });
 
 describe("collectionPageSchema", () => {
   it("reports numberOfItems consistently with the list it emits", () => {
-    const schema = collectionPageSchema("en", { name: "Work", description: "d", path: "/work" }, [
-      "a",
-      "b",
-      "c",
-    ]);
+    const schema = collectionPageSchema(
+      "en",
+      { name: "Work", description: "d", path: "/projects" },
+      ["a", "b", "c"],
+    );
     expect(schema.mainEntity.numberOfItems).toBe(schema.mainEntity.itemListElement.length);
-    expect(schema.mainEntity.itemListElement[2]?.url).toBe(`${siteConfig.url}/en/work/c`);
+    expect(schema.mainEntity.itemListElement[2]?.url).toBe(`${siteConfig.url}/en/projects/c`);
   });
 });

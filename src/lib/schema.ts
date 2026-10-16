@@ -1,6 +1,8 @@
 import { siteConfig } from "@/data/site";
 import { education } from "@/data/education";
 import { experiences } from "@/data/experience";
+import { earnedCredentials } from "@/data/credentials";
+import { getCredentialIssuer, getCredentialTitle } from "@/data/localize";
 import { absoluteUrl, localeUrl } from "@/lib/seo";
 
 /**
@@ -33,6 +35,16 @@ const worksFor = experiences
     ...(e.companyUrl ? { url: e.companyUrl } : {}),
   }));
 
+/** Earned credentials only: schema.org has no "pursuing" state, and claiming one would mislead. */
+const hasCredential = (locale: string) =>
+  earnedCredentials.map((c) => ({
+    "@type": "EducationalOccupationalCredential",
+    name: getCredentialTitle(c, locale),
+    credentialCategory: c.docType === "degree" ? "degree" : "certificate",
+    recognizedBy: { "@type": "Organization", name: getCredentialIssuer(c, locale) },
+    ...(c.verifyUrl ? { url: c.verifyUrl } : {}),
+  }));
+
 /** The site's root entity. Emitted once per page from the locale layout. */
 export const personSchema = (locale: string, description: string) => ({
   "@context": "https://schema.org",
@@ -41,15 +53,20 @@ export const personSchema = (locale: string, description: string) => ({
   name: siteConfig.name,
   url: localeUrl(locale),
   mainEntityOfPage: localeUrl(locale),
-  image: absoluteUrl("/apple-touch-icon.png"),
+  image: absoluteUrl(siteConfig.avatar),
   jobTitle: jobTitle(locale),
   description,
   email: `mailto:${siteConfig.email}`,
-  address: { "@type": "PostalAddress", addressLocality: "Chihuahua", addressCountry: "MX" },
-  nationality: { "@type": "Country", name: "México" },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: siteConfig.location.city,
+    addressCountry: siteConfig.location.countryCode,
+  },
+  nationality: { "@type": "Country", name: siteConfig.location.countryName },
   knowsAbout: siteConfig.keywords,
   knowsLanguage: ["es", "en"],
   alumniOf,
+  hasCredential: hasCredential(locale),
   ...(worksFor.length > 0 ? { worksFor } : {}),
   sameAs: [siteConfig.socials.github, siteConfig.socials.linkedin, siteConfig.socials.x].filter(
     Boolean,
@@ -69,11 +86,11 @@ export const websiteSchema = (locale: string, description: string) => ({
   copyrightHolder: personRef,
 });
 
-/** `/about` — the canonical page *about* the Person, which is what ProfilePage means. */
+/** The home page — the canonical page *about* the Person, which is what ProfilePage means. */
 export const profilePageSchema = (locale: string, name: string, description: string) => ({
   "@context": "https://schema.org",
   "@type": "ProfilePage",
-  url: localeUrl(locale, "/about"),
+  url: localeUrl(locale),
   name,
   description,
   inLanguage: locale,
@@ -81,7 +98,7 @@ export const profilePageSchema = (locale: string, name: string, description: str
   mainEntity: personRef,
 });
 
-/** `/work` — the portfolio index, as an ordered list of the case-study URLs. */
+/** `/projects` — the portfolio index, as an ordered list of the case-study URLs. */
 export const collectionPageSchema = (
   locale: string,
   meta: { name: string; description: string; path: string },
@@ -101,7 +118,7 @@ export const collectionPageSchema = (
     itemListElement: slugs.map((slug, i) => ({
       "@type": "ListItem",
       position: i + 1,
-      url: localeUrl(locale, `/work/${slug}`),
+      url: localeUrl(locale, `/projects/${slug}`),
     })),
   },
 });
@@ -124,7 +141,7 @@ export const creativeWorkSchema = (
   name: work.title,
   headline: work.title,
   description: work.description,
-  url: localeUrl(locale, `/work/${work.slug}`),
+  url: localeUrl(locale, `/projects/${work.slug}`),
   inLanguage: locale,
   isPartOf: { "@id": WEBSITE_ID },
   ...(work.datePublished ? { datePublished: work.datePublished } : {}),
@@ -137,7 +154,7 @@ export const creativeWorkSchema = (
 
 export interface BreadcrumbItem {
   name: string;
-  /** Locale-agnostic route ("", "/work", "/work/metri-info"). */
+  /** Locale-agnostic route ("", "/projects", "/projects/metri-info"). */
   path: string;
 }
 

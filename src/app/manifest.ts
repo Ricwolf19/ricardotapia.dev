@@ -19,14 +19,14 @@ const manifest = (): MetadataRoute.Manifest => ({
   lang: siteConfig.locale,
   dir: "ltr",
   categories: ["business", "productivity", "developer"],
-  theme_color: "#0a0a0f",
-  background_color: "#0a0a0f",
-  // No `purpose: "maskable"` entry: that requires an icon drawn inside the ~80%
-  // safe zone, and these are edge-to-edge. Declaring one would get it cropped on
-  // Android. Add a padded 512px asset first, then a maskable entry pointing at it.
+  theme_color: "#0c0c0f",
+  background_color: "#0c0c0f",
+  // Generated at build time from the author photo by src/app/icon.tsx. The
+  // maskable variant pads the circle into the ~80% safe zone Android crops to.
   icons: [
-    { src: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png", purpose: "any" },
-    { src: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png", purpose: "any" },
+    { src: "/icon/192", sizes: "192x192", type: "image/png", purpose: "any" },
+    { src: "/icon/512", sizes: "512x512", type: "image/png", purpose: "any" },
+    { src: "/icon/512-maskable", sizes: "512x512", type: "image/png", purpose: "maskable" },
   ],
 });
 

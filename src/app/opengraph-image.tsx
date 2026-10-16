@@ -1,20 +1,22 @@
 import { ogImageResponse, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og";
 import { siteConfig } from "@/data/site";
+import { readAvatarDataUrl } from "@/lib/avatar";
 
-export const alt = "Ricardo Tapia — Full-stack Developer";
+export const alt = "Ricardo Tapia — Full-Stack Developer";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
 /**
- * Site-wide Open Graph / Twitter card. Inherited by every route that doesn't
- * define its own (case studies do — see [locale]/work/[slug]/opengraph-image.tsx).
- * Deliberately language-neutral: this one file serves both locales.
+ * Language-neutral fallback card for routes outside a locale (the global
+ * not-found). Locale pages use [locale]/opengraph-image.tsx, which localizes
+ * the subtitle; case studies render their own.
  */
-const Image = () =>
+const Image = async () =>
   ogImageResponse({
     title: siteConfig.name,
-    subtitle: "Full-stack Developer",
-    detail: "Web Development · Mobile Apps · UI/UX Design · Cloud Solutions",
+    subtitle: "Full-Stack Developer",
+    detail: `${siteConfig.location.city}, ${siteConfig.location.countryName}`,
+    avatar: await readAvatarDataUrl(),
   });
 
 export default Image;

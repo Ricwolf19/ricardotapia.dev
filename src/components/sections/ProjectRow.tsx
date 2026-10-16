@@ -6,6 +6,8 @@ import type { Project } from "@/types";
 import { getPublicUrl } from "@/data/projects";
 import { getTagline } from "@/data/localize";
 import { Badge } from "@/components/ui/Badge";
+import { buttonVariants } from "@/components/ui/Button";
+import { cn } from "@/lib/utils";
 import { ProjectThumbnail } from "./ProjectThumbnail";
 
 interface ProjectRowProps {
@@ -24,17 +26,17 @@ export const ProjectRow = async ({ project, index }: ProjectRowProps) => {
   const shortcutLabel = pub?.kind === "repo" ? t("viewRepo") : t("viewLive");
 
   return (
-    <li className="reveal border-border border-b">
+    <li className="border-border border-b" style={{ "--i": index } as React.CSSProperties}>
       <div className="group/row relative flex items-center gap-4 py-5 sm:gap-5 sm:px-3">
-        {/* Accent bar on hover */}
-        <span className="bg-accent absolute top-0 left-0 h-full w-0.5 origin-top scale-y-0 transition-transform duration-200 group-hover/row:scale-y-100" />
+        {/* Ink bar on hover */}
+        <span className="bg-foreground absolute top-0 left-0 h-full w-0.5 origin-top scale-y-0 transition-transform duration-200 group-hover/row:scale-y-100" />
 
-        <span className="text-foreground-dim group-hover/row:text-accent w-7 shrink-0 font-mono text-sm tabular-nums transition-colors">
+        <span className="text-foreground-dim group-hover/row:text-foreground w-7 shrink-0 font-mono text-sm tabular-nums transition-colors">
           {String(index + 1).padStart(2, "0")}
         </span>
 
         {/* Main area -> case study */}
-        <Link href={`/work/${project.slug}`} className="flex min-w-0 flex-1 items-center gap-4">
+        <Link href={`/projects/${project.slug}`} className="flex min-w-0 flex-1 items-center gap-4">
           <ProjectThumbnail
             project={project}
             priority={index === 0}
@@ -44,9 +46,7 @@ export const ProjectRow = async ({ project, index }: ProjectRowProps) => {
           />
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h3 className="group-hover/row:text-accent font-mono text-lg tracking-tight transition-colors">
-                {project.title}
-              </h3>
+              <h3 className="font-mono text-lg tracking-tight">{project.title}</h3>
               <Badge variant="accent">{project.category.toUpperCase()}</Badge>
               <Badge variant={project.status === "production" ? "production" : "development"}>
                 {tStatus(project.status)}
@@ -65,7 +65,7 @@ export const ProjectRow = async ({ project, index }: ProjectRowProps) => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`${shortcutLabel} — ${project.title}`}
-            className="border-accent/40 bg-accent/10 text-accent hover:border-accent hover:bg-accent inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 font-mono text-xs font-medium transition-all hover:text-white sm:px-3.5"
+            className={cn(buttonVariants({ variant: "secondary", size: "sm" }), "shrink-0")}
           >
             {shortcutLabel}
             {pub.kind === "repo" ? (
@@ -75,13 +75,13 @@ export const ProjectRow = async ({ project, index }: ProjectRowProps) => {
             )}
           </a>
         ) : (
-          <span className="border-border text-foreground-dim inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 font-mono text-xs sm:px-3.5">
+          <span className="border-border text-foreground-dim inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full border px-3.5 font-mono text-xs">
             <Lock className="h-3.5 w-3.5" />
             {t("comingSoon")}
           </span>
         )}
 
-        <ArrowUpRight className="text-foreground-dim group-hover/row:text-accent hidden h-5 w-5 shrink-0 transition-all group-hover/row:translate-x-0.5 group-hover/row:-translate-y-0.5 sm:block" />
+        <ArrowUpRight className="text-foreground-dim group-hover/row:text-foreground hidden h-5 w-5 shrink-0 transition-all group-hover/row:translate-x-0.5 group-hover/row:-translate-y-0.5 sm:block" />
       </div>
     </li>
   );

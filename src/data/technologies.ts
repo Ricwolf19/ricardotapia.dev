@@ -40,6 +40,20 @@ export const tech = {
   excalidraw: { name: "Excalidraw", slug: "excalidraw", category: "tooling" },
   yjs: { name: "YJS", slug: "yjs", category: "tooling" },
   powerAutomate: { name: "Power Automate", slug: "power-automate", category: "tooling" },
+  powershell: { name: "PowerShell", slug: "powershell", category: "tooling" },
+  vitest: { name: "Vitest", slug: "vitest", category: "tooling", url: "https://vitest.dev" },
+  playwright: {
+    name: "Playwright",
+    slug: "playwright",
+    category: "tooling",
+    url: "https://playwright.dev",
+  },
+  turborepo: {
+    name: "Turborepo",
+    slug: "turborepo",
+    category: "tooling",
+    url: "https://turbo.build",
+  },
 
   // backend
   node: { name: "Node.js", slug: "nodejs", category: "backend", url: "https://nodejs.org" },
@@ -57,6 +71,22 @@ export const tech = {
     url: "https://www.better-auth.com",
   },
   reactRouter: { name: "React Router", slug: "react-router", category: "frontend" },
+  angular: { name: "Angular", slug: "angular", category: "frontend", url: "https://angular.dev" },
+  tanstackQuery: {
+    name: "TanStack Query",
+    slug: "tanstack-query",
+    category: "frontend",
+    url: "https://tanstack.com/query",
+  },
+  reactHookForm: {
+    name: "React Hook Form",
+    slug: "react-hook-form",
+    category: "frontend",
+    url: "https://react-hook-form.com",
+  },
+  zod: { name: "Zod", slug: "zod", category: "backend", url: "https://zod.dev" },
+  csharp: { name: "C#", slug: "csharp", category: "backend" },
+  dotnet: { name: ".NET Framework", slug: "dotnet", category: "backend" },
   java: { name: "Java", slug: "java", category: "backend" },
   struts: { name: "Struts", slug: "struts", category: "backend" },
   vbnet: { name: "VB.NET", slug: "vbnet", category: "backend" },
@@ -72,7 +102,7 @@ export const tech = {
   mongodb: { name: "MongoDB", slug: "mongodb", category: "database" },
   mysql: { name: "MySQL", slug: "mysql", category: "database" },
   sqlServer: { name: "SQL Server", slug: "sql-server", category: "database" },
-  oracleErp: { name: "Oracle ERP", slug: "oracle-erp", category: "database" },
+  oracleErp: { name: "Oracle EBS", slug: "oracle-erp", category: "database" },
   dexie: { name: "Dexie", slug: "dexie", category: "database" },
   firebase: { name: "Firebase", slug: "firebase", category: "database" },
   drizzle: {
@@ -91,6 +121,20 @@ export const tech = {
   awsS3: { name: "AWS S3", slug: "aws-s3", category: "devops" },
   gcs: { name: "Google Cloud Storage", slug: "gcs", category: "devops" },
   cloudinary: { name: "Cloudinary", slug: "cloudinary", category: "devops" },
+  aws: { name: "AWS", slug: "aws", category: "devops", url: "https://aws.amazon.com" },
+  iis: { name: "IIS", slug: "iis", category: "devops" },
+  docker: { name: "Docker", slug: "docker", category: "devops", url: "https://www.docker.com" },
+  githubActions: {
+    name: "GitHub Actions",
+    slug: "github-actions",
+    category: "devops",
+    url: "https://github.com/features/actions",
+  },
+
+  // mobile & games
+  flutter: { name: "Flutter", slug: "flutter", category: "mobile", url: "https://flutter.dev" },
+  dart: { name: "Dart", slug: "dart", category: "mobile", url: "https://dart.dev" },
+  unity: { name: "Unity", slug: "unity", category: "game", url: "https://unity.com" },
 } as const satisfies Record<string, Technology>;
 
 export type TechKey = keyof typeof tech;

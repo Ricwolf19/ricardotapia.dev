@@ -1,5 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { localized, formatDateRange, formatMonthYear } from "@/lib/utils";
+import {
+  localized,
+  localizedList,
+  formatDateRange,
+  formatMonthYear,
+  formatPhone,
+} from "@/lib/utils";
 
 describe("localized", () => {
   const cases: { name: string; locale: string; en: string | undefined; expected: string }[] = [
@@ -21,6 +27,27 @@ describe("localized", () => {
 
   it.each(cases)("$name", ({ locale, en, expected }) => {
     expect(localized(locale, "Base", en)).toBe(expected);
+  });
+});
+
+describe("localizedList", () => {
+  const base = ["a", "b"];
+
+  it("returns the English list for en when it is complete", () => {
+    expect(localizedList("en", base, ["x", "y"])).toEqual(["x", "y"]);
+  });
+
+  it("falls back to the base list when the translation is missing", () => {
+    expect(localizedList("en", base, undefined)).toBe(base);
+  });
+
+  it("falls back when the translation has a different length", () => {
+    // A half-translated list would silently drop or reorder bullets.
+    expect(localizedList("en", base, ["x"])).toBe(base);
+  });
+
+  it("ignores the English list for es", () => {
+    expect(localizedList("es", base, ["x", "y"])).toBe(base);
   });
 });
 
@@ -60,5 +87,15 @@ describe("formatMonthYear", () => {
 
   it("does not shift the year for January", () => {
     expect(formatMonthYear("2025-01", "en")).toContain("2025");
+  });
+});
+
+describe("formatPhone", () => {
+  it("groups a Mexican number as +52 XXX XXX XXXX", () => {
+    expect(formatPhone("526143965716")).toBe("+52 614 396 5716");
+  });
+
+  it("falls back to a plain plus-prefixed number elsewhere", () => {
+    expect(formatPhone("14155550123")).toBe("+14155550123");
   });
 });

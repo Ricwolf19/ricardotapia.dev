@@ -1,0 +1,41 @@
+---
+title: "Honeywell — Plant internal platform"
+slug: "honeywell"
+tagline: "20+ internal web apps, the Honeywall KPI wall and ~28 Oracle EBS → SQL Server data jobs for a manufacturing plant."
+status: "production"
+visibility: "private"
+category: "platform"
+startDate: "2024-05"
+launchDate: "2025-05"
+thumbnail: "/images/projects/honeywell/cover.jpg"
+tags: ["internal-tools", "aspnet-mvc", "vbnet", "sql-server", "oracle-ebs", "etl", "kpi-dashboard", "manufacturing"]
+---
+
+## Context
+
+A one-year internship (May 2024 – May 2025) in the IT area of Honeywell Intelligrated's Chihuahua plant. The plant needed production visibility on the floor and a way out of manual reporting: exporting from Oracle EBS to Excel, processing by hand and emailing the result took hours every day.
+
+## Architecture
+
+- **Intranet on IIS**: each application is an ASP.NET MVC 5 site in VB.NET with Entity Framework 6 over SQL Server, published on the plant server.
+- **Oracle EBS as the source of truth**: ~28 scheduled jobs (VBA, VBScript and PowerShell launched by Task Scheduler) pull data from the ERP and land it in SQL Server, where the apps read it.
+- **Honeywall**: the KPI wall reads those tables and shows earned hours against goal, top projects, CPPM, IRs, FPY, scrap, incidents and shipments on the floor's LED screen, with Highcharts over AdminLTE.
+- **Java side**: Tomcat servlets exposing discrete-job data and recording paint-line scans, plus a Swing desktop app that prints labels on Honeywell PM43 printers.
+
+## Stack
+
+- ASP.NET MVC 5, VB.NET, Entity Framework 6, .NET Framework 4.8, IIS
+- SQL Server, Oracle EBS (ODBC / JDBC)
+- VBA, VBScript, PowerShell, Task Scheduler
+- Java (Tomcat, Swing), Highcharts, AdminLTE, Bootstrap, jQuery
+
+## Technical challenges
+
+- Reliability of the Oracle → SQL Server pipeline: successfully processed data rose from 95% to 99.9%.
+- The daily shipped-parts report went from 4 h 30 min of manual work to 10 automated minutes.
+- Migrating the legacy WebForms Andon to .NET 4.8 on IIS without stopping the floor.
+- Rendering on a large-format LED screen without losing legibility.
+
+## Outcome
+
+More than 20 internal applications in production for production, quality, shipping, physical inventory, 5S audits, visitor access, standard costs and career plans; Honeywall running live on the production floor; and the quality team working from automatically computed metrics instead of hand-made ones. None of it is publicly reachable: everything runs on the plant intranet.

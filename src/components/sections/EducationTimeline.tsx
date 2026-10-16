@@ -6,7 +6,7 @@ import { formatDateRange } from "@/lib/utils";
 
 /** Vertical education timeline, mirroring ExperienceTimeline's visual language. */
 export const EducationTimeline = () => {
-  const t = useTranslations("about");
+  const t = useTranslations("experience");
   const locale = useLocale();
 
   return (

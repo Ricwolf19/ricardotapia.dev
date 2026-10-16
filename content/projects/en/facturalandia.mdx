@@ -34,13 +34,14 @@ clients; there is no Firebase anywhere.
 ## Stack
 
 - Runtime: Node 22. Backend: Express 5 + Mongoose (MongoDB).
-- Frontend: React 19 + Vite 6 + TanStack Query + React Hook Form.
+- Frontend: React 19 + Vite 6 + TanStack Query + React Hook Form + Zod, in a Turborepo monorepo.
 - Invoicing: Facturapi (CFDI 4.0). Payments: Stripe.
 - Storage: Google Cloud Storage (PDFs and supporting documents).
 - Deployed on Heroku; the monorepo is orchestrated with Turborepo.
 
 ## Technical challenges
 
+- CFDI 4.0 income (I), credit-note (E) and payment (P) invoices, cancellation with SAT reason codes, PDF/XML download, FIEL certificates and bulk capture by pasting rows from Excel.
 - The complete SAT cancellation cycle, with real-time notifications over signed
   webhooks + SSE.
 - Mongo transactions on a replica set, and an idempotent backfill of historical
@@ -50,6 +51,8 @@ clients; there is no Firebase anywhere.
   buckets.
 
 ## Outcome
+
+Time per invoice fell from 13 to 4.5 minutes and fiscal errors from 12 to 3 per month, with more than 85% of operations now running on the platform.
 
 A multi-tenant invoicing SaaS in production, where one shared layer — HTTP
 client, design system, SAT catalogs and Zod types — feeds authentication,

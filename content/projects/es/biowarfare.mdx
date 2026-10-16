@@ -1,0 +1,42 @@
+---
+title: "BioWarfare"
+slug: "biowarfare"
+tagline: "FPS de survival horror en Unity 6: cinco zonas infectadas, aliados, oleadas y un leaderboard global en Firestore."
+status: "production"
+visibility: "private"
+category: "game"
+startDate: "2025-08"
+launchDate: "2025-11"
+thumbnail: "/images/projects/biowarfare/cover.png"
+tags: ["game", "fps", "survival-horror", "unity", "csharp", "firebase", "leaderboard"]
+---
+
+## Contexto
+
+Proyecto integrador universitario: un shooter en primera persona de survival horror ambientado en un hospital tomado por la infección. El objetivo era entregar un juego completo —menú, prólogo, partida, epílogo— y no una demo, con sistemas propios encima de un motor de FPS y uno de IA comerciales.
+
+## Arquitectura
+
+- **Unity 6 con URP** y C#; escenas separadas para menú principal, prólogo, juego y epílogo.
+- **Zonas infectadas**: cinco zonas (entrada, jardín, sala principal, estacionamiento y jefe final), cada una con pilares de captura, progreso de limpieza, oleadas de spawn, jefe y efectos propios.
+- **Gunplay** con Cowsins FPS Engine y **enemigos** con Emerald AI 2025 sobre NavMesh, unidos por scripts puente de daño jugador ↔ IA. Los enemigos atraviesan puertas y persiguen por interiores.
+- **Aliados** que acompañan al jugador, brújula de enemigos, videos de prólogo y epílogo, final con helicóptero y localización al español.
+- **Leaderboard global** en Firebase Firestore: cada partida escribe nombre, enemigos eliminados, zonas limpiadas, tiempo jugado, si murió, timestamp del servidor y plataforma.
+
+## Stack
+
+- Unity 6 (URP), C#
+- Cowsins FPS Engine, Emerald AI 2025, NavMesh
+- Firebase Firestore
+- Git con ramas main / development / feature, Git LFS y GitHub Actions para builds
+
+## Retos técnicos
+
+- Balancear oleadas y jefes por zona para que la dificultad escale sin volverse injusta.
+- Navegación de IA en interiores con puertas y pasillos estrechos.
+- Escribir en Firestore desde un build de escritorio sin bloquear el hilo del juego.
+- El repositorio incluye assets de pago, así que se mantiene privado.
+
+## Resultado
+
+Versión final en noviembre de 2025: un juego jugable de principio a fin con cinco zonas, sistema de aliados, dos cinemáticas y un leaderboard global. Sin build público por las licencias de los assets.

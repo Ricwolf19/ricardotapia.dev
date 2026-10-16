@@ -1,4 +1,6 @@
 import { describe, it, expect } from "vitest";
+import { existsSync } from "node:fs";
+import path from "node:path";
 import {
   isPublicLink,
   isPublicApp,
@@ -139,6 +141,43 @@ describe("workProjects", () => {
   it("keeps slugs unique — duplicates would collide as routes", () => {
     const slugs = projects.map((p) => p.slug);
     expect(new Set(slugs).size).toBe(slugs.length);
+  });
+});
+
+describe("catalog entries", () => {
+  it("lists the internship and the game as public case studies", () => {
+    const slugs = workProjects.map((p) => p.slug);
+    expect(slugs).toContain("honeywell");
+    expect(slugs).toContain("biowarfare");
+  });
+
+  it("ships the thumbnail file for every project that claims one", () => {
+    // Flipping `thumbnailReady` without the file renders a broken image.
+    for (const p of projects.filter((x) => x.thumbnailReady)) {
+      expect(existsSync(path.join(process.cwd(), "public", p.thumbnail))).toBe(true);
+    }
+  });
+
+  it("ships every gallery image it declares", () => {
+    for (const p of projects) {
+      for (const src of p.gallery ?? []) {
+        expect(existsSync(path.join(process.cwd(), "public", src))).toBe(true);
+      }
+    }
+  });
+
+  it("never carries a bare repoUrl without a public repo link", () => {
+    // getPublicUrl falls back to `repoUrl` unconditionally, so a private repo
+    // set there would be rendered on the home row.
+    for (const p of projects.filter((x) => x.repoUrl)) {
+      expect(p.links.some((l) => l.type === "repo" && isPublicLink(l))).toBe(true);
+    }
+  });
+
+  it("exposes no public link on a project that declares why it has none", () => {
+    for (const p of projects.filter((x) => x.noLinkReason)) {
+      expect(p.links.filter(isPublicLink)).toHaveLength(0);
+    }
   });
 });
 

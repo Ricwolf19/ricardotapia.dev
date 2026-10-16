@@ -1,0 +1,41 @@
+---
+title: "Honeywell — Plataforma interna de planta"
+slug: "honeywell"
+tagline: "20+ apps web internas, el muro de KPIs Honeywall y ~28 jobs de datos Oracle EBS → SQL Server para una planta de manufactura."
+status: "production"
+visibility: "private"
+category: "platform"
+startDate: "2024-05"
+launchDate: "2025-05"
+thumbnail: "/images/projects/honeywell/cover.jpg"
+tags: ["internal-tools", "aspnet-mvc", "vbnet", "sql-server", "oracle-ebs", "etl", "kpi-dashboard", "manufacturing"]
+---
+
+## Contexto
+
+Estadía profesional de un año (mayo 2024 – mayo 2025) en el área de IT de la planta de Honeywell Intelligrated en Chihuahua. La planta necesitaba visibilidad de producción en el piso y dejar atrás los reportes manuales: exportar de Oracle EBS a Excel, procesar a mano y enviar por correo tomaba horas cada día.
+
+## Arquitectura
+
+- **Intranet sobre IIS**: cada aplicación es un sitio ASP.NET MVC 5 en VB.NET con Entity Framework 6 sobre SQL Server, publicado en el servidor de la planta.
+- **Oracle EBS como fuente de verdad**: ~28 jobs programados (VBA, VBScript y PowerShell lanzados por Task Scheduler) extraen datos del ERP y los aterrizan en SQL Server, de donde leen las apps.
+- **Honeywall**: el muro de KPIs lee esas tablas y proyecta en la pantalla LED del piso horas ganadas contra meta, top de proyectos, CPPM, IRs, FPY, scrap, incidentes y embarques, con Highcharts sobre AdminLTE.
+- **Lado Java**: servlets en Tomcat que exponen información de órdenes discretas y registran escaneos de pintura, más una app de escritorio Swing que imprime etiquetas en impresoras Honeywell PM43.
+
+## Stack
+
+- ASP.NET MVC 5, VB.NET, Entity Framework 6, .NET Framework 4.8, IIS
+- SQL Server, Oracle EBS (ODBC / JDBC)
+- VBA, VBScript, PowerShell, Task Scheduler
+- Java (Tomcat, Swing), Highcharts, AdminLTE, Bootstrap, jQuery
+
+## Retos técnicos
+
+- Confiabilidad del pipeline Oracle → SQL Server: la tasa de datos procesados con éxito subió de 95 % a 99.9 %.
+- El reporte diario de partes embarcadas pasó de 4 h 30 min de trabajo manual a 10 min automatizados.
+- Migrar el Andon legacy en WebForms a .NET 4.8 sobre IIS sin detener el piso.
+- Renderizar en una pantalla LED de gran formato sin pérdida de legibilidad.
+
+## Resultado
+
+Más de 20 aplicaciones internas en producción para producción, calidad, embarques, inventario físico, auditorías 5S, acceso de visitantes, costos estándar y planes de carrera; Honeywall operando en vivo en el piso de producción; y el equipo de calidad con métricas calculadas automáticamente en lugar de a mano. Nada de esto es accesible públicamente: todo corre en la intranet de la planta.

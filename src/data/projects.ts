@@ -412,10 +412,22 @@ export const projects: Project[] = [
     thumbnail: "/images/projects/facturalandia-thumb.jpg",
     links: [],
     startDate: "2025-03",
-    tags: ["saas", "facturacion", "cfdi", "multi-tenant", "mongodb"],
+    tags: [
+      "saas",
+      "facturacion",
+      "cfdi",
+      "multi-tenant",
+      "mongodb",
+      "tanstack-query",
+      "react-hook-form",
+      "zod",
+    ],
     technologies: techList(
       "react",
       "vite",
+      "tanstackQuery",
+      "reactHookForm",
+      "zod",
       "node",
       "express",
       "mongodb",
@@ -423,6 +435,7 @@ export const projects: Project[] = [
       "gcs",
       "stripe",
       "typescript",
+      "turborepo",
       "heroku",
     ),
   },
@@ -543,23 +556,69 @@ export const projects: Project[] = [
     tags: ["oss", "react", "library", "typescript", "npm"],
     technologies: techList("react", "typescript", "node", "express", "next", "awsS3", "gcs"),
   },
-  // Internal / historical: shown in /about, never in /work or /now.
+  // Internship work: public case studies with no public URL.
   {
     id: "11111111-0000-0000-0000-000000000012",
-    slug: "honeywell-internal",
-    title: "Honeywell — Proyectos Internos",
-    tagline: "20+ soluciones de automatización internas en Honeywell Intelligrated Chihuahua.",
+    slug: "honeywell",
+    title: "Honeywell — Plataforma interna de planta",
+    tagline:
+      "20+ apps web internas, el muro de KPIs Honeywall y ~28 jobs de datos Oracle EBS → SQL Server para una planta de manufactura.",
     description:
-      "Soluciones internas de automatización con VBA macros y VB.NET, paneles de métricas en tiempo real vía Oracle ERP y aplicaciones web ASP.NET MVC con SQL Server. Apps no hosteadas públicamente.",
-    status: "internal",
+      "Suite de aplicaciones internas sobre IIS para la planta de Honeywell Intelligrated en Chihuahua: 20+ apps ASP.NET MVC 5 / VB.NET / EF6 / SQL Server para producción, calidad, embarques, inventario, auditorías 5S y acceso de visitantes; Honeywall, el muro de KPIs (Highcharts + AdminLTE) proyectado en la pantalla LED del piso; y ~28 jobs VBA/VBScript/PowerShell que sincronizan Oracle EBS → SQL Server. El reporte de partes embarcadas pasó de 4 h 30 min a 10 min y la tasa de éxito de datos de 95 % a 99.9 %. Incluye servlets Java en Tomcat, una app Swing de impresión de etiquetas (PM43) y la migración del Andon WebForms a .NET 4.8. Sin acceso público: corre en la intranet de la planta.",
+    status: "production",
     visibility: "private",
-    category: "saas",
-    thumbnail: "/images/projects/honeywell-internal-thumb.jpg",
+    category: "platform",
+    noLinkReason: "internal",
+    thumbnail: "/images/projects/honeywell/cover.jpg",
+    // The plant photo belongs to /experience; the card keeps the placeholder.
+    // gallery: ["/images/projects/honeywell/gallery/01.jpg"] — add screenshots here.
     links: [],
     startDate: "2024-05",
     launchDate: "2025-05",
-    tags: ["automation", "vba", "vbnet", "aspnet"],
-    technologies: techList("vba", "vbnet", "oracleErp", "aspnet", "sqlServer", "powerAutomate"),
+    tags: [
+      "internal-tools",
+      "aspnet-mvc",
+      "vbnet",
+      "sql-server",
+      "oracle-ebs",
+      "etl",
+      "kpi-dashboard",
+      "manufacturing",
+    ],
+    technologies: techList(
+      "aspnet",
+      "vbnet",
+      "dotnet",
+      "sqlServer",
+      "oracleErp",
+      "vba",
+      "powershell",
+      "java",
+      "iis",
+    ),
+    experienceId: "exp-honeywell",
+  },
+  {
+    id: "11111111-0000-0000-0000-000000000016",
+    slug: "biowarfare",
+    title: "BioWarfare",
+    tagline:
+      "FPS de survival horror en Unity 6: cinco zonas infectadas, aliados, oleadas y un leaderboard global en Firestore.",
+    description:
+      "Videojuego FPS de survival horror ambientado en un hospital tomado por la infección. Cinco zonas infectadas con pilares de captura, jefes y oleadas de spawn; aliados que acompañan al jugador, brújula de enemigos, final en helicóptero y videos de prólogo y epílogo. Enemigos con NavMesh (Emerald AI 2025), gunplay con Cowsins FPS Engine, URP, localización al español y leaderboard global en Firebase Firestore (nombre, enemigos eliminados, zonas limpiadas, tiempo jugado, muerte, timestamp y plataforma). Proyecto integrador universitario; versión final en noviembre de 2025.",
+    status: "production",
+    visibility: "private",
+    category: "game",
+    // The repo bundles paid Asset Store content, so it stays private: no links.
+    noLinkReason: "internal",
+    thumbnail: "/images/projects/biowarfare/cover.png",
+    // thumbnailReady: flip once the key art is in public/images/projects/biowarfare/.
+    // gallery: ["/images/projects/biowarfare/gallery/01.png"] — add screenshots here.
+    links: [],
+    startDate: "2025-08", // TODO confirm
+    launchDate: "2025-11",
+    tags: ["game", "fps", "survival-horror", "unity", "csharp", "firebase", "leaderboard"],
+    technologies: techList("unity", "csharp", "firebase"),
   },
 ];
 
@@ -617,7 +676,7 @@ export const getPublicUrl = (p: Project): { url: string; kind: "live" | "repo" }
 };
 
 /**
- * Projects visible in /work (excludes internal/historical).
+ * Projects visible in /projects (excludes internal).
  * Priority projects first (highlighted client apps), the rest after.
  */
 export const workProjects = [...projects.filter((p) => p.status !== "internal")].sort(

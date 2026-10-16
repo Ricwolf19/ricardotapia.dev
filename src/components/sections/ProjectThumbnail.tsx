@@ -1,6 +1,5 @@
 import Image from "next/image";
 import type { Project } from "@/types";
-import { categoryGradients } from "@/data/constants";
 import { cn } from "@/lib/utils";
 
 interface ProjectThumbnailProps {
@@ -15,11 +14,11 @@ interface ProjectThumbnailProps {
 /**
  * Project thumbnail, ready for real images.
  * - If `project.thumbnailReady` is true: renders next/image (local or R2).
- * - Otherwise: a programmatic placeholder with a per-category gradient.
+ * - Otherwise: a programmatic monochrome placeholder (halftone + title).
  *
- * To attach a real image later: place the file at
- * `public/images/projects/<slug>-thumb.jpg` (or an R2 URL in `thumbnail`)
- * and set `thumbnailReady: true` in `src/data/projects.ts`.
+ * To attach a real image: place it at `public/images/projects/<slug>/cover.{jpg,png}`
+ * (or an R2 URL in `thumbnail`) and set `thumbnailReady: true` in
+ * `src/data/projects.ts`. A test fails if the flag is set without the file.
  */
 export const ProjectThumbnail = ({
   project,
@@ -46,20 +45,15 @@ export const ProjectThumbnail = ({
   return (
     <div
       className={cn(
-        "relative flex items-center justify-center overflow-hidden bg-gradient-to-br",
-        categoryGradients[project.category],
+        "bg-surface-elevated relative flex items-center justify-center overflow-hidden",
         className,
       )}
     >
-      {/* Subtle texture over the gradient */}
-      <div
-        aria-hidden
-        className="absolute inset-0 [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:16px_16px] opacity-[0.07]"
-      />
+      <div aria-hidden className="halftone absolute inset-0" />
       <span
         className={cn(
-          "relative w-full px-2 text-center font-mono leading-tight font-medium [overflow-wrap:anywhere] break-words text-white drop-shadow-sm",
-          compact ? "line-clamp-3 text-[0.7rem]" : "px-4 text-base sm:text-lg",
+          "bg-background/80 text-foreground relative max-w-[90%] rounded-md px-2 py-1 text-center font-mono leading-tight font-medium [overflow-wrap:anywhere] break-words backdrop-blur-sm",
+          compact ? "line-clamp-3 text-[0.7rem]" : "px-3 text-sm sm:text-base",
         )}
       >
         {project.title}

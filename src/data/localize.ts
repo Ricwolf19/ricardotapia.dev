@@ -1,5 +1,5 @@
-import type { Project, Experience, Education } from "@/types";
-import { localized } from "@/lib/utils";
+import type { Credential, Education, Experience, Project } from "@/types";
+import { localized, localizedList } from "@/lib/utils";
 
 /**
  * English translations of the projects and experience copy.
@@ -83,22 +83,61 @@ const projectCopyEn: Record<string, { tagline: string; description: string }> = 
     description:
       "@pibytelabs/uploaderkit is a full-stack file upload layer for React and Node: a shared client/server contract with declarative scopes, a headless hook with magic-number validation, image compression and retry/abort, GCS/S3 providers, AES-256-GCM encryption, Express and Next.js adapters, and EN/ES i18n.",
   },
-  "honeywell-internal": {
-    tagline: "20+ internal automation solutions at Honeywell Intelligrated Chihuahua.",
+  honeywell: {
+    tagline:
+      "20+ internal web apps, the Honeywall KPI wall and ~28 Oracle EBS → SQL Server data jobs for a manufacturing plant.",
     description:
-      "Internal automation solutions with VBA macros and VB.NET, real-time metric dashboards via Oracle ERP, and ASP.NET MVC web apps with SQL Server. Apps not publicly hosted.",
+      "Suite of internal IIS applications for Honeywell Intelligrated's Chihuahua plant: 20+ ASP.NET MVC 5 / VB.NET / EF6 / SQL Server apps for production, quality, shipping, inventory, 5S audits and visitor access; Honeywall, the plant KPI wall (Highcharts + AdminLTE) shown on the floor LED wall; and ~28 VBA/VBScript/PowerShell jobs syncing Oracle EBS → SQL Server. The shipped-parts report went from 4 h 30 min to 10 min and data success from 95% to 99.9%. Also Java servlets on Tomcat, a Swing label-printing app (PM43) and the migration of the WebForms Andon to .NET 4.8. No public access: it runs on the plant intranet.",
+  },
+  biowarfare: {
+    tagline:
+      "Survival-horror FPS in Unity 6: five infected zones, allies, spawn waves and a global Firestore leaderboard.",
+    description:
+      "A first-person survival-horror shooter set in a hospital overrun by the infection. Five infected zones with capture pillars, bosses and spawn waves; allies that follow the player, an enemy compass, a helicopter ending and prologue/epilogue videos. NavMesh enemies (Emerald AI 2025), gunplay on Cowsins FPS Engine, URP, Spanish localization and a global leaderboard on Firebase Firestore (name, enemies killed, zones cleansed, time played, death, timestamp and platform). University capstone; final build in November 2025.",
   },
 };
 
-const experienceCopyEn: Record<string, string> = {
-  "exp-corpfiscal":
-    "Building the internal operating platform of a tax and accounting firm on Express microservices: 13 apps in a monorepo (legal, clients, accounting, reception, HR, administration, corporate and more). Real-time collaborative whiteboard for tax-planning sessions with WebSockets, Excalidraw and Yjs.",
-  "exp-pibytelabs":
-    "I designed and maintain the internal @pibytelabs package ecosystem (ui, utils — private packages) that powers every company product. Author of listkit and uploaderkit, published as open source on npm. Full-stack architecture for clients in electronic invoicing, e-commerce, health and education: Facturalandia, CorpFiscal, Café Combate, Espau, Agates From Mexico, Danny Cuevas, Increscendo and Portillo y Young.",
-  "exp-sid":
-    "Enterprise Java applications with a custom Struts-based framework. IoT integration via REST/HTTP APIs. Cross-platform communication modules for real-time inventory tracking. MySQL database management.",
-  "exp-honeywell":
-    "Professional internship. 20+ automation solutions with VBA macros and VB.NET scripts, reducing manual processes by 40%. Real-time metric dashboards via Oracle ERP integration. ASP.NET MVC web apps with SQL Server for enterprise resource tracking.",
+const experienceCopyEn: Record<
+  string,
+  { description: string; highlights?: string[]; imageAlt?: string }
+> = {
+  "exp-corpfiscal": {
+    description:
+      "Building the internal operating platform of a tax and accounting firm on Express microservices: 13 apps in a monorepo (legal, clients, accounting, reception, HR, administration, corporate and more). Real-time collaborative whiteboard for tax-planning sessions with WebSockets, Excalidraw and Yjs.",
+  },
+  "exp-pibytelabs": {
+    description:
+      "I designed and maintain the internal @pibytelabs package ecosystem (ui, utils — private packages) that powers every company product. Author of listkit and uploaderkit, published as open source on npm. Full-stack architecture for clients in electronic invoicing, e-commerce, health and education: Facturalandia, CorpFiscal, Café Combate, Espau, Agates From Mexico, Danny Cuevas, Increscendo and Portillo y Young.",
+    highlights: [
+      "Facturalandia: CFDI 4.0 income, credit-note and payment invoices, plus cancellation with SAT reason codes via FacturAPI.",
+      "React frontend with TanStack Query, React Hook Form and Zod on a Turborepo monorepo.",
+      "Time per invoice from 13 to 4.5 min; fiscal errors from 12 to 3 per month.",
+    ],
+  },
+  "exp-sid": {
+    description:
+      "Enterprise Java applications with a custom Struts-based framework. IoT integration via REST/HTTP APIs. Cross-platform communication modules for real-time inventory tracking. MySQL database management.",
+  },
+  "exp-honeywell": {
+    description:
+      "Internship at the Chihuahua plant: internal web applications, the production KPI wall and the data pipelines that feed it from Oracle EBS.",
+    highlights: [
+      "Built 20+ internal web apps on IIS (ASP.NET MVC 5, VB.NET, Entity Framework 6, SQL Server) for production, quality, shipping, inventory, 5S audits and visitor access.",
+      "Built Honeywall, the plant KPI wall (Highcharts + AdminLTE) shown on the production-floor LED wall.",
+      "Automated Oracle EBS → SQL Server data pipelines with ~28 VBA, VBScript and PowerShell jobs orchestrated by Task Scheduler.",
+      "Cut the shipped-parts report from 4 h 30 min to 10 min and raised data success from 95% to 99.9%.",
+      "Java: Tomcat servlets and a Swing label-printing app for Honeywell PM43 printers.",
+      "Migrated the legacy WebForms Andon to .NET 4.8 on IIS.",
+    ],
+    imageAlt: "Honeywall, the plant KPI wall, on the production-floor LED screen",
+  },
+};
+
+const credentialCopyEn: Record<string, { title: string; issuer?: string }> = {
+  ingenieria: { title: "B.Eng. in Software Development and Management" },
+  tsu: { title: "Associate Degree (TSU) in IT — Multiplatform Software Development" },
+  fullstack: { title: "Full-Stack Programming Diploma (126 h)" },
+  // aws-saa: proper noun, identical in both locales.
 };
 
 const educationCopyEn: Record<string, string> = {
@@ -113,7 +152,19 @@ export const getDescription = (p: Project, locale: string): string =>
   localized(locale, p.description, projectCopyEn[p.slug]?.description);
 
 export const getExperienceDescription = (e: Experience, locale: string): string =>
-  localized(locale, e.description, experienceCopyEn[e.id]);
+  localized(locale, e.description, experienceCopyEn[e.id]?.description);
+
+export const getExperienceHighlights = (e: Experience, locale: string): string[] =>
+  localizedList(locale, e.highlights ?? [], experienceCopyEn[e.id]?.highlights);
+
+export const getExperienceImageAlt = (e: Experience, locale: string): string =>
+  localized(locale, e.image?.alt ?? "", experienceCopyEn[e.id]?.imageAlt);
+
+export const getCredentialTitle = (c: Credential, locale: string): string =>
+  localized(locale, c.title, credentialCopyEn[c.id]?.title);
+
+export const getCredentialIssuer = (c: Credential, locale: string): string =>
+  localized(locale, c.issuer, credentialCopyEn[c.id]?.issuer);
 
 export const getEducationDegree = (e: Education, locale: string): string =>
   localized(locale, e.degree, educationCopyEn[e.id]);

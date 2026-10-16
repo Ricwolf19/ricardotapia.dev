@@ -32,10 +32,10 @@ export const ProjectGrid = ({ projects }: ProjectGridProps) => {
             type="button"
             onClick={() => startTransition(() => setFilter(f.value))}
             className={cn(
-              "rounded-full border px-4 py-1.5 font-mono text-sm transition-all",
+              "h-8 rounded-full border px-4 font-mono text-xs transition-colors",
               filter === f.value
-                ? "border-primary bg-primary shadow-primary/30 text-white shadow-sm"
-                : "border-border-strong bg-surface text-foreground-muted hover:border-accent/50 hover:text-foreground",
+                ? "border-foreground bg-foreground text-background"
+                : "border-border text-foreground-muted hover:border-foreground hover:text-foreground",
             )}
           >
             {t(f.messageKey)}
@@ -49,12 +49,14 @@ export const ProjectGrid = ({ projects }: ProjectGridProps) => {
         <div
           key={filter}
           className={cn(
-            "fade-in grid grid-cols-1 gap-6 transition-opacity duration-200 sm:grid-cols-2 lg:grid-cols-3",
+            "stagger grid grid-cols-1 gap-6 transition-opacity duration-200 sm:grid-cols-2 lg:grid-cols-3",
             isPending && "opacity-60",
           )}
         >
-          {filtered.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+          {filtered.map((project, i) => (
+            <div key={project.id} style={{ "--i": i } as React.CSSProperties}>
+              <ProjectCard project={project} />
+            </div>
           ))}
         </div>
       )}

@@ -1,0 +1,42 @@
+---
+title: "BioWarfare"
+slug: "biowarfare"
+tagline: "Survival-horror FPS in Unity 6: five infected zones, allies, spawn waves and a global Firestore leaderboard."
+status: "production"
+visibility: "private"
+category: "game"
+startDate: "2025-08"
+launchDate: "2025-11"
+thumbnail: "/images/projects/biowarfare/cover.png"
+tags: ["game", "fps", "survival-horror", "unity", "csharp", "firebase", "leaderboard"]
+---
+
+## Context
+
+University capstone: a first-person survival-horror shooter set in a hospital overrun by the infection. The goal was a complete game — menu, prologue, run, epilogue — rather than a demo, with custom systems built on top of a commercial FPS engine and AI package.
+
+## Architecture
+
+- **Unity 6 with URP** and C#; separate scenes for the main menu, prologue, game and epilogue.
+- **Infected zones**: five zones (entrance, garden, main room, parking and final boss), each with capture pillars, cleansing progress, spawn waves, a boss and its own effects.
+- **Gunplay** on Cowsins FPS Engine and **enemies** on Emerald AI 2025 over NavMesh, joined by player ↔ AI damage bridge scripts. Enemies pass through doors and chase through interiors.
+- **Allies** that follow the player, an enemy compass, prologue and epilogue videos, a helicopter ending and Spanish localization.
+- **Global leaderboard** on Firebase Firestore: every run writes the player name, enemies killed, zones cleansed, time played, whether they died, a server timestamp and the platform.
+
+## Stack
+
+- Unity 6 (URP), C#
+- Cowsins FPS Engine, Emerald AI 2025, NavMesh
+- Firebase Firestore
+- Git with main / development / feature branches, Git LFS and GitHub Actions builds
+
+## Technical challenges
+
+- Balancing waves and bosses per zone so difficulty scales without becoming unfair.
+- AI navigation through interiors with doors and narrow corridors.
+- Writing to Firestore from a desktop build without blocking the game thread.
+- The repository bundles paid assets, so it stays private.
+
+## Outcome
+
+Final build in November 2025: a game playable start to finish with five zones, an ally system, two cinematics and a global leaderboard. No public build because of the asset licenses.

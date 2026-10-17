@@ -5,10 +5,12 @@ export const routing = defineRouting({
   locales: ["es", "en"],
   defaultLocale: "es",
   localePrefix: "always",
-  // Auto-detect the visitor's language from the browser's Accept-Language header
-  // (and the NEXT_LOCALE cookie). Falls back to `defaultLocale` (es) when neither
-  // matches a supported locale.
-  localeDetection: false,
+  // Unprefixed URLs redirect to the visitor's language: the NEXT_LOCALE cookie
+  // (set when they switch) first, then the browser's Accept-Language; with no
+  // supported language, src/middleware.ts falls back to `en`, not `es`.
+  // Indexed URLs are always prefixed, so crawlers and hreflang are unaffected.
+  // Pinned by src/i18n/routing.test.ts — this flag once lied in a comment.
+  localeDetection: true,
 });
 
 export type Locale = (typeof routing.locales)[number];
